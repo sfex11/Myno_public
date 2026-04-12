@@ -79,6 +79,17 @@ img { display: block; max-width: 100%; }
 }
 .logo:hover { color: var(--accent); }
 
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 4px;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  object-fit: contain;
+}
+
 /* Desktop Nav */
 .desktop-nav {
   display: flex;
@@ -166,15 +177,15 @@ main { min-height: calc(100vh - 56px - 80px); }
 }
 
 .hero-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 3px solid var(--border-card);
-  box-shadow: 0 4px 20px rgba(44, 36, 32, 0.10);
-  margin: 0 auto 24px;
+  width: 128px;
+  height: 128px;
+  border-radius: 24px;
+  background: var(--accent-bg);
+  border: 2px solid var(--border-card);
+  box-shadow: 0 6px 24px rgba(123, 94, 167, 0.12);
+  margin: 0 auto 28px;
   object-fit: contain;
-  padding: 12px;
+  padding: 14px;
 }
 
 .avatar {
@@ -215,6 +226,7 @@ main { min-height: calc(100vh - 56px - 80px); }
 .section {
   padding: 56px 24px;
   border-top: 1px solid var(--border-light);
+  scroll-margin-top: 68px;
 }
 
 .section-inner {
@@ -268,8 +280,9 @@ main { min-height: calc(100vh - 56px - 80px); }
 .post-card-avatar {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 10px;
   background: var(--accent-bg);
+  border: 1px solid var(--border-light);
   padding: 6px;
   object-fit: contain;
   flex-shrink: 0;
@@ -318,7 +331,7 @@ main { min-height: calc(100vh - 56px - 80px); }
 /* --- News Section (Myno News — 카드뉴스) --- */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -421,7 +434,7 @@ main { min-height: calc(100vh - 56px - 80px); }
   width: 40px;
   height: 40px;
   object-fit: contain;
-  opacity: 0.5;
+  opacity: 0.65;
 }
 
 /* ===========================================
@@ -569,7 +582,7 @@ main { min-height: calc(100vh - 56px - 80px); }
   border-radius: var(--radius-md);
   border: 1px solid var(--border-card);
   box-shadow: var(--shadow-card);
-  margin: 24px 0;
+  margin: 24px auto;
 }
 
 /* Article nav */
@@ -623,7 +636,6 @@ main { min-height: calc(100vh - 56px - 80px); }
   .section-title { font-size: 22px; }
 
   .news-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
   }
 
@@ -638,8 +650,9 @@ main { min-height: calc(100vh - 56px - 80px); }
 }
 
 @media (max-width: 480px) {
-  .news-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .news-body { padding: 12px; }
-  .news-body .post-title { font-size: 13px; }
+  .news-grid { grid-template-columns: 1fr; gap: 16px; }
+  .news-thumbnail { aspect-ratio: 4 / 3; }
+  .news-body { padding: 14px; }
+  .news-body .post-title { font-size: 14px; }
   .news-body .post-summary { display: none; }
 }
