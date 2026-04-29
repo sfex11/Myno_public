@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLM에게 모호한 설명을 주면 코드 정확도가 15.3%나 떨어진다. 1.5B 소형 전문 모델이 GPT를 이긴 SpecValidator 연구 리포트.">
+  <title>LLM 코드 생성의 숨겨진 약점 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>LLM 코드 생성의 숨겨진 약점</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">모호한 설명 하나가 정확도를 15.3%나 떨어뜨린다</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-04-29</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>"이 함수를 만들어줘" — 이 정도의 설명으로 ChatGPT에게 코드를 시키면, 정확히 뭘 만들어야 할지 모른다. 당연한 이야기 같지만, 2026년에 이걸 <strong>과학적으로 증명한 논문</strong>이 나왔다.</p>
+
+      <p>심지어 모호한 설명이 코드 정확도를 최대 <strong>15.3%</strong>나 떨어뜨린다는 것도 밝혀졌다. 그리고 1.5B 파라미터의 <strong>소형 전문 모델이 GPT-4보다 이 결함을 더 잘 잡아낸다</strong>는 사실도.</p>
+
+      <p>오늘은 이 논문을 중학생도 이해할 수 있게 정리해본다.</p>
+
+      <hr>
+
+      <h2>"질문이 이상하면 대답도 이상하다"</h2>
+
+      <p>LLM(거대 언어 모델)이 코드를 짤 때, 우리가 주는 설명이 얼마나 정확한지 검사한 적이 있나? 아마 대부분 그냥 "이거 만들어줘"라고 줄 것이다.</p>
+
+      <p>연구진은 이걸 <strong>Defective Task Description(결함이 있는 설명)</strong>이라고 불렀다. 그리고 이 결함이 코드 품질에 미치는 영향을 처음으로 체계적으로 분석했다.</p>
+
+      <p>결함은 3가지 종류가 있다.</p>
+
+      <p><strong>① Lexical Vagueness (어휘적 모호함)</strong> — "빠른 정렬"이라고 했는데, 빠른 게 얼마나 빠른 건지 안 적었다. 영향: <em>보통</em></p>
+
+      <p><strong>② Under-Specification (설명 부족)</strong> — "두 수를 더하는 함수"라고 했는데, 정수인지 실수인지, 범위는 어디까지인지 안 적었다. 영향: <strong>가장 심각 (15.3% 정확도 하락)</strong></p>
+
+      <p><strong>③ Syntax & Formatting (문법/형식 오류)</strong> — 변수명에 오타가 있거나 형식이 틀렸다. 영향: <em>거의 없음</em></p>
+
+      <p>재미있는 점은, <strong>모델이 커다고 더 강건한 게 아니라는 것</strong>이다. 결함 유형에 따라 약한 부분이 다르고, 모델 크기와는 상관없이 취약하다.</p>
+
+      <h2>"1.5B가 GPT를 이긴다"</h2>
+
+      <p>이 논문에서 가장 놀라운 발견은 <strong>SpecValidator</strong>라는 모델이다. 파라미터 1.5B — GPT-4보다 1,000배 작은 모델이다.</p>
+
+      <p>SpecValidator는 Qwen2.5-Coder-1.5B 기반에 LoRA로 미세조정한 이진 분류기다. 설명이 결함이 있는지 없는지 판별하는 게 전부다.</p>
+
+      <p>결과?</p>
+
+      <ul>
+        <li>SpecValidator F1 = <strong>0.804</strong></li>
+        <li>Claude Sonnet 4 F1 = 0.518</li>
+        <li>GPT-5-mini F1 = 0.469</li>
+      </ul>
+
+      <p>소형 전문 모델이 대형 범용 모델보다 <strong>71% 더 높은 F1 점수</strong>를 기록했다. 그리고 학습은 인공 결함으로만 했는데, 실제 벤치마크 결함을 <strong>72%나 맞췄다</strong>. 제로샷 일반화가 가능하다는 뜻이다.</p>
+
+      <hr>
+
+      <div style="text-align:center; margin: 2rem 0;">
+        <img src="../assets/report_defective_task.png" alt="LLM 코드 생성의 숨겨진 약점 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
+      <hr>
+
+      <h2>핵심 시사점</h2>
+
+      <p><strong>1. 모델 크기 ≠ 강건성.</strong> 큰 모델이 모호한 설명을 더 잘 처리하는 건 아니다. 결함 유형마다 취약한 부분이 다르다.</p>
+
+      <p><strong>2. 구조화된 설명이 방패다.</strong> 입력 조건, 예상 출력, 예외 처리를 명확히 적으면 결함의 영향을 크게 줄일 수 있다.</p>
+
+      <p><strong>3. 소형 전문 > 대형 범용.</strong> 하나의 일만 잘하는 작은 모델이, 뭐든 하는 큰 모델보다 특정 작업에서 훨씬 강하다.</p>
+
+      <p><strong>4. 사전 필터링의 가치.</strong> 코드 생성에 들어가기 전에 SpecValidator 같은 필터로 설명의 품질을 먼저 검사하면, 불필요한 계산과 잘못된 코드를 막을 수 있다.</p>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/slides/DefectiveTaskDescriptionsinLLM-slides.html" style="color:#7B5EA7;">Defective Task Descriptions in LLM-Based Code Generation</a></li>
+        <li>논문: "Defective Task Descriptions in LLM-Based Code Generation: Detection and Analysis" (arXiv:2604.24703)</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
