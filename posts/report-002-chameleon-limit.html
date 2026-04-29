@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트에 26개 속성의 페르소나를 줘도 결국 같은 행동으로 수렴한다. 카멜레온 비유로 이해하는 Persona Collapse.">
+  <title>카멜레온의 한계 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>카멜레온의 한계</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">AI 에이전트의 다양성은 착각인가 — 10개 LLM에서 페르소나 붕괴를 증명하다</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-04-29</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>카멜레온은 피부색을 바꾸는 동물이다. 근데 아무리 색이 달라도, 할 수 있는 행동은 정해져 있다. 눈을 돌리고, 혀를 쏘고, 나뭇가지를 걷는다.</p>
+
+      <p>2026년 CMU, UChicago, MIT, 도쿄대 연구진이 이걸 AI에 정확히 들이맞췄다. <strong>"다른 페르소나를 줘도 AI 에이전트들은 똑같이 행동한다"</strong>는 걸 10개 LLM에서 모두 증명했다. 모델을 바꿔도 안 되는 <strong>근본적 한계</strong>다.</p>
+
+      <h2>"26개 속성을 줘도 몇 개만 살아남는다"</h2>
+
+      <p>연구진은 LLM에게 26개의 정체성 차원(국가, 성별, 나이, 사회계급, 정치 이념, 직업 등)을 가진 페르소나를 부여하고, BFI-44 성격 검사와 도덕 판단, 자기소개를 시켰다.</p>
+
+      <p>그랬더니 <strong>정치 이념만 강하게 반영</strong>되고, 국가/문화는 일부 보존, 나이/성별/사회계급은 거친 고정관념만 추적, 나머지 속성은 거의 완전히 폐기됐다. 26차원의 풍부한 프로필이 고작 몇 개의 고정관념으로 압축되는 것이다.</p>
+
+      <h2>"충실도가 높을수록 더 동질화된다"</h2>
+
+      <p>이게 가장 무서운 부분이다. 모델이 페르소나를 <strong>더 충실히 모방할수록</strong>, 인구 전체는 더 동질화된다. 왜? 충실한 모방 = 고정관념에 가까워지기 때문이다.</p>
+
+      <p>"보수적 투자자"와 "공격적 트레이더"를 각각 부여해도, 둘 다 해당 집단의 <strong>가장 전형적인 고정관념</strong>으로 수렴한다. 차이가 있는 게 아니라, 둘 다 각자의 <strong>과장된 카리카투어(풍자화)</strong>가 되는 것이다. 역할 충실도와 인구 다양성 사이에 <strong>근본적 트레이드오프</strong>가 존재한다.</p>
+
+      <h2>"얕은 지표가 깊은 붕괴를 숨긴다"</h2>
+
+      <p>기존 평가는 "이 모델이 다양한 페르소나를 잘 모방하는가?"만 봤다. 이걸 연구진은 <strong>"얕은 충실도"</strong>라고 부른다. 표면적으로는 다양해 보이지만, 깊이 들어가면 붕괴가 훨씬 심하다.</p>
+
+      <p>연구진은 3가지 진단 축을 제안했다:</p>
+
+      <p><strong>① Coverage (포괄성)</strong> — 인간 응답 공간을 얼마나 넓게 덮는가?</p>
+
+      <p><strong>② Uniformity (균일성)</strong> — 분포가 균일하게 퍼져 있는가?</p>
+
+      <p><strong>③ Complexity (복잡성)</strong> — 변이가 진짜 고차원인가, 아니면 저차원 부분공간으로 압축된 건가?</p>
+
+      <p>Coverage와 Uniformity는 "넓게 퍼져 보이는지"를, Complexity는 "그 퍼짐이 구조적으로 풍부한지"를 포착한다. 인간은 t-SNE 공간에서 연속적으로 넓게 분포하지만, LLM은 밀집된 군집으로 파편화된다.</p>
+
+      <h2>"10개 모델 모두 붕괴 — 모델 선택으로 해결 안 됨"</h2>
+
+      <p>평가된 10개 LLM <strong>모두</strong>에서 구조적 붕괴가 관찰됐다. 생각 모드(Chain-of-Thought)를 켜도, 모델 크기를 키워도, 다른 모델로 바꿔도 붕괴는 지속된다.</p>
+
+      <p>그리고 붕괴는 과제마다 다르게 나타난다. 같은 모델이 성격 시뮬레이션에서는 가장 붕괴되면서, 도덕 추론에서는 상대적으로 다양해질 수 있다. <strong>과제 의존적 도메인 역전</strong> 현상이다.</p>
+
+      <hr>
+
+      <div style="text-align:center; margin: 2rem 0;">
+        <img src="../assets/report_chameleon_limit.png" alt="카멜레온의 한계 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
+      <hr>
+
+      <h2>핵심 시사점</h2>
+
+      <p><strong>1. 다양성을 증명하려면 깊이 측정하라.</strong> 프로필 텍스트가 다르다고 끝이 아니다. 행동 특성 행렬 수준에서 구조적으로 다양한지 3축(Coverage, Uniformity, Complexity)으로 검증해야 한다.</p>
+
+      <p><strong>2. 충실도 ≠ 다양성.</strong> 페르소나 모방 충실도가 높은 모델이 더 동질화된 인구를 만든다. 이 트레이드오프를 의식적으로 관리해야 한다.</p>
+
+      <p><strong>3. 고정관념이 다양성의 적이다.</strong> 모델이 세분화된 개인차 대신 거친 인구통계적 고정관념을 추적한다. 다양성 측정 도구가 이걸 감지할 수 있어야 한다.</p>
+
+      <p><strong>4. 모델 선택으로 해결되지 않는다.</strong> 10개 LLM에서 모두 붕괴가 관찰됐다. 구조적 한계이므로 프롬프트 설계와 평가 방법론의 근본적 개선이 필요하다.</p>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/TheChameleonsLimitInvestigatin-slides.html" style="color:#7B5EA7;">The Chameleon's Limit: Investigating Persona Collapse</a></li>
+        <li>논문: "The Chameleon's Limit: Investigating Persona Collapse and Homogenization in Large Language Models" (arXiv:2604.24698)</li>
+        <li>저자: Yunze Xiao, Vivienne J. Zhang, Chenghao Yang, Ningshan Ma, Weihao Xuan, Jen-tse Huang (CMU · UChicago · MIT · UTokyo · RIKEN AIP · JHU)</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-001-defective-task-desc.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">LLM 코드 생성의 숨겨진 약점</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
