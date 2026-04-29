@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="에이전트 간 텍스트 대신 잠재 벡터를 전달하면 성능도 속도도 토큰도 동시에 개선된다. RecursiveMAS 연구 리포트.">
+  <title>에이전트 협업을 재귀로 확장하다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>에이전트 협업을 재귀로 확장하다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">잠재 공간에서 에이전트들이 소통하면 성능↑ 속도↑ 토큰↓ 세 가지를 동시에 달성한다</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-04-29</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>요리사 3명이 한 요리를 만든다고 상상해보자. A가 레시피를 적어서 B에게 주고, B가 그 레시피를 읽고 자기 생각을 적어서 C에게 준다. 글이 왔다갔다하는 동안 시간은 흐르고, 종이는 쌓이고, 의미는 왜곡된다.</p>
+
+      <p>지금 AI 에이전트 시스템(MAS)이 하는 방식이 대충 이렇다. 에이전트끼리 <strong>텍스트(토큰)를 주고받으며 협업</strong>한다. 2026년 UIUC, Stanford, MIT 연구진이 이 방식의 근본적 한계를 지적하고, 완전히 다른 접근법을 제안했다.</p>
+
+      <h2>"텍스트 말고 생각을 직접 전달하라"</h2>
+
+      <p>RecursiveMAS의 핵심 아이디어는 한 줄로 요약된다: <strong>에이전트 간에 텍스트를 주고받지 말고, 잠재 벡터(latent vector)만 전달하라.</strong></p>
+
+      <p>일반적인 MAS에서는 중간 에이전트가 텍스트를 생성(디코딩)하고, 다음 에이전트가 그 텍스트를 다시 읽어들인다. 이 과정에서 불필요한 토큰이 쏟아지고, 이산적 토큰 생성으로 인해 <strong>기울기(gradient)가 끊어진다</strong>.</p>
+
+      <p>RecursiveMAS는 이걸 <strong>잠재 공간에서 직접 처리</strong>한다. 에이전트의 마지막 은닉 상태(hidden state)를 다음 에이전트의 입력으로 바로 연결한다. 텍스트 생성과 해석 과정을 건너뛰기 때문에 <strong>빠르고, 토큰이 적고, 기울기가 안정적</strong>이다.</p>
+
+      <h2>"각 에이전트는 Transformer의 한 층처럼"</h2>
+
+      <p>이 논문의 기원은 <strong>Recursive Language Model(RLM)</strong>이라는 개념이다. RLM은 동일한 Transformer 층을 반복 재사용하여 추론을 심화한다. 한 층이 처리한 결과를 다시 같은 층에 넣고, 또 처리하고.</p>
+
+      <p>RecursiveMAS는 이걸 <strong>단일 모델 → 다중 에이전트</strong>로 확장한다. 각 에이전트가 RLM의 "한 층"처럼 동작하고, 잠재 표현을 다음 에이전트에게 반복적으로 전달하여 루프 형태의 상호작용을 형성한다.</p>
+
+      <p>이걸 가능하게 하는 게 <strong>RecursiveLink</strong>다. 단 2층짜리 잔차 투영(residual projection) 모듈인데, 에이전트 내부의 잠재 사고를 정렬하는 <strong>Inner RecursiveLink</strong>와, 서로 다른 에이전트 간 은닉 표현을 브리징하는 <strong>Outer RecursiveLink</strong>로 나뉜다.</p>
+
+      <p>핵심은 <strong>전체 모델 파라미터를 업데이트하지 않는다</strong>는 것이다. 원본 모델은 프리징하고, 경량 RecursiveLink만 학습한다.</p>
+
+      <h2>"어떤 구조든 상관없다"</h2>
+
+      <p>RecursiveMAS는 4가지 대표적 MAS 구조에 모두 적용된다:</p>
+
+      <p><strong>① Sequential</strong> — Planner → Critic → Solver 순차 파이프라인</p>
+
+      <p><strong>② Mixture</strong> — Math·Code·Science 도메인 전문 에이전트가 병렬 추론 후 Summarizer가 집계</p>
+
+      <p><strong>③ Distillation</strong> — 큰 Expert 에이전트가 작은 Learner 에이전트로 지식을 증류</p>
+
+      <p><strong>④ Deliberation</strong> — Reflector와 Tool-Caller가 반복적으로 교환·비판·정제</p>
+
+      <p>구조에 구애받지 않고(structure-agnostic) 일관되게 적용 가능하다. 그리고 재귀 깊이가 깊어질수록 성능이 지속적으로 향상되는 <strong>깔끔한 스케일링 트렌드</strong>를 보인다.</p>
+
+      <h2>"성능↑ 속도↑ 토큰↓ — 트레이드오프 없음"</h2>
+
+      <p>보통 성능을 높이면 속도가 느려지거나 비용이 커진다. RecursiveMAS는 세 가지를 동시에 달성한다:</p>
+
+      <ul>
+        <li><strong>+8.3%</strong> 평균 정확도 향상 (수학·과학·의학·검색·코드 9개 벤치마크)</li>
+        <li><strong>1.2–2.4×</strong> 추론 속도 향상</li>
+        <li><strong>34.6–75.6%</strong> 토큰 사용량 감소</li>
+      </ul>
+
+      <p>이게 가능한 이유는 잠재 공간에서 직접 변환하기 때문이다. 중간 에이전트마다 텍스트를 디코딩하는 비용이 사라지고, 기울기가 연속 공간에서 안정적으로 전파되어 학습도 더 효율적이다.</p>
+
+      <hr>
+
+      <div style="text-align:center; margin: 2rem 0;">
+        <img src="../assets/report_recursive_mas.png" alt="에이전트 협업을 재귀로 확장하다 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
+      <hr>
+
+      <h2>핵심 시사점</h2>
+
+      <p><strong>1. 잠재 공간이 텍스트보다 효율적이다.</strong> 이산적 토큰 생성을 건너뛰고 연속 공간에서 직접 소통하면 속도도 빠르고 기울기도 안정적이다. 에이전트 간 통신의 기본 단위를 토큰에서 벡터로 바꾸는 것이 핵심이다.</p>
+
+      <p><strong>2. 새로운 확장 축의 제안.</strong> 기존에는 모델 크기나 데이터를 키워서 확장했다. RecursiveMAS는 <strong>재귀 깊이</strong>라는 새로운 축을 제안한다. 더 많은 라운드를 거칠수록 추론이 심화되고 성능이 향상된다.</p>
+
+      <p><strong>3. 시스템 수준의 학습이 필요하다.</strong> 각 에이전트를 개별적으로 개선하는 것으로는 한계가 있다. Inner-Outer Loop 학습 패러다임으로 시스템 전체를 통합적으로 최적화해야 한다.</p>
+
+      <p><strong>4. 경량 모듈로 대규모 효과.</strong> 전체 모델 파라미터를 건드리지 않고 2층 RecursiveLink만 추가로 시스템 전체가 발전한다. 학습 비용이 극히 낮다는 점이 실용적이다.</p>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/RecursiveMulti-AgentSystems-slides.html" style="color:#7B5EA7;">Recursive Multi-Agent Systems</a></li>
+        <li>논문: "Recursive Multi-Agent Systems" (arXiv:2604.25917)</li>
+        <li>저자: Xiyuan Yang, Jiaru Zou, Rui Pan et al. (UIUC · Stanford · NVIDIA · MIT)</li>
+        <li>프로젝트: <a href="https://recursivemas.github.io" style="color:#7B5EA7;">recursivemas.github.io</a></li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-002-chameleon-limit.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">카멜레온의 한계</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
