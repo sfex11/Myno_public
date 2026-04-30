@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Look Forward, Look Now, Look Backward — 세 가지 시선 전환으로 Zero-Shot 시각-언어 내비게이션 SOTA 달성. Three-Step Nav 리포트.">
+  <title>세 번의 시선으로 길을 찾다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>세 번의 시선으로 길을 찾다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">Look Forward → Look Now → Look Backward, 파인튜닝 없이 Zero-Shot VLN SOTA 달성</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-01</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>"거실을 지나 왼쪽으로 가서 침대 옆에 멈춰라."</p>
+
+      <p>사람에게는 쉬운 지시문이다. 하지만 로봇에게는 지옥이다. 연속 환경에서 360° 파노라마를 보면서 자연어 지시를 따라 목적지까지 걸어가는 것 — 이게 <strong>VLN-CE(Visual-Language Navigation in Continuous Environments)</strong>다.</p>
+
+      <p>2026년 USC와 NVIDIA Research 연구진이 이 문제를 파인튜닝 없이, <strong>세 가지 시선 전환</strong>만으로 해결하는 방법을 제안했다.</p>
+
+      <h2>"에이전트는 앞만 보고 달린다 — 그게 문제다"</h2>
+
+      <p>기존 MLLM 기반 내비게이션 에이전트는 <strong>현재 시점(observation)만 보고 판단</strong>한다. 이건 운전할 때 계기판만 보고 내비게이션 지도를 안 보는 것과 같다. 당연히 세 가지 실패 모드가 발생한다:</p>
+
+      <p><strong>① 궤적 이탈(Trajectory Drift)</strong> — 지금 보이는 것만으로 판단하면 글로벌 경로를 잃고 엉뚱한 방향으로 간다. 10m 걸었는데 방향이 30° 틀어져 있을 수 있다.</p>
+
+      <p><strong>② 조기 정지(Early Stopping)</strong> — 하위 지시문을 일부 완료한 것으로 오인하여 목적지 도달 전에 멈춘다. "침대 옆"이라고 했는데 침대를 멀리서 보고 "도착!" 하고 멈춰버리는 식이다.</p>
+
+      <p><strong>③ 주의 산만(Distracted Attention)</strong> — 관련 없는 객체에 주의가 분산되어 핵심 랜드마크를 놓친다. 예쁜 TV를 보다가 방향을 잊어버린다.</p>
+
+      <p>근본 원인은 하나다: <strong>현재 시점의 RGB-D 관측 + 텍스트 행동 기록만으로는 글로벌 진행 상황을 판단할 수 없다.</strong></p>
+
+      <h2>"앞을 보고, 지금을 보고, 뒤를 돌아봐라"</h2>
+
+      <p>Three-Step Nav의 핵심 아이디어는 직관적이다. 사람도 내비게이션할 때 <strong>세 가지 시선</strong>을 번갈아 쓴다:</p>
+
+      <p><strong>Step 1: Look Forward</strong> — 지시문을 하위 지시문으로 분해하고 글로벌 랜드마크를 추출하여 조악한 경로 스케치를 그린다. "거실을 지나 왼쪽으로 가서 침대 옆에 멈춰라" → s₁: 거실 진입 → s₂: 왼쪽 회전 → s₃: 침대 옆 정지.</p>
+
+      <p><strong>Step 2: Look Now</strong> — 360° 파노라마에서 탐색 가능한 방향별 후보 시점을 생성하고, 활성 하위 지시문과 가장 일치하는 방향을 Chain-of-Thought로 선택한 뒤 회전·전진한다.</p>
+
+      <p><strong>Step 3: Look Backward</strong> — 지금까지 선택한 모든 시점을 시각적으로 나열하여 궤적을 구성하고, 완료된 하위 지시문들과 대조하여 축적된 드리프트를 감사한다.</p>
+
+      <p>이게 전부다. 기울기 업데이트? 없다. 태스크 특화 파인튜닝? 없다. 기존 VLN 파이프라인에 <strong>플러그인 가능</strong>하다.</p>
+
+      <hr>
+
+      <div style="text-align:center; margin: 2rem 0;">
+        <img src="../assets/report_three_step_nav.png" alt="Three-Step Nav 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+
+      <hr>
+
+      <h2>"모르면 멈춰, 틀리면 돌아가"</h2>
+
+      <p>Look Backward 단계에서 에이전트는 <strong>Adaptive Judge</strong>라는 4가지 메타 스킬을 사용한다. 불확실한 상황에서 동적으로 자가 교정하는 능력이다:</p>
+
+      <p><strong>Stay</strong> — 현재 하위 목표를 아직 달성하지 못함. 제자리에서 추가 관찰 후 재판단.</p>
+
+      <p><strong>Continue</strong> — 현재 방향이 올바름. 다음 하위 지시문으로 진행.</p>
+
+      <p><strong>Backtrack</strong> — 드리프트가 감지됨. 이전 결정점까지 되돌아가서 재탐색.</p>
+
+      <p><strong>Look Around</strong> — 주변 환경 정보 부족. 360° 스캔하여 랜드마크를 재확인.</p>
+
+      <p>이 메타 스킬이 없으면 에이전트는 모호한 환경에서 성능이 급감한다. 절제 연구에서 Adaptive Judge를 제거했더니 불확실한 상황에서 제대로 대처하지 못했다.</p>
+
+      <h2>"Zero-Shot으로 학습 기반 방법에 맞먹는다"</h2>
+
+      <p>가장 인상적인 결과는 이거다. Three-Step Nav는 <strong>파인튜닝 없이 학습 기반 방법들과 경쟁</strong>한다:</p>
+
+      <ul>
+        <li><strong>15%↓</strong> 내비게이션 오차(Navigation Error) 감소</li>
+        <li><strong>12%↑</strong> SPL(Success weighted by Path Length) 개선</li>
+        <li>RxR-CE 다국어 벤치마크에서도 Zero-Shot SOTA 달성 (영어·힌디어·텔루구어)</li>
+      </ul>
+
+      <p>학습 기반 방법(DUET, ETPNav)은 R2R-CE 훈련 데이터로 학습한 방법들이다. Three-Step Nav는 그런 학습 과정 없이 <strong>구조적 추론</strong>만으로 비슷한 성능을 냈다.</p>
+
+      <p>다국어 환경에서도 잘 동작하는 이유가 흥미롭다. Look Forward 단계에서 지시문을 하위 지시문으로 분해할 때 <strong>언어 간 의미 구조를 보존</strong>하고, Look Backward에서 번역 노이즈로 인한 오해석을 교정한다.</p>
+
+      <h2>핵심 시사점</h2>
+
+      <p><strong>1. 구조적 추론이 데이터 의존을 줄인다.</strong> 억지로 환경 데이터를 학습시키는 대신, 글로벌-로컬-글로벌 추론 루프라는 구조적 프레임워크를 설계하면 파인튜닝 없이도 강력한 성능을 낼 수 있다. 특히 언어 독립적일 필요가 있는 태스크에서 이 접근법이 빛을 발한다.</p>
+
+      <p><strong>2. 궤적 수준 감사(Trajectory-level Auditing)의 중요성.</strong> 단순히 현재 관측만 보는 것이 아니라, 지금까지 걸어온 전체 경로를 되돌아보는 메커니즘이 축적된 오차를 잡는 핵심이다. 이건 내비게이션뿐 아니라 긴 체인 추론이 필요한 모든 에이전트 태스크에 적용 가능한 원칙이다.</p>
+
+      <p><strong>3. 모듈형 설계의 실용성.</strong> 전체 시스템을 새로 학습할 필요 없이 기존 VLN 파이프라인에 플러그인할 수 있다는 점이 실용적이다. Look Forward/Now/Backward 각 모듈은 독립적으로 교체나 개선이 가능하다.</p>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/Three-StepNavAHierarchicalGlob-slides.html" style="color:#7B5EA7;">Three-Step Nav</a></li>
+        <li>논문: "Three-Step Nav: A Hierarchical Global-Local Planner for Zero-Shot Vision-and-Language Navigation" (arXiv:2604.26946v1)</li>
+        <li>저자: Wanrong Zheng, Yunhao Ge, Laurent Itti (USC · NVIDIA Research)</li>
+        <li>코드: <a href="https://github.com/ZoeyZheng0/3-step-Nav" style="color:#7B5EA7;">github.com/ZoeyZheng0/3-step-Nav</a></li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-003-recursive-mas.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">에이전트 협업을 재귀로 확장하다</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
