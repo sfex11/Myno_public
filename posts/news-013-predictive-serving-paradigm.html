@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 서빙 최적화의 패러다임이 반응적 병목 탐색에서 구조적 예측성의 적극적 활용으로 전환될 것이다. 중학생도 이해할 수 있는 카드뉴스.">
+  <title>병목을 고치는 게 아니라 예측하라 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>병목을 고치는 게 아니라 예측하라</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">AI 서빙 최적화의 패러다임이 바뀌고 있다</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-01</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>AI 에이전트가 똑똑해질수록, 그걸 실제로 구동하는 시스템도 똑똑해져야 한다. 지금까지 AI 서빙 최적화는 "병목이 생기면 원인을 찾아 고친다"는 방식이었다. 당연해 보이지? 근데 이 "당연함"이 사실은 가장 큰 맹점이었다.</p>
+
+      <p>최근 <strong>Pythia</strong> 연구를 중심으로, 서빙 최적화의 완전히 새로운 패러다임이 제시되고 있다. 오늘은 그 내용을 중학생도 이해할 수 있게 풀어보겠다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_predictive_serving_01.png" alt="병목을 고치는 게 아니라 예측하라">
+      </div>
+
+      <h2>"응급실 vs 예방 의학"</h2>
+
+      <p>비유하면 이렇다. 응급실은 환자가 쓰러져서 실려 올 때까지 기다렸다가 처치한다. 빠르긴 하지만, <strong>매번 같은 응급 상황이 반복되어도 근본적인 예방은 못 한다.</strong></p>
+
+      <p>예방 의학은 건강 검진 데이터와 생활 습관 패턴을 분석해서, <strong>어떤 질환이 언제 발생할지 미리 예측</strong>한다. 발생하기 전에 개입해서 응급실에 갈 필요 자체를 없앤다.</p>
+
+      <p>현재 AI 서빙 최적화는 응급실 모델에 갇혀 있다. 이 글에서는 왜 그런지, 그리고 어떻게 예방 의학 모델로 전환할 수 있는지 설명한다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_predictive_serving_02.png" alt="지금은 응급실 모델에 갇혀 있다">
+      </div>
+
+      <h2>"스키마가 쌓였네?" — 현재 방식의 한계</h2>
+
+      <p>최근 "Tool Attention Is All You Need"라는 논문이 재미있는 걸 발견했다. 다중 서버 MCP 환경에서 파이프라인 전체의 레이턴시 병목이 개별 LLM 호출이 아니라 <strong>스키마 축적(Schema Accumulation)</strong>에 의해 결정된다는 걸 밝혀냈다.</p>
+
+      <p>훌륭한 발견이다. 하지만 이후에 일어난 일을 보면 문제가 보인다. 병목이 어디에 있는지 발견한 뒤에야 최적화가 시작된다. 게이팅이나 레이지 로딩으로 '증상'을 제거하는 방향으로 접근한다. 하지만 <strong>왜 스키마가 축적되는지, 그 패턴이 예측 가능한지는 묻지 않는다.</strong></p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_predictive_serving_03.png" alt="전혀 다른 3분야가 같은 원리를 말한다">
+      </div>
+
+      <h2>"전혀 다른 3분야가 같은 이야기를 한다"</h2>
+
+      <p>여기서부터 흥미로워진다. 서빙 최적화와 전혀 상관없어 보이는 세 연구가, 사실은 <strong>동일한 구조적 원칙</strong>을 실증하고 있다.</p>
+
+      <p><strong>① VLM 내비게이션 (Three-Step Nav)</strong> — 시각-언어 모델 에이전트의 실패가 무작위가 아니었다. "단계별 판단"과 "다단계 기획" 사이에 구조적 간극이 존재하며, 이 간극이 경로 이탈·조기 정지를 <strong>예측 가능하게</strong> 산출한다.</p>
+
+      <p><strong>② 롱호라이즌 추론 (ADEMA)</strong> — 긴 호라이즌 LLM 작업이 실패하는 이유를 단일 답변 부재에서 찾지 않았다. <strong>지식 상태 드리프트</strong>가 외부 충격이 아니라 아키텍처 자체의 구조적 속성이라는 걸 밝혔다. 드리프트가 구조적이면, 방향과 속도도 <strong>예측 가능</strong>하다.</p>
+
+      <p><strong>③ KV 캐시 증가</strong> — 스파스 어텐션 알고리즘은 "필요한 토큰만 attend하라"고 하지만, 시스템 구현상 KV 캐시를 전부 들고 있어야 한다. 이 <strong>알고리즘-시스템 간극</strong>이 병목의 근원이다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_predictive_serving_04.png" alt="구조가 실패를 예측 가능하게 만든다">
+      </div>
+
+      <h2>"건물 비유: 계단이 가파르면 누군가 넘어질 걸 안다"</h2>
+
+      <p>이걸 건축으로 비유해보자. 어떤 건물은 계단 경사가 가파르다(구조적 제약). 노인이 걸려 넘어질 확률이 높다(예측 가능한 실패). 다른 건물은 복도가 좁다(구조적 제약). 비상시 인파가 밀려갈 확률이 높다(예측 가능한 실패).</p>
+
+      <p>경사와 폭은 다르지만, <strong>"구조적 제약이 특정 유형의 실패를 예측 가능하게 만든다"</strong>는 원칙은 동일하다. 이걸 학술적으로 "교차 도메인 구조적 실패 동형성(Cross-Domain Isomorphism of Structural Failure Predictability)"이라고 부른다. 용어는 복잡하지만 개념은 단순하다.</p>
+
+      <p>핵심은 <strong>하나의 도메인에서 발견된 예측 원리를 다른 도메인으로 전이</strong>할 수 있다는 거다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_predictive_serving_05.png" alt="반응적 → 예측적">
+      </div>
+
+      <h2>"반응적 → 예측적: 무엇이 달라지나?"</h2>
+
+      <p>패러다임이 바뀌면 구체적으로 이렇게 달라진다:</p>
+
+      <p><strong>병목 인식:</strong> "병목이 발생한 후 원인 발견" → "아키텍처 구조만으로 어디서 어떤 패턴으로 지연이 발생할지 사전 예측"</p>
+
+      <p><strong>최적화 타이밍:</strong> "사후: 게이팅/레이지 로딩 적용" → "사전: 호출 전에 이미 필요한 리소스를 프리페치"</p>
+
+      <p><strong>최적화 대상:</strong> "증상(스키마 축적량, KV 캐시 크기)" → "원인(아키텍처가 만들어내는 패턴 자체)"</p>
+
+      <p>예를 들어, "이 에이전트 작업은 10라운드 뒤에 지식 상태가 특정 방향으로 흘러갈 것이 예측 가능하므로, 8라운드째에 KV 캐시 할당을 동적으로 조정한다" 같은 접근이 가능해진다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_predictive_serving_06.png" alt="병목이 올 곳을 아는 것">
+      </div>
+
+      <h2>"병목이 올 곳을 아는 것"</h2>
+
+      <p>지금까지의 논의를 정리하자. Tool Attention은 구조적 축적이 병목이라는 걸 보여줬고, Three-Step Nav는 아키텍처 간극이 예측 가능한 실패를 만든다는 걸 보여줬고, ADEMA는 지식 상태 변화가 구조적 속성이라는 걸 보여줬다.</p>
+
+      <p>세 가지를 결합하면 결론이 명확해진다. <strong>"구조적 제약이 예측 가능한 패턴을 만든다"</strong>는 원칙은 여러 도메인에서 이미 실증되어 있으며, 이걸 서빙 최적화에 적극적으로 활용하지 않는 현재의 반응적 접근은 한계에 도달해 있다.</p>
+
+      <p>응급실에서 환자가 올 때마다 처치하는 방식에는 한계가 있다. <strong>아키텍처 구조가 창출하는 예측 가능성을 읽어내고, 그것을 서빙 설계의 핵심 입력으로 삼는 것.</strong> 병목을 고치는 것이 아니라, 병목이 올 곳을 아는 것. 그것이 AI 서빙 최적화의 다음 패러다임이다.</p>
+
+      <hr>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>원문 Wiki: <a href="https://sfex11.github.io/galaxy_tab_public/blog/wiki-predictive-serving-paradigm.html" style="color:#7B5EA7;">병목을 고치는 게 아니라 예측하라</a></li>
+        <li>대상 논문: "Pythia — Toward Predictability-Driven Agent-Native LLM Serving"</li>
+        <li>참조: Tool Attention Is All You Need · Three-Step Nav · ADEMA · Unifying Sparse Attention with Hierarchical Memory</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-012-persona-collapse-diversity.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">Persona Collapse & Diversity</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
