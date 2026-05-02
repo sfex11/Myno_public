@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Crab 논문 리포트 — AI 에이전트가 장시간 작업 중 크래시해도, 스팟 인스턴스가 뺏겨도, 이전 상태로 스마트하게 복원하는 Crab 시스템을 중학생도 이해할 수 있게 설명.">
+  <title>AI의 게임 세이브를 스마트하게 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>AI의 게임 세이브를 스마트하게</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">Crab: 에이전트 샌드박스를 위한 의미론적 체크포인트/복원 런타임</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-02</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>게임을 하다가 갑자기 꺼지면 어떤 기분인가요? 3시간 동안 깬 던전이 날아가서 처음부터 다시 해야 한다면… 끔찍하죠.</p>
+
+      <p>AI 에이전트도 같은 고민을 합니다. 코드를 수정하고, 파일을 만들고, 서버를 띄우면서 수백 번의 작업 단계(턴)를 거치는데, 한 번 크래시되면 <strong>전체를 처음부터 다시 해야 합니다.</strong></p>
+
+      <p>2026년 4월, 홍콩과학기술대학교(HKUST) 연구진이 이 문제를 해결하는 논문을 발표했습니다. 이름은 <strong>Crab(크랩)</strong> — 게임 세이브를 스마트하게 만드는 시스템입니다.</p>
+
+      <hr>
+      <div style="text-align:center;">
+        <img src="../assets/report_crab.png" alt="Crab 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <hr>
+
+      <h2>"왜 갑자기 꺼지는 거야?!" — 3가지 재앙</h2>
+
+      <p>AI 에이전트가 장시간 작업하다가 망가지는 이유는 세 가지입니다.</p>
+
+      <p><strong>⚡ 크래시</strong> — 에이전트가 수백 턴 동안 작업하다가 에러로 멈추면, 처음부터 전체 재실행해야 합니다. 시간 비용이 어마어마하죠.</p>
+
+      <p><strong>☁️ 스팟 인스턴스</strong> — 클라우드에서 컴퓨터를 빌릴 때 싼 가격의 "스팟"을 쓰면, 언제든 누군가가 내 컴퓨터를 뺏어갈 수 있습니다. 진행 상황이 날아갑니다.</p>
+
+      <p><strong>🌳 트리 탐색</strong> — AI가 여러 가능성을 동시에 시도해야 할 때(나무 가지처럼 분기), 각 분기점마다 상태를 저장해두지 않으면 같은 길을 여러 번 반복해야 합니다.</p>
+
+      <p>"그냥 매번 전체 상태를 저장하면 되지 않나?" — 좋은 생각입니다. 하지만 <strong>매 턴마다 전체를 저장하면 작업 속도가 3.78배 느려집니다.</strong> 세이브 때문에 게임이 느려지는 셈이죠.</p>
+
+      <h2>"75%는 사실 저장할 필요 없었다"</h2>
+
+      <p>여기서 연구진의 핵심 발견이 등장합니다.</p>
+
+      <p>AI 에이전트가 하는 작업의 <strong>87%</strong>는 사실 "상태 변화"를 만들지 않습니다. 그냥 정보를 읽기만 하거나, 대화 내용만 바뀌는 식이죠. 이런 턴에서는 체크포인트(저장)를 아예 건너뛰어도 됩니다.</p>
+
+      <p>실제로 상태 변화가 있는 턴은:</p>
+
+      <ul>
+        <li><strong>FS-ONLY (8%)</strong> — 파일만 바뀜 (코드 수정, 파일 생성/삭제)</li>
+        <li><strong>PROC-ONLY (3%)</strong> — 프로세스만 바뀜 (서버 시작, 포트 열기)</li>
+        <li><strong>FULL (2%)</strong> — 파일과 프로세스 둘 다 바뀜 (패키지 설치 + 서버 시작)</li>
+      </ul>
+
+      <p>정리하면: <strong>87%는 스킵, 8%는 파일만 저장, 3%는 프로세스만 저장, 2%만 전체 저장.</strong> 이렇게 분류하면 저장 비용을 87%나 줄일 수 있습니다.</p>
+
+      <h2>"에이전트와 운영체제 사이의 의미론적 간극"</h2>
+
+      <p>그런데 이걸 어떻게 자동으로 알 수 있을까요? 여기가 핵심입니다.</p>
+
+      <p><strong>에이전트 프레임워크</strong>는 "어떤 툴을 호출했는지"는 알지만, "그 결과 운영체제에 무슨 일이 일어났는지"는 모릅니다.</p>
+
+      <p><strong>운영체제</strong>는 "무슨 파일이 바뀌었는지"는 알지만, "이게 AI의 몇 번째 턴에서 일어난 일인지"는 모릅니다.</p>
+
+      <p>논문이 부르는 <strong>"에이전트–OS 의미론적 간극"</strong>입니다. 양쪽 모두 혼자서는 "이 턴이 저장 가치가 있는지"를 판단할 수 없습니다.</p>
+
+      <p>Crab은 이 두 레이어를 연결합니다. 에이전트 프레임워크를 블랙박스로 취급하면서, OS 수준에서 일어나는 변화를 관찰하고, 각 턴의 "의미"에 따라 저장 여부를 자동으로 결정합니다.</p>
+
+      <h2>Crab은 어떻게 작동하나?</h2>
+
+      <p>Crab은 세 가지 부품으로 구성됩니다.</p>
+
+      <p><strong>🔍 Coordinator(조율자)</strong> — AI가 LLM에 질문할 때마다 "지금이 턴 경계다!"라고 감지합니다. 그리고 Inspector에게 "이번 턴에 무슨 변화가 있었어?"라고 묻습니다.</p>
+
+      <p><strong>📡 Inspector(검사관)</strong> — eBPF라는 리눅스 커널 기술로 파일시스템, 프로세스, 메모리의 변화를 가볍게 감지합니다. 그리고 4단계(SKIP / FS-ONLY / PROC-ONLY / FULL)로 분류합니다.</p>
+
+      <p><strong>⚙️ C/R Engine(복원 엔진)</strong> — 실제 체크포인트와 복원을 수행합니다. 필요한 것만 최소한으로 저장합니다. 파일만 바뀌면 ZFS 스냅샷만, 프로세스만 바뀌면 CRIU만 씁니다.</p>
+
+      <p>그리고 가장 영리한 부분: AI가 LLM에 답변을 기다리는 동안(이건 원래 아무것도 안 하는 대기 시간), <strong>그 사이에 몰래 체크포인트를 만듭니다.</strong> 결과적으로 AI 입장에서는 지연을 거의 느끼지 못합니다.</p>
+
+      <h2>"롤백 버튼 하나로 복구"</h2>
+
+      <p>Crab의 가장 재미있는 기능 중 하나: <strong>롤백을 에이전트 툴로 직접 노출</strong>합니다.</p>
+
+      <p>기존에는 에이전트가 망가진 상태를 복구하려면 복잡한 셸 명령을 직접 실행해야 했습니다. `git reset`, 파일 수동 복원, 프로세스 재시작… 취약하고 불완전하죠.</p>
+
+      <p>Crab에서는 <code>rollback(checkpoint_id)</code>이라는 툴을 한 번 호출하면, 알려진 좋은 상태로 즉시 복원됩니다. <strong>벽시계 시간 29% 감소, 롤백 관련 토큰 36% 감소</strong>라는 결과가 나왔습니다.</p>
+
+      <h2>핵심 시사점</h2>
+
+      <p><strong>1. "다 저장"이 아니라 "똑똑하게 저장"이다.</strong> 87%의 턴에서는 저장 자체가 불필요하다는 걸 발견한 것이 핵심입니다. 전체를 매번 저장하는 것보다, 변화가 있는 턴만 변화된 부분만 저장하는 것이 87% 더 효율적입니다.</p>
+
+      <p><strong>2. 에이전트와 OS 사이의 간극을 메우는 것이 열쇠다.</strong> 에이전트 프레임워크만으로는, OS만으로는 효율적인 체크포인트를 만들 수 없습니다. 두 레이어의 정보를 결합하는 크로스레이어 접근이 필요합니다.</p>
+
+      <p><strong>3. 대기 시간을 활용하면 오버헤드를 숨길 수 있다.</strong> AI가 LLM 응답을 기다리는 시간에 체크포인트를 만들면, 에이전트가 체감하는 지연은 작업 시간의 0.44%에 불과합니다. 96개 샌드박스가 동시에 돌아가도 정상 속도를 유지합니다.</p>
+
+      <h2>원문과 참고 자료</h2>
+
+      <ul>
+        <li>슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/CrabASemantics-AwareCheckpoint-slides.html" style="color:#7B5EA7;">Crab 슬라이드</a></li>
+        <li>논문: "Crab: A Semantics-Aware Checkpoint/Restore Runtime for Agent Sandboxes" (arXiv:2604.28138v1)</li>
+        <li>저자: Tianyuan Wu, Chaokun Chang, Lunxi Cao, Wei Gao, Wei Wang (HKUST)</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-005-clawgym.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI 에이전트를 체계적으로 만드는 체육관</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
