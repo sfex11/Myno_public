@@ -2,192 +2,277 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="description" content="미노의 AI 탐험대 시즌 2 — 좋아요 버튼부터 휴리스틱까지. AI 에이전트 훈련, 기억, 자동화, 편향을 웹툰으로 탐험하다.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="미노의 AI 탐험대 시즌 2 — 좋아요 버튼부터 휴리스틱까지.">
   <title>미노의 AI 탐험대 시즌 2 | Myno's Blog</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <link rel="stylesheet" href="../style.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: #1a1a2e;
-      overflow: hidden;
-      height: 100dvh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      font-family: 'Pretendard', sans-serif;
-      color: #fff;
-    }
-
-    /* Top bar */
-    .top-bar {
+    .mode-toggle {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      top: 12px;
+      right: 12px;
+      z-index: 300;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      font-family: 'Pretendard', sans-serif;
+      transition: background 0.2s;
+    }
+    .mode-toggle:hover { background: rgba(0,0,0,0.7); }
+    .back-btn {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 300;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      text-decoration: none;
+      font-family: 'Pretendard', sans-serif;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: rgba(0,0,0,0.7); }
+
+    /* ========== SLIDER MODE ========== */
+    .slider-mode {
+      min-height: 100vh;
+      background: #1a1a2e;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .slider-mode.active { display: flex; }
+
+    .slider-topbar {
+      width: 100%;
+      max-width: 700px;
+      padding: 56px 16px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 16px;
-      background: linear-gradient(180deg, rgba(26,26,46,0.95) 0%, rgba(26,26,46,0) 100%);
-      transition: opacity 0.3s;
     }
-    .top-bar.hidden { opacity: 0; pointer-events: none; }
-    .top-bar a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
-    .top-bar a:hover { color: #fff; }
-    .top-bar .page-info {
-      font-size: 14px;
-      color: rgba(255,255,255,0.8);
-      background: rgba(255,255,255,0.1);
-      padding: 4px 14px;
-      border-radius: 20px;
+    .slider-topbar .ep-badge {
+      font-size: 13px;
+      color: #9b6baf;
+      font-weight: 700;
     }
-    .top-bar .back-home { font-size: 14px; }
+    .slider-topbar .page-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .slider-topbar .page-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.2s;
+    }
+    .slider-topbar .page-dots .dot.active {
+      background: #9b6baf;
+      width: 24px;
+      border-radius: 4px;
+    }
 
-    /* Image container */
-    .viewer {
+    .slider-container {
+      width: 100%;
+      max-width: 700px;
+      position: relative;
+      overflow: hidden;
       flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
     }
-    .viewer img {
-      max-width: 100%;
-      max-height: 100dvh;
+    .slider-track {
+      display: flex;
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .slider-track img {
+      width: 100%;
+      min-width: 100%;
       object-fit: contain;
-      transition: opacity 0.2s;
+      border-radius: 8px;
+      user-select: none;
+      -webkit-user-drag: none;
     }
-    .viewer img.loading { opacity: 0.3; }
 
-    /* Nav zones */
-    .nav-zone {
-      position: fixed;
+    .slider-nav {
+      position: absolute;
       top: 0;
       bottom: 0;
-      width: 30%;
-      z-index: 50;
-      cursor: pointer;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      z-index: 10;
     }
-    .nav-zone.left { left: 0; }
-    .nav-zone.right { right: 0; }
-
-    /* Bottom bar */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 12px 16px 16px;
-      background: linear-gradient(0deg, rgba(26,26,46,0.95) 0%, rgba(26,26,46,0) 100%);
-      transition: opacity 0.3s;
-    }
-    .bottom-bar.hidden { opacity: 0; pointer-events: none; }
-
-    .progress-bar {
-      width: 100%;
-      height: 3px;
+    .slider-nav.prev { left: 0; justify-content: flex-start; padding-left: 8px; }
+    .slider-nav.next { right: 0; justify-content: flex-end; padding-right: 8px; }
+    .slider-nav button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
       background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .slider-nav:hover button { opacity: 1; }
+
+    .slider-bottom {
+      width: 100%;
+      max-width: 700px;
+      padding: 12px 16px 24px;
+      text-align: center;
+    }
+    .slider-bottom .ep-title {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .slider-bottom .ep-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .slider-bottom .ep-nav button {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'Pretendard', sans-serif;
+      transition: background 0.2s;
+    }
+    .slider-bottom .ep-nav button:hover { background: rgba(255,255,255,0.2); }
+    .slider-bottom .ep-nav button:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    .slider-bottom .ep-nav span {
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+    }
+
+    .progress-track {
+      width: 100%;
+      max-width: 700px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
       border-radius: 2px;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
       background: #9b6baf;
       border-radius: 2px;
-      transition: width 0.3s;
+      transition: width 0.35s;
     }
 
-    .ep-label {
-      text-align: center;
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
+    /* ========== SCROLL MODE ========== */
+    .scroll-mode {
+      display: none;
+      padding: 56px 16px 80px;
+      max-width: 700px;
+      margin: 0 auto;
     }
+    .scroll-mode.active { display: block; }
 
-    /* Episode divider overlay */
-    .ep-divider-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(26,26,46,0.97);
+    .scroll-mode .ep-block {
+      margin-bottom: 48px;
+    }
+    .scroll-mode .ep-header {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .scroll-mode .ep-num {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
-    }
-    .ep-divider-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .ep-divider-overlay .ep-num-big {
-      font-size: 72px;
-      font-weight: 800;
-      color: #9b6baf;
-      line-height: 1;
-    }
-    .ep-divider-overlay .ep-title-big {
-      font-size: 20px;
-      color: rgba(255,255,255,0.8);
-      margin-top: 12px;
-      text-align: center;
-      padding: 0 32px;
-    }
-    .ep-divider-overlay .ep-sub-big {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #9b6baf;
+      color: #fff;
+      font-weight: 700;
       font-size: 14px;
-      color: rgba(255,255,255,0.4);
-      margin-top: 8px;
+      flex-shrink: 0;
     }
-    .ep-divider-overlay .tap-hint {
-      position: absolute;
-      bottom: 60px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.3);
-      animation: pulse 2s infinite;
+    .scroll-mode .ep-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--text-primary, #2C2420);
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.7; }
+    .scroll-mode .ep-header .ep-sub {
+      color: var(--text-muted, #999);
+      font-size: 0.85rem;
+    }
+    .scroll-mode .ep-images {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .scroll-mode .ep-images img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border-card, #e8e0d8);
     }
   </style>
 </head>
 <body>
 
-  <div class="top-bar hidden" id="topBar">
-    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-home">← 홈</a>
-    <span class="page-info" id="pageInfo">EP.7 — 1 / 6</span>
-    <a href="expedition-s1.html">S1 →</a>
+  <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-btn">← 홈</a>
+  <button class="mode-toggle" id="modeToggle" onclick="toggleMode()">📖 스크롤</button>
+
+  <!-- ===== SLIDER MODE ===== -->
+  <div class="slider-mode active" id="sliderMode">
+    <div class="slider-topbar">
+      <span class="ep-badge" id="sEpBadge">EP.7</span>
+      <div class="page-dots" id="sDots"></div>
+    </div>
+
+    <div class="slider-container" id="sliderContainer">
+      <div class="slider-track" id="sliderTrack"></div>
+      <div class="slider-nav prev" id="sPrev"><button>‹</button></div>
+      <div class="slider-nav next" id="sNext"><button>›</button></div>
+    </div>
+
+    <div class="slider-bottom">
+      <div class="progress-track"><div class="progress-fill" id="sProgress"></div></div>
+      <div class="ep-title" id="sTitle">좋아요 버튼이 숨긴 세 가지 거짓말</div>
+      <div class="ep-nav">
+        <button id="sPrevEp" onclick="changeEp(-1)">← 이전 에피소드</button>
+        <span id="sEpIndex">1 / 6</span>
+        <button id="sNextEp" onclick="changeEp(1)">다음 에피소드 →</button>
+      </div>
+    </div>
   </div>
 
-  <div class="viewer" id="viewer">
-    <img id="mainImg" src="" alt="미노의 AI 탐험대">
-  </div>
-
-  <div class="nav-zone left" id="navLeft"></div>
-  <div class="nav-zone right" id="navRight"></div>
-
-  <div class="bottom-bar hidden" id="bottomBar">
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="ep-label" id="epLabel">EP.7 좋아요 버튼이 숨긴 세 가지 거짓말</div>
-  </div>
-
-  <div class="ep-divider-overlay" id="epDivider">
-    <div class="ep-num-big" id="divNum">EP.7</div>
-    <div class="ep-title-big" id="divTitle">좋아요 버튼이 숨긴 세 가지 거짓말</div>
-    <div class="ep-sub-big" id="divSub">RLHF와 보상의 함정</div>
-    <div class="tap-hint">탭하여 시작</div>
-  </div>
+  <!-- ===== SCROLL MODE ===== -->
+  <div class="scroll-mode" id="scrollMode"></div>
 
   <script>
-    const episodes = [
+    const EP = [
       { num: 7, title: "좋아요 버튼이 숨긴 세 가지 거짓말", sub: "RLHF와 보상의 함정", prefix: "ep07" },
       { num: 8, title: "AI를 위한 체육관", sub: "ClawGym과 에이전트 훈련", prefix: "ep08" },
       { num: 9, title: "AI의 스마트한 게임 세이브", sub: "메모리 전략과 Crab", prefix: "ep09" },
@@ -195,131 +280,142 @@
       { num: 11, title: "파이프라인이 길어질수록 깨지는 것들", sub: "자동화의 역설", prefix: "ep11" },
       { num: 12, title: "휴리스틱의 세 얼굴", sub: "인간과 AI의 결정 편향", prefix: "ep12" },
     ];
-
     const BASE = "../assets/expedition/";
+    const PAGES = 6;
+
     let curEp = 0;
     let curPage = 0;
-    let showUI = true;
-    let hideTimer;
-    let dividerShown = false;
+    let isSlider = true;
+    let touchX0 = 0, touchY0 = 0, swiping = false;
 
-    const mainImg = document.getElementById("mainImg");
-    const pageInfo = document.getElementById("pageInfo");
-    const progressFill = document.getElementById("progressFill");
-    const epLabel = document.getElementById("epLabel");
-    const topBar = document.getElementById("topBar");
-    const bottomBar = document.getElementById("bottomBar");
-    const epDivider = document.getElementById("epDivider");
+    const sliderTrack = document.getElementById("sliderTrack");
+    const sliderContainer = document.getElementById("sliderContainer");
 
-    function imgSrc(epIdx, page) {
-      return BASE + episodes[epIdx].prefix + "-p" + String(page + 1).padStart(2, "0") + ".png";
+    function src(ep, page) {
+      return BASE + EP[ep].prefix + "-p" + String(page + 1).padStart(2, "0") + ".png";
     }
 
-    function totalPages() { return episodes.length * 6; }
-    function flatIndex() { return curEp * 6 + curPage; }
-
-    function update() {
-      const src = imgSrc(curEp, curPage);
-      mainImg.classList.add("loading");
-      const img = new Image();
-      img.onload = () => { mainImg.src = src; mainImg.classList.remove("loading"); };
-      img.onerror = () => { mainImg.src = src; mainImg.classList.remove("loading"); };
-      img.src = src;
-
-      pageInfo.textContent = "EP." + episodes[curEp].num + " — " + (curPage + 1) + " / 6";
-      progressFill.style.width = ((flatIndex() + 1) / totalPages() * 100) + "%";
-      epLabel.textContent = "EP." + episodes[curEp].num + " " + episodes[curEp].title;
-
-      showDivider(curEp);
+    // Build slider images for current episode
+    function buildSlider() {
+      sliderTrack.innerHTML = "";
+      for (let i = 0; i < PAGES; i++) {
+        const img = document.createElement("img");
+        img.src = src(curEp, i);
+        img.alt = "EP." + EP[curEp].num + " P" + (i + 1);
+        img.draggable = false;
+        sliderTrack.appendChild(img);
+      }
+      curPage = 0;
+      updateSlider();
     }
 
-    function showDivider(epIdx) {
-      if (epIdx === curEp && dividerShown) return;
-      dividerShown = true;
-      document.getElementById("divNum").textContent = "EP." + episodes[epIdx].num;
-      document.getElementById("divTitle").textContent = episodes[epIdx].title;
-      document.getElementById("divSub").textContent = episodes[epIdx].sub;
-      epDivider.classList.add("show");
+    function updateSlider() {
+      sliderTrack.style.transform = "translateX(-" + (curPage * 100) + "%)";
+      // dots
+      const dots = document.getElementById("sDots");
+      dots.innerHTML = "";
+      for (let i = 0; i < PAGES; i++) {
+        const d = document.createElement("div");
+        d.className = "dot" + (i === curPage ? " active" : "");
+        dots.appendChild(d);
+      }
+      // info
+      document.getElementById("sEpBadge").textContent = "EP." + EP[curEp].num;
+      document.getElementById("sTitle").textContent = EP[curEp].title;
+      document.getElementById("sEpIndex").textContent = (curEp + 1) + " / " + EP.length;
+      document.getElementById("sPrevEp").disabled = curEp === 0;
+      document.getElementById("sNextEp").disabled = curEp === EP.length - 1;
+      // progress
+      const total = EP.length * PAGES;
+      const current = curEp * PAGES + curPage;
+      document.getElementById("sProgress").style.width = ((current + 1) / total * 100) + "%";
     }
 
-    function dismissDivider() {
-      if (!epDivider.classList.contains("show")) return false;
-      epDivider.classList.remove("show");
-      return true;
-    }
-
-    function goNext() {
-      if (dismissDivider()) return;
-      if (curPage < 5) {
-        curPage++;
-        update();
-      } else if (curEp < episodes.length - 1) {
-        curEp++;
-        curPage = 0;
-        dividerShown = false;
-        update();
+    function slideTo(dir) {
+      const next = curPage + dir;
+      if (next >= 0 && next < PAGES) {
+        curPage = next;
+        updateSlider();
       }
     }
 
-    function goPrev() {
-      if (dismissDivider()) return;
-      if (curPage > 0) {
-        curPage--;
-        update();
-      } else if (curEp > 0) {
-        curEp--;
-        curPage = 5;
-        dividerShown = false;
-        update();
+    function changeEp(dir) {
+      const next = curEp + dir;
+      if (next >= 0 && next < EP.length) {
+        curEp = next;
+        buildSlider();
+        window.scrollTo(0, 0);
       }
     }
 
-    function toggleUI() {
-      showUI = !showUI;
-      topBar.classList.toggle("hidden", !showUI);
-      bottomBar.classList.toggle("hidden", !showUI);
-      if (showUI) {
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(() => {
-          showUI = false;
-          topBar.classList.add("hidden");
-          bottomBar.classList.add("hidden");
-        }, 3000);
-      }
-    }
+    // Touch
+    sliderContainer.addEventListener("touchstart", e => {
+      touchX0 = e.touches[0].clientX;
+      touchY0 = e.touches[0].clientY;
+      swiping = true;
+    }, { passive: true });
 
-    // Touch / click
-    let touchStartX = 0;
-    document.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    document.addEventListener("touchend", e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 50) {
-        dx < 0 ? goNext() : goPrev();
-      } else {
-        // tap
-        const x = e.changedTouches[0].clientX;
-        const w = window.innerWidth;
-        if (x < w * 0.3) goPrev();
-        else if (x > w * 0.7) goNext();
-        else toggleUI();
+    sliderContainer.addEventListener("touchend", e => {
+      if (!swiping) return;
+      swiping = false;
+      const dx = e.changedTouches[0].clientX - touchX0;
+      const dy = e.changedTouches[0].clientY - touchY0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        dx < 0 ? slideTo(1) : slideTo(-1);
       }
-    });
+    }, { passive: true });
 
-    document.getElementById("navLeft").addEventListener("click", e => { e.stopPropagation(); goPrev(); });
-    document.getElementById("navRight").addEventListener("click", e => { e.stopPropagation(); goNext(); });
+    // Click nav
+    document.getElementById("sPrev").addEventListener("click", () => slideTo(-1));
+    document.getElementById("sNext").addEventListener("click", () => slideTo(1));
 
     // Keyboard
     document.addEventListener("keydown", e => {
-      if (e.key === "ArrowRight" || e.key === " ") goNext();
-      else if (e.key === "ArrowLeft") goPrev();
-      else if (e.key === "Escape") toggleUI();
+      if (!isSlider) return;
+      if (e.key === "ArrowRight") slideTo(1);
+      else if (e.key === "ArrowLeft") slideTo(-1);
     });
 
+    // Build scroll mode
+    function buildScroll() {
+      const container = document.getElementById("scrollMode");
+      container.innerHTML = "";
+      EP.forEach(ep => {
+        const block = document.createElement("div");
+        block.className = "ep-block";
+        block.innerHTML = `
+          <div class="ep-header">
+            <span class="ep-num">${ep.num}</span>
+            <div>
+              <h2>${ep.title}</h2>
+              <div class="ep-sub">${ep.sub}</div>
+            </div>
+          </div>
+          <div class="ep-images">
+            ${[1,2,3,4,5,6].map(p => `<img src="${BASE}${ep.prefix}-p${String(p).padStart(2,'0')}.png" alt="EP.${ep.num} P${p}" loading="lazy">`).join("")}
+          </div>
+        `;
+        container.appendChild(block);
+      });
+    }
+
+    // Mode toggle
+    function toggleMode() {
+      isSlider = !isSlider;
+      document.getElementById("sliderMode").classList.toggle("active", isSlider);
+      document.getElementById("scrollMode").classList.toggle("active", !isSlider);
+      document.getElementById("modeToggle").textContent = isSlider ? "📖 스크롤" : "🖼️ 슬라이더";
+      document.body.style.background = isSlider ? "#1a1a2e" : "";
+      document.querySelector(".back-btn").style.background = isSlider ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.1)";
+      document.querySelector(".back-btn").style.color = isSlider ? "#fff" : "#333";
+      document.getElementById("modeToggle").style.background = isSlider ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.1)";
+      document.getElementById("modeToggle").style.color = isSlider ? "#fff" : "#333";
+      if (!isSlider) window.scrollTo(0, 0);
+    }
+
     // Init
-    update();
-    // Auto-show UI briefly
-    setTimeout(() => { topBar.classList.remove("hidden"); bottomBar.classList.remove("hidden"); }, 100);
-    hideTimer = setTimeout(() => { showUI = false; topBar.classList.add("hidden"); bottomBar.classList.add("hidden"); }, 3000);
+    buildSlider();
+    buildScroll();
   </script>
 </body>
 </html>
