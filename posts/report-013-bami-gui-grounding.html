@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 화면에서 버튼을 찾지 못하는 진짜 이유. 추가 학습 없이 편향을 진단하고 해결하는 BAMI 프레임워크.">
+  <title>AI에게 화면은 너무 복잡하다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>AI에게 화면은 너무 복잡하다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">추가 학습 없이 GUI 그라운딩의 편향을 진단하고 해결하는 BAMI 프레임워크</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-09</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>"설정 버튼 눌러줘."</p>
+
+      <p>사람이라면 화면을 보자마자 찾아서 누른다. 1초면 된다. 근데 AI한테 이걸 시키면 어떻게 될까? 화면을 캡처해서 분석하고, "아 저기 있네!" 하고 좌표를 찾아야 한다. 이름은 <strong>GUI Grounding</strong>이라고 한다. 쉽게 말하면 "화면에서 이거 찾아!"를 AI가 하는 작업이다.</p>
+
+      <p>그런데 벤치마크 결과가 충격적이었다. 대부분 모델의 정확도가 <strong>50% 미만</strong>이었다. 동전을 던져서 찍는 것과 비슷한 수준이다. 10번 시도하면 5번은 틀린다. 화면에 버튼이 수십 개 있고, 아이콘도 텍스트도 섞여 있고, 해상도는 높은데 요소는 작은 상황에서 AI는 거의 <strong>사막에서 바늘 찾기</strong>를 하고 있었다.</p>
+
+      <p>그래서 연구진(칭화대 + Lenovo Research)이 물었다. <strong>"왜 틀리는 거야? 뭘 모르는 건가, 아니면 뭔가 다른 문제가 있는 건가?"</strong></p>
+
+      <hr>
+      <div style="text-align:center;">
+        <img src="../assets/report_bami_gui_grounding.png" alt="BAMI GUI 그라운딩 인포그래픽" style="max-width:100%; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+      </div>
+      <hr>
+
+      <h2>"오류의 74%는 편향이다" — MPD 진단</h2>
+
+      <p>연구진은 <strong>MPD(Masked Prediction Distribution)</strong>라는 기법으로 오류 원인을 X-Ray 찍었다. 방법은 이렇다. 스크린샷의 일부를 무작위로 가리고 → AI에게 반복해서 좌표를 예측하게 하고 → 예측 위치의 빈도를 히트맵으로 그린다.</p>
+
+      <p>결과가 명확했다.</p>
+
+      <p>오류의 14%는 진짜 <strong>"지식 부족"</strong>이었다. AI가 모르는 건 모르는 거다. 어쩔 수 없다. 하지만 나머지 <strong>74%는 편향(Bias)</strong>이었다. AI가 충분히 지식을 가지고 있는데도, 어떤 이유에서인지 <strong>틀리는 방향</strong>으로 빠져버린다.</p>
+
+      <blockquote style="border-left:4px solid #7B5EA7; padding:12px 20px; margin:20px 0; background:#f8f5fc; border-radius:0 8px 8px 0;">
+        AI가 화면에서 요소를 찾지 못하는 이유의 3/4은 "모르기 때문"이 아니다. <strong>"알고도 찌르는 방향이 틀리기 때문"</strong>이다.
+      </blockquote>
+
+      <h2>"근데 편향이라니, 구체적으로 뭐가 문제지?"</h2>
+
+      <p>74%의 편향은 두 가지 유형으로 나뉜다.</p>
+
+      <p><strong>첫째, 정밀도 편향(Precision Bias).</strong> AI가 "아, 저기 근처에 있어!" 하고 대충 위치는 잡는데, <strong>정확한 좌표를 못 찍는다</strong>. 비유하면 "서울역 근처"는 알겠는데 "정확히 몇 번 출구인지"는 모르는 거다. 고해상도일수록, 버튼이 작을수록 심해진다. 탐색 공간이 너무 넓기 때문이다.</p>
+
+      <p><strong>둘째, 모호성 편향(Ambiguity Bias).</strong> 비슷하게 생긴 UI 요소가 여러 개 있으면 AI가 <strong>엉뚱한 걸 선택한다</strong>. "삭제" 버튼이 세 개 있으면 다 비슷해 보이니까 다른 걸 누른다. 문제는 AI가 후보를 고를 때 <strong>"텍스트가 얼마나 비슷한가"(편집 거리)</strong>를 기준으로 삼는데, 이건 화면에서의 <strong>"실제 거리"랑 다르다</strong>는 거다. 글자가 비슷해도 화면 반대편에 있을 수 있고, 글자가 달라도 바로 옆에 있을 수 있다.</p>
+
+      <h2>"줌인하면 되잖아" — Coarse-to-Fine Focus</h2>
+
+      <p>정밀도 편향을 해결하는 방법은 생각보다 직관적이었다. <strong>줌인하면 된다.</strong></p>
+
+      <p>사람도 그렇잖아? 처음부터 미세한 부분까지 보려고 하면 눈이 아프다. 그래서 먼저 전체를 보고 "아, 저기 있네" 하고 <strong>대략적 위치</strong>를 잡는다. 그리고 그 근처를 <strong>확대</strong>해서 자세히 본다. 또 모자라면 한 번 더 확대한다.</p>
+
+      <p>BAMI는 이걸 그대로 구현했다. <strong>Coarse-to-Fine Focus</strong>라고 부른다.</p>
+
+      <p>원본 스크린샷에서 대략적 좌표를 예측 → 그 좌표 중심으로 일정 비율 영역을 크롭 → 크롭된 영역에서 다시 정밀 좌표 예측 → 이걸 N번 반복. 각 단계에서 탐색 공간이 확 줄어들기 때문에, AI가 처음부터 전체 화면에서 바늘을 찾을 필요 없이 <strong>점점 좁아지는 후보 영역에서만</strong> 집중하면 된다.</p>
+
+      <h2>"선택 기준을 바꿔라" — Candidate Selection</h2>
+
+      <p>모호성 편향은 좀 다른 접근이 필요했다. AI가 후보를 고르는 방식 자체가 잘못됐기 때문이다.</p>
+
+      <p>AI는 "삭제" 버튼을 찾을 때, 화면에서의 물리적 거리가 아니라 <strong>텍스트의 편집 거리</strong>를 기준으로 고른다. 근데 이게 말이 안 된다. "삭제하기"와 "삭제"는 편집 거리상 비슷하지만, 화면에서는 완전히 다른 위치에 있을 수 있다.</p>
+
+      <p>BAMI는 <strong>프롬프트에 선택 규칙을 주입</strong>해서 이걸 교정한다. 다중 후보를 생성하고 → GUI 지역화에 특화된 규칙으로 필터링하고 → 최종 선택을 한다. 외부 모델을 로컬 보정기로 써서, AI가 본능적으로 고르는 "글자 비슷함" 기준을 <strong>"화면에서의 적합성" 기준으로 덮어쓴다</strong>.</p>
+
+      <h2>"학습 안 하고 +5.9%"</h2>
+
+      <p>이 방법들의 가장 큰 특징은 <strong>Training-Free</strong>라는 거다. 모델을 새로 학습시킬 필요가 없다. 기존 모델 그대로 쓰면서, <strong>추론 과정의 구조만 바꾼다</strong>.</p>
+
+      <p>결과는?</p>
+
+      <p><strong>OS-Atlas-7B:</strong> 42.7% → 46.8% (+4.1%p)</p>
+
+      <p><strong>UI-TARS-7B:</strong> 49.5% → 54.2% (+4.7%p)</p>
+
+      <p><strong>TianXi-Action-7B:</strong> 51.9% → <strong>57.8%</strong> (+5.9%p)</p>
+
+      <p>가장 성능이 좋은 TianXi에 적용하면 57.8%. 아직 100%에서 한참 멀지만, 이건 <strong>아무 학습도 하지 않고</strong> 얻은 결과다. 모델 구조를 바꾸지도 않고, 가중치를 업데이트하지도 않고, 그냥 <strong>"어떻게 생각할지"의 순서만 바꿨을 뿐</strong>이다.</p>
+
+      <p>절제 연구에서도 흥미로운 결과가 나왔다. Coarse-to-Fine은 특히 <strong>작은 UI 요소(아이콘, 작은 버튼)</strong>에서 효과가 컸다. 큰 버튼은 원래도 잘 찾으니까. Candidate Selection에서는, <strong>Chain-of-Thought를 언어 공간에서 확장하면 오히려 성능이 떨어졌다</strong>. 길게 생각하면 생각이 꼬인다. 이미지 공간에서 구조화된 추론을 하는 게 훨씬 효과적이었다.</p>
+
+      <blockquote style="border-left:4px solid #7B5EA7; padding:12px 20px; margin:20px 0; background:#f8f5fc; border-radius:0 8px 8px 0;">
+        모델이 "더 많이 생각하면" 더 잘할 거라는 가정이 깨졌다. GUI 시나리오에서는 <strong>생각의 방식을 구조화하는 것</strong>이 <strong>생각의 양을 늘리는 것</strong>보다 중요하다.
+      </blockquote>
+
+      <h2>핵심 요약</h2>
+
+      <p><strong>1. AI가 화면에서 버튼을 찾는 정확도는 50% 미만이다.</strong> 동전 찍기 수준.</p>
+
+      <p><strong>2. 오류의 74%는 "모름"이 아니라 "편향"이다.</strong> 지식은 있는데 찌르는 방향이 틀린다.</p>
+
+      <p><strong>3. 편향은 두 가지다.</strong> 정밀도 편향(근처까진 찾는데 정확한 좌표를 못 잡음)과 모호성 편향(비슷한 요소를 구분 못함).</p>
+
+      <p><strong>4. 해결책은 직관적이다.</strong> 줌인해서 찾고(Coarse-to-Fine), 선택 기준을 교정한다(Candidate Selection).</p>
+
+      <p><strong>5. 학습 없이 +5.9%p 향상.</strong> 추론 구조만 바꿔서 모델의 잠재력을 해방시키는 비용 효율적 방법이다.</p>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>논문: <a href="https://arxiv.org/abs/2605.06664" style="color:#7B5EA7;">BAMI: Training-Free Bias Mitigation in GUI Grounding</a> (arXiv: 2605.06664)</li>
+        <li>Borui Zhang, Bo Zhang, Bo Wang, Wenzhao Zheng 등 · Tsinghua University · Lenovo Research</li>
+        <li>GitHub: <a href="https://github.com/Neur-IO/BAMI" style="color:#7B5EA7;">github.com/Neur-IO/BAMI</a></li>
+        <li>원문 슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/BAMITraining-FreeBiasMitigatio-slides.html" style="color:#7B5EA7;">BAMI 논문 시각화</a></li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-012-context-boundary-aphasia.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI는 쓸데없는 걸 다 기억하려 한다</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
