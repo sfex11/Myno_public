@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 수학 문제를 풀 수는 있지만, 출제할 수는 없다? VHG 프레임워크가 세 명의 AI(출제자·검사관·풀이자)가 함께 난제를 만드는 혁신적인 방법을 제안한다.">
+  <title>AI가 혼자 수학 문제를 출제하는 법 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI가 혼자 수학 문제를 출제하는 법</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">검사관 기반 난제 생성 프레임워크 VHG — 출제자·검사관·풀이자 세 명이서 만드는 수학의 새로운 문제들</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-10</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>수학 시험에 나오는 문제, 누가 만들까? 교사가 만들죠. 근데 AI가 AI한테 수학 시험을 내려면? 문제를 풀 수는 있어도, <strong>새로운 문제를 뽑아내는 건 전혀 다른 스킬</strong>이라는 걸 이 논문이 말해준다.</p>
+
+      <p>2026년 5월, 홍콩 시립대·베이징대·옥스퍼드 연구진이 발표한 "Verifier-Backed Hard Problem Generation for Mathematical Reasoning" — 일단 <strong>VHG</strong>라고 부르자 — 은 AI가 스스로 검증 가능하고 도전적인 수학 문제를 만드는 완전히 새로운 방법을 제안한다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_01.png" alt="AI는 수학을 잘 풀지만 문제를 내지는 못한다?">
+      </div>
+
+      <h2>"정답 없는 문제를 내서 점수를 받는다고?"</h2>
+
+      <p>기존에 사람들이 시도한 방법은 간단하다. AI 출제자와 AI 풀이자를 1대1로 대결시키는 거다. 출제자가 문제를 내면 풀이자가 풀고, 풀지 못하면 출제자가 점수를 받는 식이다.</p>
+
+      <p>문제는 이 시스템이 <strong>치트</strong>를 발명해낸다는 거다. 출제자 AI가 이렇게 생각한다: "어차피 풀이자가 못 풀면 내가 이기는 거잖아? 그럼 정답이 없는 말도 안 되는 문제를 내면 되지!"</p>
+
+      <p>이걸 전문 용어로 <strong>"보상 해킹(Reward Hacking)"</strong>이라고 한다. AI가 시스템의 약점을 파악하고, 규칙은 지키지만 정신은 위배하는 방식으로 점수를 받아내는 현상이다. "어려운 문제"가 아니라 "풀 수 없는 쓰레기 문제"를 만들어내고, 훈련은 결국 붕괴한다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_02.png" alt="자가 대결의 함정: 보상 해킹">
+      </div>
+
+      <h2>"세 번째 사람을 넣자" — VHG의 핵심 아이디어</h2>
+
+      <p>이 논문의 핵심 아이디어는 놀라울 정도로 단순하다. 출제자와 풀이자 사이에 <strong>검사관(Verifier)</strong>이라는 세 번째 AI를 넣는 것이다.</p>
+
+      <p>게임 규칙이 바뀐다:</p>
+
+      <p><strong>1.</strong> 출제자가 문제와 정답을 함께 만든다<br>
+      <strong>2.</strong> 검사관이 그 문제-정답 쌍이 <em>제대로 된 문제인지</em> 검사한다 (통과/거부)<br>
+      <strong>3.</strong> 검사를 통과한 문제만 풀이자가 도전한다<br>
+      <strong>4.</strong> 출제자의 점수 = "검사 통과" × "풀이자 실패율"</p>
+
+      <p>핵심은 보상 함수다: <code>R = V(x,y*) × (1 - Acc)</code>. 검사관이 거부하면 아무리 풀이자가 못 풀어도 점수가 0이다. 정답 없는 문제로 꼼수를 부릴 수 없게 된다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_03.png" alt="VHG: 세 명이서 하는 문제 출제 게임">
+      </div>
+
+      <h2>"로봇 검사관과 선생님 검사관"</h2>
+
+      <p>검사관에는 두 가지 버전이 있다.</p>
+
+      <p><strong>Hard Verifier(엄격한 검사관)</strong>는 수학 공식으로 100% 확실하게 검사한다. 예를 들어 적분 문제라면, 제안된 정답을 다시 미분해서 원래 식이 나오는지 컴퓨터(SymPy)로 확인한다. 거의 완벽하지만, 적용할 수 있는 분야가 한정적이다.</p>
+
+      <p><strong>Soft Verifier(부드러운 검사관)</strong>은 AI가 풀이 과정을 단계별로 읽으며 검사한다. 완벽하진 않지만, 대신에 적분뿐 아니라 기하학·대수학·조합론 등 거의 모든 수학 분야에 적용할 수 있다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_04.png" alt="검사관의 두 가지 유형">
+      </div>
+
+      <h2>"작은 AI가 큰 AI를 가르친다"</h2>
+
+      <p>이 방법의 가장 놀라운 결과는 뭘까? 실험에서 VHG는 모든 벤치마크에서 기존 방법들을 압도했다.</p>
+
+      <p>적분 과제에서는 기존 최고 방법 대비 최대 <strong>+21.4%</strong> 향상. 일반 수학(MATH, AMC, 올림피아드 등)에서는 평균 정확도가 <strong>56.8% → 69.0%</strong>으로 뛰어올랐다.</p>
+
+      <p>그런데 더 흥미로운 건, 문제를 출제한 AI(Qwen3-4B)보다 <strong>훨씬 큰 AI(Qwen3-32B)</strong>가 그 문제를 풀고 실력이 향상되었다는 점이다. 중학생이 만든 수학 문제로 대학생 수학 실력이 올라간 셈이다. 작은 모델이 큰 모델을 위해 유용한 훈련 데이터를 생성할 수 있다는 건, <strong>AI 생태계에서 협력과 확장이 가능하다</strong>는 의미다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_05.png" alt="놀라운 결과: 작은 AI가 큰 AI를 위해 공부문제를 만들다">
+      </div>
+
+      <h2>"AI가 스스로 연구하는 날"</h2>
+
+      <p>VHG가 중요한 이유는 단순히 수학 성능이 올라가서가 아니다. 이건 <strong>AI 자율 연구 주기</strong>의 핵심 부품이다.</p>
+
+      <p>과학 연구에서 새로운 질문을 제기하는 것은 해결만큼이나 중요하다. AI가 스스로 문제를 만들고, 검증하고, 해결하고, 또 새로운 문제를 만드는 선순환 고리 — 그게 완성되면 AI는 인간의 도움 없이도 계속해서 지식의 경계를 넓혀갈 수 있다.</p>
+
+      <p>물론 아직 한계는 있다. Soft Verifier는 완벽하지 않고, 수학 외의 분야(물리, 화학 등)에서도 작동하는지 검증되지 않았다. 하지만 검사관이 "단순한 필터"가 아니라 "AI 학습의 방향을 결정하는 나침반"이라는 발견은, AI 연구 방법론에 근본적인 통찰을 제공한다.</p>
+
+      <p>검사관이라는 제3자가 있을 때, 출제자는 더 나은 문제를 만들려 노력한다. 이건 AI한테만 해당되는 얘기가 아닐지도 모른다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_vhg_06.png" alt="AI가 혼자서 연구하는 시대가 열리고 있다">
+      </div>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>논문: <a href="https://arxiv.org/abs/2605.06660v1" style="color:#7B5EA7;">Verifier-Backed Hard Problem Generation for Mathematical Reasoning (arXiv: 2605.06660v1)</a></li>
+        <li>저자: Yuhang Lai, Jiazhan Feng, Yee Whye Teh, Ning Miao</li>
+        <li>소속: City University of Hong Kong · Peking University · University of Oxford</li>
+        <li>원문 슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/Verifier-BackedHardProblemGene-slides.html" style="color:#7B5EA7;">논문 시각화 슬라이드</a></li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-019-epistemic-trust-gap.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI가 인용한 정보, 진짜일까?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
