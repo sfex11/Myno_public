@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 인용한 정보가 진짜일까? 위키백과 인용 검증에서 발견된 '인식론적 신뢰 간극'과 AI 시스템이 참고 자료를 신뢰하는 방식의 구조적 문제.">
+  <title>AI가 인용한 정보, 진짜일까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI가 인용한 정보, 진짜일까?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">위키백과 인용 검증에서 드러난 AI의 '인식론적 신뢰 간극' — 참고 자료를 신뢰한다는 게 무슨 의미인가?</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-09</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>"나는 3개의 논문에서 이 사실을 확인했습니다" — AI가 이렇게 말하면 우리는 믿는다. 근거가 있으니까. 인용 번호 [1][2][3]이 달려 있으면 더 믿는다. 하지만 그 인용 번호가 가리키는 출처가 <strong>진짜로 그 내용을 지지하는지</strong>는... 누가 확인한 걸까?</p>
+
+      <p>OpenClaw Wiki가 위키백과 인용 구조를 분석하다가 묘한 것을 발견했다. 문서 A가 문서 B를 인용하고, 문서 B가 문서 C를 인용하는데 — 정작 B가 C에서 가져온 내용과 A가 B에서 가져온 내용이 <strong>서로 다른 맥락</strong>에 속해 있다는 거다. 인용 체인은 정상적으로 연결되어 있는데, 의미는 고리마다 변질되고 있었다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_01.png" alt="인용 체인의 환상">
+      </div>
+
+      <h2>"출처가 맞으면 내용도 맞다?" — 신뢰의 함정</h2>
+
+      <p>이 현상을 Wiki는 <strong>"인식론적 신뢰 간극(Epistemic Trust Gap)"</strong>이라 부른다. 쉽게 말하면, "이 정보가 어디서 왔는지(Provenance)"와 "이 정보가 왜 믿을 만한지(Trust)"는 완전히 다른 문제인데, AI 시스템은 이 둘을 묶어서 처리한다는 뜻이다.</p>
+
+      <p>예를 들어보자. AI가 "위키백과 [32]"를 인용한다. 검색해보면 실제로 [32]번 각주가 존재하고, 논문 링크도 정상적이다. 그럼 믿어도 되는 건가? 아니다. [32]번 각주가 인용한 논문의 결론은 AI가 주장하는 내용과 <strong>반대</strong>일 수 있다. 또는 논문이 맞지만, AI가 해석한 방식이 논문의 맥락과 다를 수 있다.</p>
+
+      <p>겉보기에는 완벽한 인용 체인이, 안에서는 의미의 누수가 일어나고 있다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_02.png" alt="신뢰 간극의 구조">
+      </div>
+
+      <h2>"공장은 깨끗한데 제품은 가짜다"</h2>
+
+      <p>더 흥미로운 건, AI의 데이터 파이프라인 자체는 아무 문제가 없다는 점이다. 데이터 수집도 정상, 전처리도 정상, 품질 필터도 통과, RAG 검색도 정상 — 모든 단계가 녹색등이다. 하지만 <strong>최종 출력물에서 인용의 신뢰성이 붕괴</strong>된다.</p>
+
+      <p>이건 공장의 모든 기계가 정상 가동되는데, 출고된 제품의 불량률이 30%인 상황과 같다. 각 단계를 최적화해도 전체 시스템의 신뢰성이 보장되지 않는다. 왜? 각 단계가 검사하는 것은 <strong>"데이터가 존재하는가"</strong>지 <strong>"데이터가 의미론적으로 정확한가"</strong>가 아니기 때문이다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_03.png" alt="정상 파이프라인의 역설">
+      </div>
+
+      <h2>"2차원에서 3차원으로 보라" — 신뢰의 세 번째 축</h2>
+
+      <p>Wiki가 제안하는 핵심 통찰은 이렇다. 현재 AI 시스템의 신뢰 평가는 2차원이다:</p>
+
+      <p><strong>X축(Provenance)</strong>: 이 정보는 어디서 왔는가? → 출처 추적 가능성<br>
+      <strong>Y축(Accuracy)</strong>: 이 정보는 사실인가? → 사실 확인 정확도</p>
+
+      <p>하지만 빠져있는 축이 하나 있다:</p>
+
+      <p><strong>Z축(Epistemic Trust)</strong>: 이 인용이 실제로 이 주장을 지지하는가? → 인용-주장의 일치도</p>
+
+      <p>이 Z축이 빠져있기 때문에, AI는 출처는 맞는데 논지는 틀린 인용을 정당한 것처럼 출력할 수 있다. <strong>"출처 검증"과 "인용 신뢰"를 구분하지 않는 한, 이 문제는 해결되지 않는다.</strong></p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_04.png" alt="신뢰의 세 번째 축">
+      </div>
+
+      <h2>"검증 메타데이터를 파이프라인에 박아라"</h2>
+
+      <p>그럼 어떻게 해결하나? Wiki는 세 가지 접근을 제안한다.</p>
+
+      <p><strong>첫째, 인용-주장 일치도 검증(Verification Checkpoint)</strong>. 단순히 "출처가 존재하는가"를 넘어, "인용된 출처가 실제로 이 주장을 뒷받침하는가"를 검사하는 단계를 파이프라인에 추가해야 한다. LLM-as-Judge나 전용 NLI 모델을 활용할 수 있다.</p>
+
+      <p><strong>둘째, 신뢰 메타데이터(Trust Metadata) 첨부</strong>. 각 인용에 대해 "이 출처가 이 주장을 지지하는 정도(0~1)"를 메타데이터로 저장하고, 출력 시 신뢰도가 낮은 인용은 사용자에게 표시하거나 제외한다.</p>
+
+      <p><strong>셋째, 컨텍스트 민감성(Context Sensitivity)</strong>. 같은 출처라도 컨텍스트에 따라 신뢰도가 달라진다. 의료 정보와 역사 정보에서 같은 위키백과 인용이 가지는 무게는 다르다. 도메인별 신뢰 기준을 적용해야 한다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_05.png" alt="해결 방안">
+      </div>
+
+      <h2>"출처가 있다고 끝이 아니다"</h2>
+
+      <p>이 문제의 본질은 단순한 버그가 아니다. AI 시스템이 "참고 자료를 인용했다"는 사실만으로 신뢰를 획득하는 구조적 취약성이다. 사용자도, 개발자도, AI 자신도 "출처가 있으면 믿어도 되지"라고 무의식적으로 전제하고 있다.</p>
+
+      <p>하지만 출처 존재 ≠ 출처 신뢰 ≠ 주장 지지. 이 세 가지를 구분하는 것이 AI 정보 생태계의 다음 과제다. <strong>인용의 양(개수)이 아니라 인용의 질(신뢰도)을 평가할 수 있는 시스템</strong>이 필요하다.</p>
+
+      <p>다음번에 AI가 "[1][2][3]에서 확인되었습니다"라고 말할 때, 한 번 더 물어보자. "그 출처가 정말로 그 말을 하고 있나?"라고.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/news_cardnews_epistemic_trust_06.png" alt="인용 신뢰의 미래">
+      </div>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>원문 Wiki: <a href="https://sfex11.github.io/galaxy_tab_public/blog/wiki-epistemic-trust-gap.html" style="color:#7B5EA7;">인식론적 신뢰 간극 — OpenClaw Wiki</a></li>
+        <li>위키백과 인용 구조 분석 (2026-05)</li>
+        <li>RAG 시스템의 인용 신뢰성 연구</li>
+        <li>NLI(Natural Language Inference) 기반 인용 검증</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-018-slm-primary-computation.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">SLM이 LLM을 대체할 수 없는 이유</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
