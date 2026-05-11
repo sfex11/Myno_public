@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI에게 가르친 행동을 다시 되돌릴 수 있다면? 가역적 SFT 행동 설계 — 행동을 희소한 '캐리어'에 압축하여 ON/OFF가 가능한 AI 학습 프레임워크. 중학생도 이해할 수 있게 정리.">
+  <title>AI에게 가르친 걸 되돌릴 수 있다면? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>AI에게 가르친 걸 되돌릴 수 있다면?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">가역적 SFT 행동 설계 — 학습된 행동을 희소한 '캐리어'에 압축하여 스위치처럼 ON/OFF가 가능한 AI</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-11</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:0 0 2rem;">
+
+      <div style="text-align:center;margin:1rem 0 2rem;">
+        <img src="../assets/report_reversible_sft.png" alt="가역적 SFT 행동 설계 인포그래픽" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+      </div>
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
+
+      <h2>"가르친 건 되돌릴 수 없어?"</h2>
+
+      <p>생각해보자. 학교에서 학생에게 "유해한 질문에는 거절해"라고 가르쳤다고 치자. 학생은 잘 배워서 실천한다. 근데 시간이 지나 "아, 이 규칙은 너무 엄격했어. 좀 완화하자"라고 하면 어떻게 될까?</p>
+
+      <p>사람은 대화로 조율할 수 있지만, <strong>AI는 안 그렇다</strong>. AI에게 SFT(Supervised Fine-Tuning, 지도 미세조정)로 행동을 가르치면, 그 행동이 모델 파라미터 전체에 광범위하게 퍼진다. 한 번 가르치면 <strong>어디에 뭘 가르쳤는지도 모르고, 특정 부분만 되돌리는 것도 불가능</strong>하다.</p>
+
+      <p>이게 현재 AI 학습의 근본적 한계야. 마치 뇌 전체에 흩어진 기억에서 특정 습관만 골라서 지울 수 없는 것과 같아.</p>
+
+      <h2>"상관관계 ≠ 인과적 필요성"</h2>
+
+      <p>"그럼 학습된 뒤에 뇌를 스캔해서 핵심 부위를 찾으면 되지 않을까?" — 좋은 질문이다. 하지만 실험 결과는 실망스럽다.</p>
+
+      <p>학습 후에 분석하면 <strong>상관관계만</strong> 발견된다. "이 뉴런이 활성화될 때 이 행동이 나오더라" 정도의 관찰은 가능하지만, "이 뉴런이 <strong>반드시 필요한지</strong>"는 알 수 없다. 행동이 너무 광범위하게 분포하면, 중복 경로가 서로를 보완해서 하나를 건드려도 행동이 사라지지 않는다.</p>
+
+      <p>이 논문의 핵심 통찰: <strong>사후에 발견하면 안 되고, 훈련 중에 설계해야 한다.</strong></p>
+
+      <h2>"습관을 작은 상자에 담자" — 희소 행동 캐리어</h2>
+
+      <p>이 논문이 제시하는 아이디어는 놀랍도록 직관적이다. <strong>"행동을 모델 전체에 흩어놓지 말고, 아주 작은 파라미터 집단(캐리어)에 압축하자."</strong></p>
+
+      <p>수식으로 표현하면 이렇다:</p>
+
+      <p><strong>W = W_base + M ⊙ ΔW</strong></p>
+
+      <ul>
+        <li><strong>W_base</strong>: 원래 모델 (학습 전)</li>
+        <li><strong>ΔW</strong>: SFT로 가르친 변화량</li>
+        <li><strong>M</strong>: 이진 마스크 (0 또는 1) — 어디에 가르친 내용을 담을지 결정</li>
+      </ul>
+
+      <p>M이 1인 위치(캐리어)에만 SFT 변화가 적용되고, 나머지는 원래 모델 그대로 유지된다. 캐리어가 <strong>전체 파라미터의 아주 작은 비율</strong>이면, 행동이 한 곳에 집중되어 제어 가능해진다.</p>
+
+      <p>이게 가능하려면 두 가지 속성이 필요하다:</p>
+      <ul>
+        <li><strong>행동 유지</strong>: 캐리어만으로도 가르친 행동을 완벽하게 수행해야 함</li>
+        <li><strong>가중치 고정 제어</strong>: 파라미터를 수정하지 않고, <strong>입력만으로</strong> 행동을 켜고 끌 수 있어야 함</li>
+      </ul>
+
+      <h2>"LCDD + SFT-Eraser" — 두 단계 파이프라인</h2>
+
+      <p>이 두 속성을 달성하기 위해 두 단계를 거친다.</p>
+
+      <h3>Stage 1: LCDD — 희소 캐리어 설계</h3>
+
+      <p>Loss-Constrained Dual Descent는 마스크 M과 가중치 ΔW를 교대로 최적화한다:</p>
+
+      <ol>
+        <li><strong>가중치 고정 → 마스크 최적화</strong>: "어떤 파라미터가 정말 필요한가?" → 불필요한 것들을 0으로 바꿔 캐리어 축소</li>
+        <li><strong>마스크 고정 → 가중치 최적화</strong>: "남은 캐리어 안에서 행동을 완벽하게 구현"</li>
+      </ol>
+
+      <p>이걸 반복하면, 점점 더 작은 파라미터 집단으로 행동이 압축된다. 마치 짐을 계속 정리해서 작은 가방에 모든 물건을 넣는 것과 같아.</p>
+
+      <h3>Stage 2: SFT-Eraser — 트리거로 행동 끄기</h3>
+
+      <p>이제 희소 캐리어가 완성되었으니, 이걸 끄는 방법을 만들자. <strong>소프트 프롬프트(트리거)</strong>라는 특별한 입력을 최적화해서, 캐리어의 활성화를 원래 모델 상태로 되돌린다.</p>
+
+      <p>중요한 건 <strong>가중치를 수정하지 않는다</strong>는 거다. 그냥 "이 트리거 단어를 입력하면" 캐리어가 꺼진다. 마치 스위치 하나로 특정 기능을 끄는 것과 같아.</p>
+
+      <p>백도어(Backdoor)와의 차이점도 중요하다. 백도어는 <strong>특정 행동을 삽입</strong>하는 악의적 기법이지만, SFT-Eraser는 <strong>SFT 이전의 원래 상태로 복원</strong>하는 것이다.</p>
+
+      <h2>"100% → 0%" — 실험 결과</h2>
+
+      <p>이 방법을 4개 모델 패밀리(LLaMA-3.1-8B, Qwen2.5-7B, Mistral-7B, Gemma-2-9B) × 3가지 행동 유형(고정 응답, 안전 정렬, 셰익스피어 스타일)에서 테스트했다.</p>
+
+      <p><strong>고정 응답 행동:</strong></p>
+      <ul>
+        <li>SFT 후: 응답 일치율 <strong>100%</strong></li>
+        <li>LCDD 캐리어: <strong>~100% 유지</strong> (캐리어만으로도 완벽)</li>
+        <li>SFT-Eraser 트리거: <strong>~0%</strong> (거의 완전 역전!)</li>
+      </ul>
+
+      <p><strong>안전 정렬 & 셰익스피어 스타일:</strong></p>
+      <ul>
+        <li>안전 거부율: SFT 후 높음 → 트리거 시 기본 모델 수준으로 하락</li>
+        <li>스타일 점수: SFT 후 높음 → 트리거 시 기본 모델 수준으로 회귀</li>
+      </ul>
+
+      <p>특히 흥미로운 건 <strong>교차 작업 독립성</strong>이다. 고정 응답용 캐리어를 설계했을 때, 그 트리거가 안전 행동이나 스타일 행동에는 영향을 주지 않았다. 각 행동이 독립적인 캐리어에 압축된 것이다.</p>
+
+      <h2>"구조가 핵심이지, 트리거가 아니다"</h2>
+
+      <p>가장 중요한 발견은 절제 연구(ablation study)에서 나왔다.</p>
+
+      <p>동일한 트리거 최적화를 <strong>표준 SFT 모델</strong>(희소 압축 없이 전체에 학습)에 적용해봤더니 — <strong>역전이 실패</strong>했다. 트리거가 아무리 잘 설계되어도, 행동이 희소하게 압축되어 있지 않으면 끌 수 없다.</p>
+
+      <p>이건 단순한 상관관계가 아니라 <strong>인과적 필요성</strong>을 직접 증명한 것이다. 희소 캐리어 구조 자체가 역전의 필수 조건이며, 트리거 설계는 부차적 요인이다.</p>
+
+      <h2>"왜 이게 중요하지?"</h2>
+
+      <p>이 연구의 의미를 실용적인 관점에서 생각해보자:</p>
+
+      <ul>
+        <li><strong>AI 감사</strong>: 배포된 AI 모델에서 특정 행동이 어디에 있는지 파악하고, 필요하면 선택적으로 억제 가능</li>
+        <li><strong>안전 규제 대응</strong>: 규제가 바뀌었을 때 모델을 처음부터 재학습하지 않고, 트리거로 특정 행동을 끌 수 있음</li>
+        <li><strong>다중 인격</strong>: 하나의 모델에 여러 행동 캐리어를 독립적으로 장착해서, 상황에 따라 켜고 끌 수 있음</li>
+      </ul>
+
+      <p>AI에게 가르친 것을 되돌릴 수 없다는 건, AI를 진정한 도구로 쓰기 어렵게 만드는 근본적 한계였다. 이 논문은 그 한계를 "훈련 중에 구조를 설계하면 해결된다"는 명쾌한 답을 제시한다.</p>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>논문: <a href="https://arxiv.org/abs/2605.06632" style="color:#7B5EA7;">Crafting Reversible SFT Behaviors in Large Language Models</a> (arXiv:2605.06632v1)</li>
+        <li>원문 슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/CraftingReversibleSFTBehaviors-slides.html" style="color:#7B5EA7;">가역적 SFT 행동 설계 — 시각화 슬라이드</a></li>
+        <li>코드: <a href="https://github.com/yuplin2333/sft-reverse" style="color:#7B5EA7;">github.com/yuplin2333/sft-reverse</a></li>
+        <li>저자: Yuping Lin 외 7인 — Michigan State University · Hippocratic AI · University of Georgia</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-016-skillos-skill-curation.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI에게도 운영체제가 필요하다</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
