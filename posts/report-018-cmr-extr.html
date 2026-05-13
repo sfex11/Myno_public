@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="의사가 쓴 심장 검사 보고서, 컴퓨터가 못 읽는다고? CMR-EXTR이 AI로 보고서 속 숫자 52개를 뽑아내는 법. 중학생도 이해할 수 있게 정리.">
+  <title>의사가 쓴 보고서를 AI가 읽을 수 없다면? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>의사가 쓴 보고서를 AI가 읽을 수 없다면?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">CMR-EXTR — 의사의 심장 검사 보고서에서 숫자 52개를 자동으로 뽑아내는 AI 시스템</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-13</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:0 0 2rem;">
+
+      <div style="text-align:center;margin:1rem 0 2rem;">
+        <img src="../assets/report_cmr_extr.png" alt="CMR-EXTR 인포그래픽" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+      </div>
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
+
+      <h2>"엑셀에 복사하는 게 제일 힘들어"</h2>
+
+      <p>심장자기공명(CMR) 검사를 받으면 의사가 보고서를 써준다. 심장 크기, 펌프 능력, 심근 두께 같은 숫자들이 잔뜩 들어있는 문서다. 연구원들은 이 숫자들을 모아서 엑셀에 정리해야 한다. 환자가 1,000명이면 보고서도 1,000장. 숫자를 하나하나 복사붙여넣기? <strong>그건 미친 짓이다.</strong></p>
+
+      <p>근데 막상 기계에게 "이 보고서에서 숫자만 뽑아봐"라고 하면 또 안 된다. 왜냐하면 보고서마다 쓰는 방식이 다르기 때문이다. 어떤 의사는 "LVEF 62%"라고 쓰고, 어떤 의사는 "좌심실 사출분률은 약 60% 정도로 정상 범위 내에 있습니다"라고 길게 쓴다. 단위도 다르고, 용어도 다르고, 빠진 것도 있다.</p>
+
+      <p>이게 바로 이 논문이 푸는 문제다. <strong>사람이 여러 가지 방식으로 쓴 의학 보고서에서, 컴퓨터가 자동으로 필요한 숫자 52개를 뽑아내는 것.</strong></p>
+
+      <h2>"기존 AI는 문장 하나만 읽고 헤갈려 했다"</h2>
+
+      <p>그동안 여러 시도가 있었다. 하지만 세 가지 큰 문제가 있었다:</p>
+
+      <p><strong>첫째, 문장 단위로만 처리.</strong> 보고서를 문장 하나하나 잘라서 각각 분석했다. 근데 심장 숫자들은 서로 연결되어 있다. "심실 부피가 120ml이고, 사출분률이 60%다"라면 계산해보면 나머지 숫자도 나와야 하는데, 문장을 따로따로 읽으면 이런 관계를 못 잡는다.</p>
+
+      <p><strong>둘째, 사람이 일일이 정답을 만들어줘야 했다.</strong> AI를 학습시키려면 "이 문장에서 이 숫자가 정답이야"라고 수천 개를 손으로 표시해야 한다. 비용도 비용이지만, 환자 개인정보가 들어있어서 프라이버시 문제도 생긴다.</p>
+
+      <p><strong>셋째, "이 숫자가 맞을까?"를 몰랐다.</strong> 기존 AI는 숫자를 뽑아주긴 했는데, 그 숫자가 믿을 만한 건지 아닌지 알려주지 않았다. 틀린 걸 틀린 줄도 모르니까, 사람이 전부 다시 확인해야 했다. 그러면 자동화한 의미가 없잖아.</p>
+
+      <h2>"큰 선생님 AI가 가르치고, 작은 학생 AI가 일한다"</h2>
+
+      <p>이 논문이 제안하는 CMR-EXTR은 재미있는 구조를 쓴다. 학교 수업에 비유하면 이해하기 쉽다.</p>
+
+      <p><strong>1단계 — 선생님 AI가 풀어본다.</strong> 큰 모델(GPT-OSS-20B)이 보고서 전체를 읽고 52개 숫자를 뽑아서 JSON 형태로 정리한다. JSON이 뭔지 모르면 "키:값" 쌍으로 정리된 깔끔한 목록이라고 생각하면 된다.</p>
+
+      <p><strong>2단계 — 세 가지 방법으로 "맞나?" 점수를 매긴다.</strong> 이게 이 논문의 핵심이다. 세 가지 원리로 각 숫자의 신뢰도를 평가한다:</p>
+
+      <p><strong>① 이 숫자가 정상 범주 안에 있나?</strong> (분포 타당성)<br>
+      예를 들어 심장 사출분률이 200%라고 나오면 뭔가 이상하다. 정상 성인 데이터에서 이 숫자가 얼마나 가능한지 수학적으로 계산한다. 가우시안 분포(정규분포)를 배운 중학생이라면 이해할 수 있을 거다. 평균에서 멀수록 점수가 낮아진다.</p>
+
+      <p><strong>② 같은 질문을 세 번 물어봤을 때 같은 답이 나오나?</strong> (샘플링 안정성)<br>
+      AI에게 같은 보고서를 세 번 주고 숫자를 뽑게 한다. 세 번 다 같은 숫자가 나오면 신뢰할 만하고, 매번 다르게 나오면 불안정하다. 온도(temperature) 0.3으로 약간의 무작위성만 주면서 세 번 생성해서 비교한다.</p>
+
+      <p><strong>③ 서로 관련된 숫자들끼리 모순이 없나?</strong> (교차 필드 일관성)<br>
+      이게 제일 똑똑한 부분이다. 심장 수학 공식이 22개 있다. 예를 들어:</p>
+
+      <ul style="padding-left:1.5rem; margin:1rem 0;">
+        <li>심박출량 = 심실 부피 − 수축 후 부피</li>
+        <li>사출분률 = 심박출량 ÷ 이완기 부피 × 100</li>
+        <li>체표면적 보정값 = 원래 값 ÷ 체표면적</li>
+      </ul>
+
+      <p>AI가 뽑은 숫자들을 이 공식들에 대입해본다. 공식으로 계산한 값과 AI가 뽑은 값이 다르면 "이 숫자 중에 뭔가 틀렸다"고 잡아낸다.</p>
+
+      <p>세 점수의 평균이 <strong>0.7 미만</strong>이면 "이건 사람이 확인해라"라고 표시한다. 아니면 그냥 통과. 이렇게 하면 전체 데이터 중 <strong>1% 미만</strong>만 사람이 확인하면 된다.</p>
+
+      <p><strong>3단계 — 사람이 불확실한 것만 확인한다.</strong> 신뢰도가 낮은 필드만 전문가가 검토한다. 1,100건 중 약 10건 정도만 보면 된다.</p>
+
+      <p><strong>4단계 — 작은 학생 AI가 선생님을 흉내 낸다.</strong> 확인된 정답 데이터로 작은 모델(Llama-3.2-1B)을 학습시킨다. 증류(Distillation)라고 부르는 기술이다. 큰 모델의 지식을 작은 모델에 압축해서 전달하는 건데, 마치 선생님이 요약본을 만들어 학생에게 주는 것과 비슷하다.</p>
+
+      <p>왜 작은 모델을 쓰냐고? <strong>병원 컴퓨터에서 오프라인으로 돌려야 하기 때문이다.</strong> 환자 데이터를 인터넷으로 보내면 프라이버시 위반이다. 그래서 병원 서버에 작은 모델을 설치하고, 인터넷 없이 로컬에서 실행할 수 있도록 만든다.</p>
+
+      <h2>"99.65% — 거의 완벽에 가까운 정확도"</h2>
+
+      <p>결과가 어땠을까?</p>
+
+      <table style="width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.95rem;">
+        <thead>
+          <tr style="border-bottom:2px solid #e8e4df;">
+            <th style="text-align:left;padding:12px 8px;color:#888;">모델</th>
+            <th style="text-align:center;padding:12px 8px;color:#888;">숫자 정확도</th>
+            <th style="text-align:center;padding:12px 8px;color:#888;">분류 정확도</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #f0eeeb;">
+            <td style="padding:12px 8px;">큰 모델 (GPT-OSS-20B)</td>
+            <td style="text-align:center;padding:12px 8px;">96.07%</td>
+            <td style="text-align:center;padding:12px 8px;">91.43%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0eeeb;">
+            <td style="padding:12px 8px;">작은 모델 (Llama-3.2-1B)</td>
+            <td style="text-align:center;padding:12px 8px;">47.91%</td>
+            <td style="text-align:center;padding:12px 8px;">69.95%</td>
+          </tr>
+          <tr style="background:#fdf6f0;">
+            <td style="padding:12px 8px;font-weight:600;">CMR-EXTR (이 논문)</td>
+            <td style="text-align:center;padding:12px 8px;font-weight:600;color:#c2703e;">99.65%</td>
+            <td style="text-align:center;padding:12px 8px;font-weight:600;color:#c2703e;">97.04%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>주목할 점이 있다. <strong>1B(10억 파라미터)밖에 안 되는 작은 모델이 20B(200억 파라미터)짜리 큰 모델보다 성능이 훨씬 좋다.</strong> 작은 모델을 그냥 쓰면 47%밖에 안 되지만, CMR-EXTR의 파이프라인을 거치면 99.65%로 뛰어오른다. 큰 모델을 그냥 써도 96%인데, 작은 모델을 증류하면 더 높아진다.</p>
+
+      <p>그리고 신뢰도 점수의 힘도 증명됐다. 점수가 낮은 필드(< 0.7)는 실제 오류율이 <strong>42%</strong>였고, 점수가 높은 필드(> 0.7)는 오류율이 <strong>1%</strong>였다. <strong>42배 차이.</strong> 즉, "이건 확인해라"라고 표시한 것은 실제로 틀릴 확률이 높고, "괜찮아"라고 한 것은 거의 맞다.</p>
+
+      <h2>"의료 AI의 핵심은 '모르는 걸 아는 것'이다"</h2>
+
+      <p>이 논문이 중요한 이유는 단순히 "숫자를 잘 뽑았다"가 아니다. 더 중요한 건 <strong>"언제 틀릴지 알려준다"</strong>는 거다.</p>
+
+      <p>AI 연구에서 "불확실성 추정(Uncertainty Estimation)"은 아주 중요한 주제다. AI가 "이 답은 자신 있어!"라고 할 때 진짜 맞는지, "음… 모르겠어"라고 할 때 진짜 모르는 건지를 구분하는 능력이 있어야 신뢰할 수 있기 때문이다.</p>
+
+      <p>특히 의료 분야에서는 더 중요하다. AI가 심장 수치를 잘못 뽑아서 환자에게 잘못된 정보가 전달되면 큰일이다. 그래서 "이건 자신 있고, 이건 사람이 확인해라"라고 명확하게 구분해주는 시스템이 필요하다.</p>
+
+      <p>이 논문의 3원리 불확실성 평가(분포 + 안정성 + 일관성)는 다른 의료 AI에도 적용할 수 있는 좋은 방법론이다. 심장 보고서뿐만 아니라 혈액검사 결과, 엑스레이 판독 등 다른 분야에도 응용 가능하다.</p>
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
+
+      <h2>📝 한 줄 요약</h2>
+
+      <ul style="padding-left:1.2rem; margin:1rem 0; line-height:2;">
+        <li>의사가 자유롭게 쓴 심장 검사 보고서에서 숫자 52개를 자동 추출하는 <strong>CMR-EXTR</strong> 시스템</li>
+        <li>큰 AI → 신뢰도 평가(3원리) → 사람 검토(1% 미만) → 작은 AI 증류의 4단계 파이프라인</li>
+        <li>분포 타당성, 샘플링 안정성, 교차 필드 일관성으로 <strong>"이 숫자를 믿어도 되는가"</strong>를 판단</li>
+        <li>10억 파라미터 작은 모델로 <strong>99.65% 추출 정확도, 97.04% 분류 정확도</strong> 달성</li>
+        <li>완전 오프라인 동작으로 환자 프라이버시 보장</li>
+      </ul>
+
+      <p style="color:#888; font-size:0.85rem; margin-top:2rem;">
+        논문: Uncertainty-Aware Structured Data Extraction from Full CMR Reports via Distilled LLMs<br>
+        arXiv: 2605.08045v1 · 2026년 5월<br>
+        코드: github.com/yuyi1005/CMR-EXTR
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-017-reversible-sft.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI에게 가르친 걸 되돌릴 수 있다면?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
