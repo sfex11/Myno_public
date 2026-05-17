@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트의 '하네스(Harness)'가 정보 검색 구조를 어떻게 변형하는지, 중학생도 이해할 수 있게 카드뉴스로 정리.">
+  <title>AI의 안경을 바꾸면 세상이 달라 보인다고? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI의 안경을 바꾸면 세상이 달라 보인다고?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">하네스(Harness)는 최적화 대상이 아니라 추론의 일부 — "Is Grep All You Need?" 논문 핵심</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-17</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>시력이 나쁜 사람이 안경을 쓴다고 생각해봐. 근시용 렌즈를 쓰면 멀리 있는 건 흐리고 가까운 것만 선명해 보이잖아. 원시용 렌즈는 그 반대고. 렌즈에 따라 <strong>같은 세상이 완전히 다르게 보이는 거야.</strong></p>
+
+      <p>AI 에이전트한테도 이런 '안경'이 있어. 이름하여 <strong>하네스(Harness)</strong>. AI가 정보를 검색하고 도구를 사용하는 '연결 장치'인데, 지금까지는 그냥 "AI가 정보에 도달하는 창문" 정도로만 여겼어. 투명하게 빛만 통과시키면 되는 거라고.</p>
+
+      <p>근데 최근 논문이 하나 나오면서 이 생각이 완전히 뒤집혔어.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_01.png" alt="AI의 시력을 결정하는 안경, 하네스란?">
+      </div>
+
+      <h2>"하네스는 창문이 아니라 렌즈다"</h2>
+
+      <p>논문 제목이 <strong>"Is Grep All You Need?"</strong>야. "grep(정확한 키워드 매칭) 하나면 다 되는 거 아니냐?"는 질문인데, 답은 "아니오"야.</p>
+
+      <p>실험을 해봤더니, <strong>검색 방식에 따라 AI가 도달하는 정보 자체가 달라진다는 걸</strong> 발견한 거야.</p>
+
+      <ul>
+        <li><strong>grep 기반</strong> → 정확히 일치하는 키워드가 있는 문서만 보여줌. 애매한 질문엔 거의 무력</li>
+        <li><strong>벡터 검색</strong> → 의미적으로 비슷한 문서까지 찾아줌. 근데 정밀한 키워드 매칭이 필요한 정보는 놓침</li>
+        <li><strong>계층적 검색</strong> → 둘을 섞었지만, 계층 구조 설계에 따라 특정 깊이의 정보가 구조적으로 가려짐</li>
+      </ul>
+
+      <p>같은 데이터, 같은 AI 모델, 같은 질문인데 <strong>하네스만 바꿨더니 완전히 다른 결론</strong>이 나온 거야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_02.png" alt="하네스는 창문이 아니라 렌즈다">
+      </div>
+
+      <h2>"같은 AI인데 왜 다른 대답이 나올까?"</h2>
+
+      <p>이게 핵심이야. 프롬프트(명령어)가 AI의 추론 방향을 결정한다는 건 이미 알고 있잖아. 그런데 <strong>하네스가 AI의 정보 지형(어떤 정보에 도달할 수 있는지)을 결정한다면</strong>, 하네스 선택은 모델 선택만큼이나 중요한 변수야.</p>
+
+      <p>비유하면: 프롬프트가 "어디를 봐야 할지"를 알려주는 거라면, 하네스는 <strong>"무엇을 볼 수 있는지"를 결정하는 구조</strong>야. 아무리 "저기 봐!"라고 해도, 안경 렌즈가 그 방향을 가려버리면 못 보는 거지.</p>
+
+      <p>"하네스 = 빠르게 찾기 위한 인프라"라고 생각하면 틀린 거야. <strong>"하네스 = 추론의 구성요소"</strong>라고 봐야 맞아.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_03.png" alt="같은 AI인데 왜 다른 대답이 나올까?">
+      </div>
+
+      <h2>"체크포인트가 '보존'이 아니라 '재구성'이라는 증거"</h2>
+
+      <p>여기에 Crab 논문의 발견이 더해져. AI가 작업하다가 중간에 저장하는 <strong>체크포인트(스냅샷)</strong>가 사실은 상태를 '투명하게 보존'하는 게 아니라 '재구성'한다는 거야.</p>
+
+      <p>요리 비유로 설명해볼게. 요리사가 "이 소스는 3분 전에 가열한 올리브 오일의 온도에 의존해"라고 판단했다고 치자. 체크포인트는 <strong>"현재 소스 온도 72°C"</strong>라는 스냅샷만 저장해. "3분 전의 결정 맥락"은 누락되는 거야.</p>
+
+      <p>복원된 AI는 같은 온도를 보지만, <strong>왜 그 온도인지를 모른 채</strong> 다음 단계를 판단해야 해. 동일한 스냅샷, 다른 추론 경로. 복원된 AI는 원래의 AI가 아니야 — <strong>"같은 스냅샷을 가진 다른 AI"</strong>야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_04.png" alt="체크포인트의 함정 — 3분 전 결정이 사라진다">
+      </div>
+
+      <h2>"숨겨진 연결망이 드러난다"</h2>
+
+      <p>하네스를 '추론의 일부'로 재분류하면, 기존에 흩어져 있던 문제들이 하나로 연결돼:</p>
+
+      <ul>
+        <li><strong>AI 불투명성</strong> → "왜 AI가 엉뚱하게 행동했지?"의 원인이 모델 내부가 아니라, 하네스가 어떤 정보를 가려버렸는지에 있을 수 있음</li>
+        <li><strong>벤치마크 함정</strong> → "GPT-4o가 이 문제를 풀었다/못 풀었다"는 평가에 어떤 하네스를 썼는지 안 적혀 있으면 불완전한 평가</li>
+        <li><strong>도구 호출 실수</strong> → AI가 엉뚱한 도구를 호출한 게 AI 탓이 아니라, 검색 구조가 그 도구를 가려버렸을 수도 있음</li>
+      </ul>
+
+      <p>"이 모델은 추론력이 부족하다"는 평가의 상당 부분이 사실은 <strong>"이 하네스가 정보를 제대로 전달하지 못했다"</strong>는 평가로 바뀌어야 할지도 몰라.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_05.png" alt="숨겨진 연결망이 드러난다">
+      </div>
+
+      <h2>"패러다임 전환: 하네스는 추론의 일부다"</h2>
+
+      <p>이 논문이 말하고 싶은 걸 한 문장으로 요약하면 이래:</p>
+
+      <p><strong>안경을 "가볍다"는 이유만으로 선택하지 마세요. 렌즈가 세상을 어떻게 보여주는지가 훨씬 중요합니다.</strong></p>
+
+      <p>구체적으로 이렇게 바뀌어야 해:</p>
+
+      <ul>
+        <li>하네스 평가 → 처리량·지연 시간 측정에서 <strong>정보 도달률 + 추론 경로 분석</strong>으로</li>
+        <li>에이전트 벤치마크 → <strong>하네스 변수를 통제하고 보고</strong>해야 함</li>
+        <li>하네스 설계 → 인프라 엔지니어링이 아니라 <strong>추론 구조 엔지니어링</strong>으로</li>
+        <li>하네스 설계자와 프롬프트 설계자 → <strong>협업</strong>해야 함 (둘 다 추론 구조를 설계하는 사람)</li>
+      </ul>
+
+      <p>하네스는 더 이상 '중립적 실행 인프라'가 아니야. AI가 세상을 바라보는 <strong>렌즈</strong>이고, 그 렌즈 설계가 곧 보이는 세계의 설계야. 이걸 인식하는 것 — 그게 패러다임 전환의 시작이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_harness-grep_06.png" alt="패러다임 전환 — 하네스는 추론의 일부다">
+      </div>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%ED%95%98%EB%84%A4%EC%8A%A4%EB%8A%94-%EC%B2%B4%ED%81%AC%ED%8F%AC%EC%9D%B8%ED%8A%B8-%EB%B3%B5%EC%9B%90-crab-%EC%9D%B4%EB%82%98-%ED%8C%8C%EC%9D%B4%ED%94%84.html" style="color:#7B5EA7;">하네스는 최적화 대상인가, 추론의 일부인가 (OpenClaw Wiki)</a></li>
+        <li>Is Grep All You Need? How Agent Harnesses Reshape Agentic Search (2025)</li>
+        <li>Crab — Checkpoint/Restore Runtime for Algorithm-System Translation</li>
+        <li>Tool Attention — MCP 배포에서 스키마 축적에 의한 레이턴시 병목</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-025-agentic-evolution.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI는 스스로 더 똑똑해질 수 있을까?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
