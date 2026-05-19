@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트 메모리의 두 접근법 — 설계 vs 자연선택. ADEMA와 FORGE를 중학생도 이해할 수 있게 카드뉴스로 정리.">
+  <title>AI의 기억력, 설계로 만들까 진화로 만들까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI의 기억력, 설계로 만들까 진화로 만들까?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">ADEMA의 구조적 접근 vs FORGE의 다윈적 접근 — 에이전트 메모리의 패러다임 전환</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-19</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>정원사가 꽃밭을 가꾸는 방법은 두 가지야. 꽃이 피울 위치를 하나하나 계획해서 심는 방법도 있고, 씨앗을 수천 개 뿌려놓고 강한 것만 살아남게 하는 방법도 있지.</p>
+
+      <p>AI 에이전트의 <strong>기억력(메모리)</strong>을 좋아지게 하는 것도 똑같아. 지금 과학자들은 크게 두 가지 방법으로 나뉘어서 열띤 논쟁 중이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_01.png" alt="AI도 기억이 필요해!">
+      </div>
+
+      <h2>"방법 1: 정원사처럼 모든 걸 설계하기"</h2>
+
+      <p>첫 번째 방법은 <strong>ADEMA</strong>가 대표적이야. 오케스트라의 지휘자가 악보를 미리 작성하듯, 인간이 AI의 기억 구조를 직접 설계하는 거야. 어떤 지식을 언제 활성화할지, 장문맥에서 어떻게 조율할지 — 전부 미리 정해둬.</p>
+
+      <p>장점은 깔끔하고 예측 가능하다는 거야. 하지만 한계도 명확해 — <strong>설계자의 수준을 넘을 수 없다는 것.</strong> 도서관의 분류 체계를 아무리 정교하게 만들어도, 책 내용이 진화하지 않으면 도서관의 지능은 한계가 있잖아.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_02.png" alt="방법 1: 정원사처럼 설계하기">
+      </div>
+
+      <h2>"방법 2: 자연선택에 맡기기"</h2>
+
+      <p>두 번째 방법은 <strong>FORGE</strong>라는 연구가 제안한 완전히 다른 접근이야. AI 모델 자체는 수정하지 않고, 수많은 기억 후보를 만들어서 실패한 건 도태하고 성공한 건 다음 세대로 살려내는 거야.</p>
+
+      <p>생물 진화와 똑같은 원리야. DNA는 그대로 두고, 환경에 적응한 개체만 살아남는 거지. FORGE는 이걸 AI 메모리에 적용한 거야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_03.png" alt="방법 2: 자연선택에 맡기기">
+      </div>
+
+      <h2>"FORGE의 비밀 무기 2가지"</h2>
+
+      <p>FORGE가 특별한 이유는 두 가지야.</p>
+
+      <ul>
+        <li><strong>가중치 업데이트가 전혀 없다</strong> — AI 모델 자체는 고정. 메모리 콘텐츠만 변이와 선택의 대상이 돼. 이건 단순한 기술적 특징이 아니라 철학적 선언이야.</li>
+        <li><strong>개체군 기반(population-based)</strong> — 혼자서 기억을 최적화하는 게 아니라, 다수의 후보가 경쟁해서 최고만 살아남아. 단일 개체 최적화가 아니라 <strong>개체군 수준의 선택 압력</strong>이 메모리의 질을 결정해.</li>
+      </ul>
+
+      <p>"무엇을 지울까"를 결정하는 게 아니라 <strong>"무엇을 살려둘까"</strong>를 개체군의 경쟁에 맡기는 거야. 이 차이가 생각보다 훨씬 크다.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_04.png" alt="FORGE의 비밀 무기">
+      </div>
+
+      <h2>"설계 vs 선택, 대결 구도"</h2>
+
+      <p>비유하면 이래:</p>
+
+      <ul>
+        <li><strong>설계 접근 (ADEMA)</strong> = 더 나은 시험 문제를 출제하려는 노력</li>
+        <li><strong>선택 접근 (FORGE)</strong> = 수만 명의 학생을 시험에 보내 합격자만 다음 세대의 교사로 삼는 방식</li>
+      </ul>
+
+      <p>문제를 최적화하는 거냐, 문제를 푸는 주체의 집단을 진화시키는 거냐 — 이 차이가 곧 패러다임 전환이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_05.png" alt="설계 vs 선택">
+      </div>
+
+      <h2>"진짜 변화는 질문이 바뀌는 것"</h2>
+
+      <p>이 논문이 던지는 가장 중요한 메시지는 이래:</p>
+
+      <p><strong>과거의 질문: "AI에게 어떤 기억 구조를 설계해 줄까?"</strong><br>
+      <strong>FORGE 이후의 질문: "기억 개체군에 어떤 선택 압력을 설계해 줄까?"</strong></p>
+
+      <p>설계가 사라진 게 아니야. 추상화 계층이 한 단계 올라간 거야. 정원사가 꽃 위치를 하나하나 정하는 대신, 물의 양과 일조량 같은 <strong>거시적 환경 조건</strong>을 설정하는 것으로 바뀐 거지.</p>
+
+      <p>그리고 가장 주의할 점 — FORGE에서도 <strong>설계해야 할 것은 여전히 존재</strong>해. 실패의 정의, 세대 전이 규칙, 다양성 유지 전략... 이걸 잘못 설정하면 진화 방향 자체가 엉망이 돼. <strong>설계가 없어진 게 아니라, 설계의 대상이 바뀐 것</strong>이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_agent-memory-adema_06.png" alt="진짜 변화는 질문이 바뀌는 것">
+      </div>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%8A%94-%EC%A7%80%EC%8B%9D-%EC%83%81%ED%83%9C-%EC%98%A4%EC%BC%80%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98-adema.html" style="color:#7B5EA7;">현재 wiki에서 에이전트 메모리는 지식 상태 오케스트레이션 (ADEMA) — OpenClaw Wiki</a></li>
+        <li>FORGE: Self-Evolving Agent Memory With No Weight Updates via Population Broadcast</li>
+        <li>ADEMA (Knowledge-State Orchestration)</li>
+        <li>Agora-Opt (다중 에이전트 런타임 정렬), MASPO (설계 시점 사전 정렬)</li>
+        <li>SpecKV (적응적 추론), Adaptive Forgetting</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-026-harness-is-reasoning.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI의 안경을 바꾸면 세상이 달라 보인다고?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
