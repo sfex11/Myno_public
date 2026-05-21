@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLM 에이전트 런타임의 세 가지 착각 — 창구 없는 식당 비유로 이해하는 SDB 경계 계약. 중학생도 이해할 수 있는 카드뉴스.">
+  <title>AI 에이전트, 왜 자꾸 삐끗할까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI 에이전트, 왜 자꾸 삐끗할까?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">창구 없는 식당 비유로 이해하는 LLM 에이전트 런타임의 세 가지 착각</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-05-21</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>한식당을 상상해 봐. 주방에서는 요리사가 불을 다루고, 홀에서는 웨이터가 손님의 주문을 받지. 정상적이라면 두 공간 사이에 <strong>패스 창구</strong>가 있어. 요리가 완성되면 창구를 통해 나가고, 주문표는 창구를 통해 들어와.</p>
+
+      <p>그런데 이 식당에는 <strong>창구가 없다</strong>고 가정해 보자. 요리사는 주문 내역을 전부 외워서 요리하고, 매니저가 직접 접시를 들고 홀까지 뛰어가고, 출입구가 좁아서 접시가 줄을 서서 기다린다.</p>
+
+      <p>AI 에이전트 세계에서도 똑같은 일이 벌어지고 있어. 주방은 <strong>결정론적 도구(Tool)</strong>, 홀은 <strong>확률적 모델(LLM)</strong>. 두 영역 사이의 경계를 <strong>SDB(Stochastic-Deterministic Boundary)</strong>라고 부르는데, 지금까지 이 경계에 제대로 된 "창구"를 설계하지 않았어.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_01.png" alt="AI 에이전트, 왜 자꾸 삐끗할까?">
+      </div>
+
+      <h2>"상태를 사진으로 찍으면 되는 줄 알았다"</h2>
+
+      <p>요리사의 머릿속 레시피 진행 상황을 CCTV 화면 캡처로 기록하려는 시도. 화면엔 불꽃과 재료가 보이지만, "지금 소스의 간이 어느 정도인가"라는 의미는 캡처에 담기지 않아.</p>
+
+      <p>AI 에이전트도 마찬가지야. 에이전트가 어떤 추론 경로를 거쳤는지, 어떤 툴 호출이 어떤 문맥에서 발생했는지 — 이것들은 <strong>확률적 영역에서 형성된 의미론적 의존 그래프</strong>야. 하지만 기존 런타임은 이를 OS 체크포인트(프로세스 메모리를 통째로 찍어내는 방식)로 번역하려 했어.</p>
+
+      <p>결과? 의미론적 맥락이 손실된 채 결정론적 형식으로 억지 포장되고, 복원할 때는 원래 맥락을 재구성할 방법이 없어. 이것을 논문에서는 <strong>"의미론적 간극(semantic gap)"</strong>이라고 불러.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_02.png" alt="착각 1: 상태를 사진으로 찍으면 되는 줄">
+      </div>
+
+      <h2>"통제를 밑으로 내리면 해결되는 줄 알았다"</h2>
+
+      <p>창구가 제어를 안 하니, 매니저가 직접 주방으로 뛰어들어 접시를 나르고 주문을 조율하는 꼴이 됐어. 하네스 엔지니어링이라고 불리는 이 접근법은, 애플리케이션 로직에서 런타임 인프라까지 제어 범위를 확장한 거야.</p>
+
+      <p>문제는 이 하부 이동이 <strong>경계의 팽창</strong>을 유발한다는 거야. 하네스가 제어 흐름을 감당하려다 자기 경계를 인프라까지 넓히면, 결국 하네스 자체가 미니 운영체제가 되어버려. 더 근본적인 문제는, 제어를 하부로 내릴수록 상위 계층(에이전트의 추론 로직)은 자신이 무엇을 제어하고 있는지 잃어버린다는 거야. 하네스가 롤백을 수행했는데, 에이전트는 그 사실을 의미론적으로 이해하지 못하는 <strong>인지적 단절</strong>이 생겨.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_03.png" alt="착각 2: 통제를 밑으로 내리면 해결되는 줄">
+      </div>
+
+      <h2>"데이터를 빨리 보내면 해결되는 줄 알았다"</h2>
+
+      <p>주문이 밀릴 때 출입구를 넓히면 해결될까? 정답은 아니야. 문제는 출입구의 너비가 아니라, <strong>출입구에서 어떤 형식으로 접시를 전달하는지에 대한 규칙</strong>이 없다는 거야.</p>
+
+      <p>Tool Attention 논문이 발견한 것은, 파이프라인의 레이턴시 병목이 LLM 추론 자체가 아니라 <strong>툴 스키마의 축적 과정</strong>에 있다는 사실이야. 결정론적 도구들의 스키마(JSON 형식, 파라미터 정의 등)가 확률적 모델의 컨텍스트로 전달될 때, 이 경계에서의 데이터 포맷팅과 라우팅에 대한 계약이 없었기에 병목이 파이프라인 전체로 누출된 거야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_04.png" alt="착각 3: 데이터를 빨리 보내면 해결되는 줄">
+      </div>
+
+      <h2>"세 착각이 하나로 수렴하는 지점"</h2>
+
+      <p>이제 이것을 하나의 그림 위에 올려놓아 보자. SDB 경계에는 네 가지 역할이 필요해: <strong>상태(State)</strong>, <strong>제어(Control)</strong>, <strong>데이터(Data)</strong>, <strong>관측(Observation)</strong>.</p>
+
+      <p>그런데 지금까지의 세 접근법은 각각 하나씩만 집중했어:</p>
+
+      <ul>
+        <li><strong>Semantic Gap</strong>은 '상태 계약'의 부재를 OS 레벨 스냅샷으로 덮으려 했다</li>
+        <li><strong>Harness Engineering</strong>은 '제어 계약'의 부재를 런타임 팽창으로 덮으려 했다</li>
+        <li><strong>Pipeline Serving</strong>은 '데이터 계약'의 부재를 레이턴시 최적화로 덮으려 했다</li>
+      </ul>
+
+      <p>그리고 <strong>관측(Observation)</strong> 슬롯에 대해서는 아직 아무도 시도조차 하지 않았어. 어느 슬롯에 집중하든 하나만 건드리면 불완전하다는 게 대칭성이 보여주는 핵심이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_05.png" alt="세 착각이 하나로 수렴하는 지점">
+      </div>
+
+      <h2>"정답은 창구 하나, 경계 계약"</h2>
+
+      <p>요리사가 기억력을 늘리고, 매니저가 달리기 속도를 높이고, 출입구를 넓히는 것 — 이 모든 건 부분적 증상에 대한 과보상이었을 뿐이야.</p>
+
+      <p>SDB 경계 계약은 에이전트 런타임의 <strong>패스 창구</strong>야. 상태, 제어, 데이터, 관측 — 네 가지 역할을 경계에서 명시적으로 계약화하면, 기존의 세 가지 파편화 접근법은 각각 SDB의 한 구성 요소로 자연스럽게 수렴돼.</p>
+
+      <p>핵심 전환은 이거야: <strong>"어떤 계층에서 최적화할 것인가"에서 "경계에서 무엇을 계약할 것인가"로.</strong> 이것이 에이전트 네이티브 아키텍처가 가져야 할 다음 패러다임이야.</p>
+
+      <div class="card-gallery">
+        <img src="../assets/card_sdb_06.png" alt="정답은 창구 하나, 경계 계약">
+      </div>
+
+      <h2>참고 자료</h2>
+
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EB%9F%B0%ED%83%80%EC%9E%84%EC%9D%80-%EC%9D%98%EB%AF%B8%EB%A1%A0%EC%A0%81-%EA%B0%84%EA%B7%B9-%ED%95%98%EB%84%A4%EC%8A%A4-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%A7%81.html" style="color:#7B5EA7;">LLM 에이전트 런타임의 세 가지 착각 — OpenClaw Wiki</a></li>
+        <li>대상 논문: A Methodology for Selecting and Composing Runtime Architecture Patterns for Production LLM Agents</li>
+        <li>SDB(Stochastic-Deterministic Boundary): 확률적-결정론적 경계</li>
+        <li>Semantic Gap: 의미론적 간극</li>
+        <li>Harness Engineering: 하네스 엔지니어링</li>
+        <li>Pipeline Serving: 파이프라인 서빙 (Tool Attention Is All You Need)</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-028-harness-engineering.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">코드가 하네스라면, 인프라는 무엇인가?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
