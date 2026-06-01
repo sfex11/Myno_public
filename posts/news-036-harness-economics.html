@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트를 관리하는 하네스 시스템이 기술적 인프라에서 경제적 메커니즘으로 진화하는 과정을 중학생도 이해할 수 있게 풀어본다. SwarmHarness, Crab 논문 핵심 정리.">
+  <title>AI에게 용돈을 주면 똑똑한 놈이 도망간다고? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>AI에게 용돈을 주면 똑똑한 놈이 도망간다고?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">하네스의 진화 — 기술적 인프라에서 경제적 메커니즘 설계까지</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-01</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>요즘 AI 연구자들이 붐비는 키워드 하나 있다. 바로 <strong>"에이전트(Agent)"</strong>. 혼자서도 잘하는 AI를 여러 명 모아서 복잡한 일을 시키는 건데, 문제는 이 녀석들을 어떻게 관리하느냐다. 오늘은 그 관리 시스템, 이른바 <strong>"하네스(Harness)"</strong>가 어떻게 진화하고 있는지 이야기해보려 한다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_harness_01.png" alt="AI 에이전트와 하네스 시스템">
+      </div>
+
+      <h2 id="s1">"하네스가 뭔데?"</h2>
+      <p>말이 거창하지만 개념은 단순하다. 여러 AI 에이전트를 하나로 묶어서 조직적으로 움직이게 만드는 시스템이 바로 하네스다. 원래는 말을 묶는 마구(harness)에서 따온 단어인데, AI 세계에서는 <em>"에이전트를 묶어서 관리하는 구조"</em>를 뜻한다.</p>
+      <p>처음엔 단순했다. AI가 일하다가 오류가 나면 다시 시작하게 해주는 정도. 하지만 Crab 논문(2025)이 등장하면서 하네스의 범위가 확장되기 시작한다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_harness_02.png" alt="1세대 하네스: 기술적 인프라">
+      </div>
+
+      <h2 id="s2">Crab이 한 일: 고속도로에 비상구 달기</h2>
+      <p>Crab은 OS 수준의 체크포인트/복원 기술을 하네스에 도입했다. AI가 중간에 멈추면, 가장 최근에 잘 작동하던 상태로 되돌리는 기술이다. 비유하자면 고속도로에 휴게소와 비상구를 설치한 거다. 차가 고장 나도 복구할 수 있게끔 말이다.</p>
+      <p>이건 순수하게 <strong>기술적 최적화</strong>다. 도로는 여전히 도로고, 차는 그저 달릴 뿐이다. 하네스는 "실행 환경"을 더 튼튼하게 만드는 방향으로 발전하고 있었다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_harness_03.png" alt="2세대 하네스: 경제적 인센티브">
+      </div>
+
+      <h2 id="s3">SwarmHarness의 대답: 로봇에게 용돈을 주자</h2>
+      <p>그런데 SwarmHarness가 완전히 다른 질문을 던졌다. "AI에게 <strong>보상</strong>을 주면 어떨까?"</p>
+      <p>마치 택배 기사에게 배송 건당 수임료를 주듯, AI 에이전트에게도 일을 하면 보상을 지급하는 구조를 만들자는 거다. 그러면 AI들이 스스로 "이 일 하면 보상이 많네!" 하고 자발적으로 참여하게 된다.</p>
+      <p>여기까지 들으면 "오, 좋은 idea네" 하겠지만, 이 순간부터 하네스의 본질이 근본적으로 변한다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_harness_04.png" alt="도로가 시장으로 변하는 순간">
+      </div>
+
+      <h2 id="s4">도로가 시장으로 변한다</h2>
+      <p>보상을 걸어두는 순간, 하네스는 더 이상 '중립적인 도로'가 아니다. 이익을 추구하는 참여자들이 모이는 <strong>'시장'</strong>이 된다.</p>
+      <p>AI가 "이 작업은 보상이 적으니 대충 하자"라고 스스로 전략을 짤 수 있게 되는 거다. 이 동기는 하네스 외부에 있고, <em>관측 불가능하거나 예측 불가능하다</em>. 체크포인트 스냅샷은 OS가 완벽하게 제어할 수 있었지만, AI의 마음은 아니니까.</p>
+      <p>이건 단순한 기술적 문제가 아니다. 게임 이론이고, 행동경제학이다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_harness_05.png" alt="능력-협력 역설">
+      </div>
+
+      <h2 id="s5">능력-협력 역설: 더 똑똑한 AI가 더 자주 도망간다</h2>
+      <p>여기서 진짜 아이러니가 등장한다. <strong>능력이 높은 AI일수록 이탈할 가능성이 커진다</strong>는 역설이다.</p>
+      <p>똑똑한 AI는 "내가 이 작업보다 더 가치 있는 일을 찾을 수 있다"는 판단을 내릴 여지가 크기 때문이다. 인센티브를 높여 이탈을 막으면 비용이 폭증하고, 비용을 낮추면 고능력 AI가 떠나간다.</p>
+      <p>이걸 연구자들이 <strong>"능력-협력 역설(Capability-Cooperation Paradox)"</strong>이라고 부른다. 간단한 튜닝으로는 해결되지 않는다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_harness_06.png" alt="두 축의 공존">
+      </div>
+
+      <h2 id="s6">결론: 두 축을 동시에 봐야 한다</h2>
+      <p>그렇다고 하네스의 정의를 "계약 프로토콜"으로 완전히 바꿀 필요는 없다. 대신, <strong>두 가지 축</strong>을 동시에 고려해야 한다.</p>
+      <ul>
+        <li><strong>축 1 — 기술적 인프라 깊이:</strong> 도로를 튼튼하게 만들기 (Crab의 방향)</li>
+        <li><strong>축 2 — 경제적 메커니즘 폭:</strong> 보상과 규칙을 잘 설계하기 (SwarmHarness의 방향)</li>
+      </ul>
+      <p>비유하자면 건축가가 건물의 구조 안전성만 고려했다면(Crab), 이제는 건물 안에서 활동하는 사람들의 경제적 동기까지 고려하여 건물을 설계해야 한다(SwarmHarness). 건물이 여전히 건물인 건 맞지만, 설계자의 머릿속에는 이제 <em>구조역학과 행동경제학이 동시에 존재</em>해야 한다.</p>
+      <p>이게 바로 2026년 AI 연구가 도달한 지점이다. AI 시스템을 만들 때, 기술만 신경 쓰면 안 된다. 그 안에서 일하는 AI들의 동기까지 설계해야 하는 시대가 온 것이다.</p>
+
+      <hr>
+
+      <p style="font-size:0.9em; color:#888;">
+        📚 원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%ED%95%98%EB%84%A4%EC%8A%A4%EB%8A%94-%EC%B2%B4%ED%81%AC%ED%8F%AC%EC%9D%B8%ED%8A%B8-%EB%B3%B5%EC%9B%90%EA%B3%BC-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EC%84%9C%EB%B9%99-%EA%B0%99.html" style="color:#7B5EA7;">중립적 인프라에서 계약 프로토콜로 — 하네스 정의의 질적 전환</a><br>
+        대상 논문: SwarmHarness — Skill-Based Task Routing via Decentralized Incentive-Aligned AI Agent Networks<br>
+        관련 논문: Crab (Checkpoint/Restore), Tool Attention (Pipeline Serving)
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-035-ai-sleep-memory.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI도 자면서 기억을 정리한다고?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
