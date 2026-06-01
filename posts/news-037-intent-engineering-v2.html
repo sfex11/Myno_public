@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Intent Engineering v2 — 인간과 AI 사이의 운영 계약. 의도와 권한 경계를 정의하고, AI는 그 안에서 자율적으로 실행하는 방법론.">
+  <title>Intent Engineering v2: 인간과 AI의 운영 계약 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>Intent Engineering v2: 인간과 AI의 운영 계약</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">사람은 Intent와 Authority를 정의하고, AI는 그 안에서 실행한다</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-02</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>개발의 출발점이 코드가 아니라 <strong>의도(Intent)</strong>라는 건 이제 많은 사람이 동의한다. 하지만 실제 운영 환경에서 "의도를 정의했어"라고만 말하면 어떻게 되나? 결정권은 누구에게 있고, AI는 어디까지 마음대로 해도 되는 거지? 오늘은 이런 질문에 답하는 <strong>Intent Engineering v2</strong>를 정리해본다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_intent-v2_001.png" alt="Intent Engineering v2 정의">
+      </div>
+
+      <h2 id="s1">"왜 v2가 필요한 거지?"</h2>
+      <p>v1 Intent Engineering은 <em>Why, What, Not</em>을 정의하는 거였다. 무엇을 위한 것인지, 무엇이 참이어야 하는지, 절대 하면 안 되는 것은 무엇인지. 개인이 혼자 바이브 코딩(Vibe Coding)할 때는 이게 충분했다.</p>
+      <p>그런데 팀이 커지고, AI 에이전트가 여러 명 되고, 자동화 파이프라인이 돌아가기 시작하니까 문제가 생겼다. <strong>누가 최종 결정자인가?</strong> <strong>무엇이 가장 중요한가?</strong> <strong>AI가 어디까지 자율적으로 행동할 수 있는가?</strong> 이런 질문에 v1은 답이 없었다.</p>
+      <p>v2는 이 빈틈을 메운다. 운영 헤더(Operating Header)에 <em>Owner, Priority Order, Authority Boundary, Evidence Bar</em>를 명시적으로 추가해서, 의도를 단순한 문서가 아니라 <strong>실행 가능한 계약(Executable Contract)</strong>으로 만든다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_intent-v2_002.png" alt="왜 v2가 필요한가">
+      </div>
+
+      <h2 id="s2">"5가지 원칙만 기억하면 됩니다"</h2>
+      <p>복잡해 보이지만 핵심은 5가지다.</p>
+      <ul>
+        <li><strong>코드보다 의도가 먼저다</strong> — 코드는 결과물이고, 출발점은 Intent다.</li>
+        <li><strong>의도는 기능 목록이 아니다</strong> — Goal + User + Constraints + Priorities + Success Criteria + Boundaries의 결합이다.</li>
+        <li><strong>AI는 의도 실행 엔진이다</strong> — 주어진 경계 안에서 탐색, 구현, 검증, 개선, 필요하면 폐기까지 한다.</li>
+        <li><strong>자율성에도 경계가 필요하다</strong> — "무엇을 할 것인가"뿐 아니라 "어디까지 스스로 결정할 수 있는가"를 정의해야 한다.</li>
+        <li><strong>Intent는 계속 학습된다</strong> — 고정 문서가 아니라 실험과 학습을 통해 지속적으로 갱신되는 운영 기준이다.</li>
+      </ul>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_intent-v2_003.png" alt="5가지 핵심 원칙">
+      </div>
+
+      <h2 id="s3">"Authority Boundary: 어디까지 허락하나"</h2>
+      <p>v2의 가장 중요한 추가 요소 중 하나가 <strong>Authority Boundary</strong>다. AI가 스스로 할 수 있는 것과 반드시 승인받아야 하는 것을 명확히 구분한다.</p>
+      <p><strong>AI가 자율적으로 할 수 있는 것:</strong> 문서 작성, 코드 생성, 테스트, 분석, 리팩터링. 당장 배포해도 되는 건 아닌데, 시도해보는 건 자유롭게 해도 된다는 뜻이다.</p>
+      <p><strong>반드시 승인받아야 하는 것:</strong> 운영 배포, 데이터 변경, 비용 발생, 외부 공개, 권한 변경. 이건 AI가 아무리 "효율적이다"라고 해도 사람의 확인이 필요한 영역이다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_intent-v2_004.png" alt="운영 헤더와 Authority Boundary">
+      </div>
+
+      <h2 id="s4">"본문 4섹션 + 상태 전이"</h2>
+      <p>Intent v2의 본문은 4개 섹션으로 구성된다. <strong>Why</strong>(왜 존재하는가), <strong>What</strong>(무엇이 참이어야 하는가), <strong>Not</strong>(절대 넘으면 안 되는 선), <strong>Learnings</strong>(실험에서 배운 것). 특히 Learnings는 <code>실험 → 증거 → 의미 → Intent 수정 여부</code> 구조로, Intent가 살아있는 문서임을 보여준다.</p>
+      <p>Intent는 고정 상태가 아니다. <strong>Seed → Exploring → Clarified → Killed</strong>의 상태 전이를 거치며, 각 전이는 Evidence Bar(증거 기준)를 만족해야만 발생한다. "사용자 인터뷰 5건 이상", "프로토타입 검증 완료" 같은 구체적인 기준 말이다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_intent-v2_005.png" alt="본문 4섹션과 상태 전이">
+      </div>
+
+      <h2 id="s5">"v1 vs v2: 문서에서 계약으로"</h2>
+      <p>v1은 개인이 혼자 쓰는 문서였다. 경험 기반이고, 암묵적이고, 운영성이 낮았다. v2는 팀과 에이전트가 함께 쓰는 계약이다. Evidence Bar 기반이고, 명시적이고, 조직 단위까지 확장 가능하다.</p>
+      <p>이게 진짜 차별점이다. v1이 "바이브 코딩의 훌륭한 메모"였다면, v2는 "AI 에이전트 운영의 법전"이다. 의도를 문서가 아닌 <strong>실행 가능한 계약</strong>으로 만드는 것. 그게 Intent Engineering v2의 본질이다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_intent-v2_006.png" alt="v1 vs v2">
+      </div>
+
+      <h2 id="s6">"Define Intent. Define Authority. Let AI Execute."</h2>
+      <p>v2의 핵심을 가장 짧게 표현하면 이 한 문장이다. 사람은 <strong>Intent(의도)</strong>와 <strong>Authority(권한)</strong>를 정의하고, AI는 그 안에서 자율적으로 실행한다. 이걸 하면 바이브 코딩을 넘어 AI 에이전트 운영, 다중 에이전트 협업, 조직 단위 개발까지 자연스럽게 확장된다.</p>
+      <p>단순한 프레임워크 업그레이드가 아니다. AI와 함께 일하는 방식 자체를 정의하는 건이다.</p>
+
+      <hr>
+
+      <p style="font-size:0.9em; color:#888;">
+        Intent Engineering v2 — 인간과 AI의 운영 계약(Operational Contract)<br>
+        핵심 슬로건: Define Intent. Define Authority. Let AI Execute.
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-036-harness-economics.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI에게 용돈을 주면 똑똑한 놈이 도망간다고?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
