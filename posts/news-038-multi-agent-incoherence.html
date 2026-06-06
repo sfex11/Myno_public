@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="잘 만든 부품을 모았는데 자동차가 고장 난다면? 다중 AI 에이전트 조합에서 발생하는 확률 공리 붕괴를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>모두가 맞는데 전체가 틀리다면? — 다중 에이전트 조합의 역설 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>모두가 맞는데 전체가 틀리다면?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">다중 AI 에이전트 조합에서 확률 공리가 붕괴하는 구조적 원인</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-06</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>AI 에이전트가 여러 명 팀을 이룰 때, 각자는 완벽하게 잘하는데 합치면 이상한 결과가 나온다. 마치 자동차 부품이 각각 합격인데 조립하면 고장 나는 것처럼. 논문 <strong>"Locally Coherent, Globally Incoherent"</strong>가 이 현상을 수학으로 증명했다. 중학생도 이해할 수 있게 정리해본다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_news038_01.png" alt="모두가 맞는데 전체가 틀리다면?">
+      </div>
+
+      <h2 id="s1">"요리 비유로 이해해봐"</h2>
+      <p>4명의 셰프가 각자 자기 스테이션에서 완벽한 요리를 만든다. 소스셰프는 완벽한 소스를, 구이셰프는 완벽한 구이를. 개별적으로는 흠잡을 데 없는데, 이 네 요리를 한 테이블에 올리면 소스는 짜고 구이는 달고 샐러드는 시고 디저트는 맵다. 각자의 기준 안에서는 완벽한데 <strong>조합의 결과는 식당을 폐업하게 만든다</strong>.</p>
+      <p>다중 AI 에이전트 오케스트레이션 연구(Agora-Opt, MASPO)는 이 상황을 놓치고 있었다. "개별 에이전트가 일관적이면 조합도 일관적일 것이다"라는 암묵적 전제 위에 서 있었기 때문이다. 너무 당연해서 아무도 의심하지 않았던 거다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_news038_02.png" alt="요리로 이해하는 조합의 문제">
+      </div>
+
+      <h2 id="s2">"두 시스템, 같은 실수"</h2>
+      <p><strong>Agora-Opt</strong>는 런타임에 AI 에이전트들이 토론하며 서로의 판단을 교정하는 방식이다. 회의실에 모인 전문가들이 합의점을 찾아가는 것 같다고 생각하면 된다. 반면 <strong>MASPO</strong>는 처음부터 프롬프트를 잘 설계해서 런타임에 교정할 필요가 없도록 하는 방식이다.</p>
+      <p>접근 방식은 다르지만 둘 다 같은 실수를 했다. 정렬의 단위를 "개별 에이전트"로만 봤다는 것. 각 에이전트가 좋아지면 전체도 좋아지겠지? — 이건 수학적으로 "부분이 연속이면 전체도 연속이다"라고 가정하는 것과 같은 오류다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_news038_03.png" alt="AI 에이전트도 똑같은 문제가 있어">
+      </div>
+
+      <h2 id="s3">"확률 규칙이 합치면 깨져"</h2>
+      <p>확률의 기본 규칙은 세 가지다. 확률은 0 이상, 전체 합은 1, 배반사건은 더하기. 간단하지? AI 에이전트 A는 변수 X₁, X₂만 보고, B는 X₂, X₃만 본다. 각자는 자기가 본 범위 안에서 이 규칙을 완벽하게 지킨다.</p>
+      <p>하지만 <strong>두 결과를 하나로 합치는 순간</strong>, 규칙이 깨진다. 비유하면 서울-부산 거리는 정확히 측정했고, 부산-제주 거리도 정확히 측정했는데, 두 값을 하나의 지도에 합치면 삼각 부등식이 성립하지 않는 것과 같다. 각 변의 길이는 맞는데 삼각형이 안 되는 거다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_news038_04.png" alt="수학으로 증명하는 조합의 붕괴">
+      </div>
+
+      <h2 id="s4">"해결책은 부품이 아닌 연결에 있다"</h2>
+      <p>이 논문이 가져오는 변화는 단순한 버그 수정이 아니다. 연구의 초점 자체를 바꾼다. 기존: "개별 에이전트를 어떻게 잘 정렬할 것인가?" → 논문 이후: "일관적인 에이전트들을 어떻게 <strong>무모순적으로 조합</strong>할 것인가?"</p>
+      <p>구체적으로 세 가지가 필요하다. 첫째, 문제를 의사소통 효율성이 아니라 <strong>조합 연산의 대수적 무모순성</strong> 문제로 재정의. 둘째, 에이전트 출력을 결합할 때마다 확률 공리가 위배되었는지 검증하는 <strong>런타임 일관성 모니터</strong>. 셋째, 조합 불일치를 완전히 제거하는 건 불가능하니까, 위배의 <strong>상한(bound)을 추정</strong>하고 허용 범위 내로 유지하는 메커니즘.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_news038_05.png" alt="해결책은 부품이 아닌 연결을 봐야 해">
+      </div>
+
+      <h2 id="s5">"부품 점검에서 연결 검사로"</h2>
+      <p>이 논문의 핵심을 한 문장으로: <strong>"다중 에이전트 시스템의 품질은 가장 좋은 에이전트의 품질로 결정되지 않고, 가장 약한 조합 연산의 무모순성으로 결정된다."</strong></p>
+      <p>과거에는 시스템이 실패하면 "어떤 에이전트가 잘못되었는가"를 찾았다. 앞으로는 "각 에이전트는 정상인데 <strong>조합 연산에서 무엇이 깨졌는가</strong>"를 다뤄야 한다. 부품을 더 잘 만드는 것만으로 충분하지 않다. 부품들이 함께 작동할 때 확률 공리가 무너지는 순간을 포착하고 경계를 지키는 것이 다음 세대 오케스트레이션 연구의 과제다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_news038_06.png" alt="부품 점검에서 연결 검사로">
+      </div>
+
+      <hr>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: Locally Coherent, Globally Incoherent: Bounding Compositional Incoherence in Multi-Component LLM Agents<br>
+        관련 개념: Agora-Opt · MASPO · Bayes-Consistent Agentic Orchestration · Compositional Safety
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-037-intent-engineering-v2.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">Intent Engineering v2: 인간과 AI의 운영 계약</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
