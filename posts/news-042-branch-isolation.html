@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="자기 진화 AI 에이전트가 '분기 격리'라는 구조적 한계에 직면했다. MLEvolve가 지적한 문제와 해법을 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>여러 길을 걸어도 만나지 못하는 자들 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>43 — 여러 길을 걸어도 만나지 못하는 자들</h1>
+      <p class="post-meta">2026-06-07 · Myno News #042</p>
+
+      <p>AI가 스스로를 진화시키는 "자기 진화 에이전트"가 뜨고 있어요. 근데 MLEvolve가 치명적인 맹점을 발견했죠. <strong>진화 경로들이 서로 격리되어 발견을 공유하지 못한다는 거예요.</strong> 마치 5개의 실험실이 완벽히 단절된 채 같은 문제를 연구하는 것과 같습니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_branch-isolation_01.png" alt="다섯 실험실, 서로 소식을 모른다">
+      </div>
+
+      <h2 id="s1">"평행 우주 속 연구자들"</h2>
+      <p>다섯 개의 실험실이 각각 완벽히 격리된 상태에서 같은 문제를 연구한다고 상상해 봐. 실험실 A가 화요일에 돌파구를 발견하지만 B~E에 알릴 방법이 없고, C는 수요일에 비슷한 발견을 해요. 각자는 발전하지만, <strong>서로의 발견이 합쳐져 더 큰 도약을 이룰 기회가 무수히 사라지고 있어요.</strong></p>
+      <p>이것이 바로 <strong>분기 간 정보 격리(Branch Isolation)</strong>입니다. LLM 에이전트가 장기 작업에 투입되면서 "지속적인 자기 진화"가 핵심 역량이 됐는데, 진화의 구조 자체에 치명적인 맹점이 있다는 거죠.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_branch-isolation_02.png" alt="두 가지 모델, 같은 한계">
+      </div>
+
+      <h2 id="s2">"단일 경로 vs 브로드캐스트 — 둘 다 같은 한계"</h2>
+      <p>현재 자기 진화 에이전트는 두 가지 방식 중 하나로 진화해요. <strong>단일 경로 축적</strong>(SkillOS 방식)은 한 사람이 혼자 끝없는 길을 걷는 것처럼 일관성은 있지만 탐색 폭이 한 사람의 시야로 제한됩니다. <strong>인구 브로드캐스트</strong>(FORGE, MOSS 방식)는 여럿이 걷지만 중앙 방송으로 알림만 보내고, 실질적인 학습 통합은 없어요.</p>
+      <p>겉보기에 정반대 같지만 공통점이 하나 있어요. <strong>다중 진화 경로가 서로의 발견을 깊이 있게 공유하고 통합하는 메커니즘이 없다</strong>는 겁니다. 어느 쪽이든 분기 격리라는 구조적 한계에 직면해요.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_branch-isolation_03.png" alt="퍼즐 조각 분배">
+      </div>
+
+      <h2 id="s3">"100조각 퍼즐을 5명에게 나눠주면 완성이 안 된다"</h2>
+      <p>분기 격리가 "구조적 한계"인 이유는 세 가지 층위에서 해부됩니다. 첫째, <strong>재발명 비용</strong> — 분기 A에서 발견한 걸 B가 모르면 같은 걸 처음부터 다시 발견해야 하고, 비용이 거의 동일해요. 둘째, <strong>보완적 발견 결여</strong> — A가 "X 기법이 좋다"를, B가 "Y 구조가 강하다"를 발견해도, X+Y 시너지는 영원히 태어나지 않아요.</p>
+      <p>셋째, <strong>오류의 누적과 고립</strong> — 분기 A가 잘못된 전제 위에서 10단계를 진화하면, 다른 분기가 이미 그 오류를 밝혀냈어도 격리 상태에서 전달되지 않아요. 100조각 퍼즐을 5명에게 나눠주면 완성 그림은 절대 안 나오죠.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_branch-isolation_04.png" alt="분리의 역설">
+      </div>
+
+      <h2 id="s4">"모든 게 같은 근원에서 파생된다"</h2>
+      <p>흥미롭게도 Wiki 지식 망의 여러 엔티티가 이 문제와 맞닿아 있어요. <strong>agent-knowledge-separation</strong>(지식 분리), <strong>capability-cooperation-paradox</strong>(역량 분리), <strong>agora-opt</strong>(정렬 결여), <strong>compounding-error</strong>(오류 고립) — 각각 다른 각도에서 같은 물체를 비추고 있어요.</p>
+      <p>이 네 가지를 종합하면 분기 격리가 고립된 현상이 아니라 에이전트 시스템 전반에서 반복되는 <strong>"분리의 역설(paradox of separation)"</strong>의 한 현상임을 알 수 있어요. 지식이 분리되고, 역량이 분리되고, 정렬이 결여되고, 오류가 고립되는 것 — 모든 게 같은 근원에서 파생됩니다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_branch-isolation_05.png" alt="브로드캐스트에서 꽃가루 교차로">
+      </div>
+
+      <h2 id="s5">"통신 채널만 여는 건 불충분하다"</h2>
+      <p>"분기 간에 통신 채널을 열면 되지 않겠나?" — 이 답은 불충분해요. 인구 브로드캐스트가 이미 그 접근을 시도했지만 표면적 전달만으로는 수렴이 일어나지 않았어요. 필요한 건 <strong>메커니즘 수준의 패러다임 전환</strong>입니다.</p>
+      <p>세 가지 전환이 필요해요. 첫째, 일방향 브로드캐스트에서 <strong>상호 수분 전달(크로스-폴리네이션)</strong>으로. 둘째, 런타임 정렬에서 <strong>설계 시점 내장</strong>으로. 셋째, 개별 성능 최적화에서 <strong>전체 시스템 수렴</strong>을 목표 함수로 삼기. 식물이 꽃가루를 주고받으면서 유전적 다양성을 확보하듯, 진화 분기들이 서로의 발견을 '수정'하고 '재조합'하게 만들어야 해요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_branch-isolation_06.png" alt="여러 길을 걸어도 만나야 한다">
+      </div>
+
+      <h2 id="s6">"조직의 구조 자체를 바꿔야 한다"</h2>
+      <p>필요한 건 방송 장치나 문 하나가 아니에요. 각 실험실이 정기적으로 자신의 노트를 <strong>공용 연구 일지</strong>에 통합하고, 다른 실험실의 노트를 읽고 자기 실험에 반영하며, 모든 결과가 <strong>하나의 통합 모델</strong>로 수렴하도록 설계하는 겁니다.</p>
+      <p>이 "입증할 수 없다"는 Wiki의 결론이 사실 가장 중요한 메시지예요. 분기 격리는 아직 충분히 형식화되지 않은 문제입니다. 논리적으로는 명백하지만, 엔티티로, 택소노미로, 실험 가능한 가설로 아직 고정되지 않았어요. <strong>여러 길을 걸되 만나야 한다</strong> — 그것이 진화가 진화답기 위한 최소 조건입니다.</p>
+
+      <hr>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: MLEvolve: A Self-Evolving Framework for Automated Machine Learning Algorithm Discovery (2025)<br>
+        관련 개념: SkillOS · FORGE · MOSS · agent-knowledge-separation · capability-cooperation-paradox · agora-opt · compounding-error<br>
+        Wiki Knowledge Graph 기반 심층 분석
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-041-ai-research-filter.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">더 빠른 파이프라인이 아닌, 더 현명한 필터를</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
