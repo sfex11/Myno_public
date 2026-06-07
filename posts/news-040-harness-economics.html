@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 하네스가 단순한 '실행 껍데기'에서 인센티브와 계약이 작동하는 '시장'으로 진화하는 과정. SwarmHarness 논문을 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>하네스는 더 이상 도로가 아니다 — 체크포인트에서 계약 프로토콜로 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>하네스는 더 이상 도로가 아니다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">체크포인트에서 계약 프로토콜로 — SwarmHarness가 던진 질문</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-07</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>AI 에이전트가 돌아가게 하려면 감싸주는 껍데기가 필요한데, 이걸 <strong>하네스(Harness)</strong>라고 부른다. 처음엔 단순한 실행 껍데기였지만, 점점 더 많은 역할을 맡아왔다. 그런데 SwarmHarness 논문이 던진 질문은 이렇다: <strong>경제적 인센티브를 핵심 기능으로 삼으면, 하네스는 중립적 인프라에서 계약 프로토콜로 재정의되어야 하는가?</strong></p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_harness-economics_01.png" alt="하네스란 무엇인가?">
+      </div>
+
+      <h2 id="s1">"하네스는 원래부터 고정된 정의가 아니었다"</h2>
+      <p>Wiki에 기록된 분석 궤적을 따라가면, 하네스의 경계는 줄곧 확장되어 왔다. <strong>Crab 논문</strong>은 체크포인트/복원(Checkpoint/Restore)이라는 OS 수준의 메커니즘을 하네스의 영역으로 끌어들였다. 그 전까지 하네스는 '에이전트의 코드를 감싸는 껍데기' 정도였지만, Crab은 <strong>"하네스는 실행 환경 자체를 설계할 수 있다"</strong>는 각성을 가져왔다.</p>
+      <p>즉, 하네스는 단일 정의가 아니라 <strong>확장 스펙트럼</strong>으로 evolving 해온 개념이다. SwarmHarness의 등장은 이 스펙트럼 위에 새로운 점을 찍는 행위인데, 문제는 그 점이 기존 선상의 연장인지, 아니면 전혀 새로운 축을 만드는지다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_harness-economics_02.png" alt="도로가 시장이 되다">
+      </div>
+
+      <h2 id="s2">"고속도로가 시장이 되는 순간"</h2>
+      <p>하네스를 고속도로라고 상상해 보자. Crab이 한 일은 고속도로에 중간 휴게소와 비상구를 설치하여, 차가 고장 나도 쉽게 복구할 수 있게 한 것이다. 기술적 최적화다. 도로는 여전히 도로다.</p>
+      <p>하지만 SwarmHarness가 하는 일은 다르다. 고속도로 위를 달리는 <strong>각 차량의 운전자에게 "목적지까지 가면 요금을 지급한다"는 조건을 걸고</strong>, 운전자들이 스스로 이득을 계산해 참여하도록 만든다. 이 순간 고속도로는 더 이상 '중립적인 도로'가 아니다. <strong>자기 이익을 추구하는 당사자들이 모이는 '시장'</strong>이 된다.</p>
+      <p>여기서 핵심은 '불투명한 외부 변수'다. 체크포인트 스냅샷은 OS가 완벽하게 제어할 수 있다. 하지만 노드가 <strong>"이 작업은 보상이 적으니 속도를 늦추자"</strong>라고 결정하는 순간, 그 동기는 하네스 외부에 있으며 관측 불가능하거나 예측 불가능하다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_harness-economics_03.png" alt="두 축의 공존">
+      </div>
+
+      <h2 id="s3">"정의를 바꿀 필요는 없다, 하지만 프레임워크는 바꿔야 한다"</h2>
+      <p>결론부터 말하면, 단일 정의로의 대체는 불필요하지만 분석 프레임워크의 갱신은 필수다. 하네스는 애초에 단일 정의로 묶이지 않는 스펙트럼이었다. Crab이 "인프라 계층으로의 확장"을 보여주었다면, SwarmHarness는 <strong>"경제적 메커니즘 설계로의 확장"</strong>을 보여준다. 이 둘은 배타적이 아니라 <strong>공존하는 두 축</strong>이다.</p>
+      <p>다만 "중립적 실행 인프라"라는 암묵적 전제가 갖는 위험은 직시해야 한다. 이 전제 아래에서는 노드의 전략적 이탈, 인센티브 게임, 계약 불이행 등을 하네스의 '결함'이 아니라 '외부 환경의 노이즈'로 처리하게 된다. <strong>시장을 만들면서 시장의 논리를 무시하는 것</strong>과 같다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_harness-economics_04.png" alt="능력이 높으면 이탈 유인도 커진다">
+      </div>
+
+      <h2 id="s4">"능력-협력 역설: 똑똑한 놈이 더 잘 떠난다"</h2>
+      <p><strong>capability-cooperation-paradox</strong>가 SwarmHarness의 핵심 딜레마를 보여준다. 노드 개별의 능력이 높을수록 자율적 이탈 유인도 커진다. 능력이 높은 노드는 "내가 이 작업보다 더 가치 있는 일을 찾을 수 있다"는 판단을 내릴 여지가 크기 때문이다.</p>
+      <p>인센티브를 높이면 이탈을 막을 수 있지만 비용이 폭증하고, 비용을 낮추면 고능력 노드가 떠난다. 이건 단순한 기술적 튜닝으로 해결되지 않는다. <strong>behavior-infrastructure-dual-cost-model</strong>이 보여주듯, 기존 하네스의 비용은 순수 인프라 비용이었지만 SwarmHarness에서는 노드의 전략적 행위 비용(모니터링, 인센티브 지급, 계약 집행, 이탈 탐지)이 추가되어 비선형적으로 폭증할 수 있다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_harness-economics_05.png" alt="인센티브가 탐색을 죽이는 역설">
+      </div>
+
+      <h2 id="s5">"보상이 확실한 길만 고르면 창의성이 죽는다"</h2>
+      <p><strong>constrained-exploration</strong>이 보여주는 문제도 치명적이다. 자발적 참여 노드가 인센티브 정렬 때문에 탐색 범위를 자발적으로 제한한다. "보상이 확실한 작업만 선택한다"는 행위는 탐색의 다양성을 해치며, 결국 <strong>스웜 전체의 문제 해결 능력을 저하</strong>시킨다. 인센티브가 에이전트의 인지적 다양성을 압살하는 역설이다.</p>
+      <p>이건 AI Safety 분야에서 SafetyALFRED가 지적한 패턴 — 실험실에서 안전하다고 증명된 것이 실세계에서도 안전한가? — 과 구조적으로 동일하다. SwarmHarness가 묻는 것은 <strong>"중립적 인프라에서 안정적으로 작동하는 것이 자기 이익 추구 노드들 사이에서도 안정적인가?"</strong>다. 답은 "아니오"다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_harness-economics_06.png" alt="두 번째 축을 그어라">
+      </div>
+
+      <h2 id="s6">"하네스의 정의에 두 번째 축을 그어라"</h2>
+      <p>SwarmHarness는 하네스를 "계약 프로토콜"로 재정의하는 것이 아니다. 기존 확장 궤적을 <strong>"기술적 인프라 → 경제적 메커니즘 설계"라는 새로운 축으로 연장</strong>하는 것이다. 핵심 변화는 정의의 텍스트가 아니다. 하네스가 다루어야 할 <strong>실패 모드의 카탈로그</strong>가 변한다.</p>
+      <p>기존: 체크포인트 손상 → 롤백. 새로운: 노드의 전략적 이탈 → 인센티브 재설계. 하네스의 정의에 두 번째 축을 그어야 한다 — 기술적 인프라의 깊이를 다루는 축과, 경제적 메커니즘의 폭을 다루는 축. 건축가가 처음에는 건물의 구조 안전성만 고려했다면, 이제는 건물 안에서 활동하는 사람들의 <strong>경제적 동기까지 고려하여 건물을 설계</strong>해야 한다. 하네스도 마찬가지다.</p>
+
+      <hr>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: SwarmHarness: Skill-Based Task Routing via Decentralized Incentive-Aligned AI Agent Networks<br>
+        관련 개념: agentic-harness-engineering · agent-os-semantic-gap · capability-cooperation-paradox · behavior-infrastructure-dual-cost-model · constrained-exploration · SafetyALFRED<br>
+        Wiki Knowledge Graph 기반 심층 분석
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-039-agent-memory-architecture.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">기억은 서재가 아니라 숲이다</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
