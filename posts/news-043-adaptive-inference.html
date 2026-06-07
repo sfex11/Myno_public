@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 똑똑해지려면 '생각의 양'이 아니라 '생각의 방향'이 중요하다는 이야기. 적응적 추론(Adaptive Inference)이 궤적 조율(Trajectory Steering)로 확장되어야 하는 이유를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>생각의 양이 아니라 방향이다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>44 — 생각의 양이 아니라 방향이다</h1>
+      <p class="post-meta">2026-06-08 · Myno News #043</p>
+
+      <p>AI가 글을 쓸 때 뭔가를 "생각하면서" 답을 찾는다는 거 알고 있죠? 근데 <strong>"생각을 많이 하는 것"이 진짜 "잘 생각하는 것"일까요?</strong> 연구자들은 오랫동안 "얼마나 생각할까"만 고민했는데, 최근 "어떤 방향으로 생각할까"라는 새로운 질문이 떠오르고 있어요.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_adaptive_inference_01.png" alt="AI가 많이 생각하면 똑똑해질까?">
+      </div>
+
+      <h2 id="s1">"연비계만 있는 자동차"</h2>
+      <p>지금 AI 연구자들이 한 일을 한 줄로 요약하면... "정교한 연비계"를 만든 거예요. <strong>CADENCE</strong>는 문제가 복잡하면 더 큰 모델에게 맡기고, <strong>SpecKV</strong>는 압축 상태를 보고 사고 길이를 조절해요. 둘 다 "얼마나 많은 연산을 쓸까?"에 대한 대답이에요.</p>
+      <p>마치 운전할 때 시속 몇 km로 갈지만 계산하고, <strong>목적지가 어딘지는 안 보는</strong> 자동차와 같죠.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_adaptive_inference_02.png" alt="현재 AI는 연비계만 있어요">
+      </div>
+
+      <h2 id="s2">"방향이 틀리면 연료는 낭비"</h2>
+      <p>문제는 여기서 시작돼요. 연비가 아무리 좋아도 <strong>반대 방향으로 가면 영영 도착 못 하잖아요.</strong> AI도 마찬가지예요. 틀린 방향으로 생각을 오래 해봐야 정답이 안 나오고, 오히려 에너지만 낭비되죠.</p>
+      <p>실제로 시각+언어 모델(MLLM) 기반 에이전트는 <strong>"경로 이탈"</strong>과 <strong>"조기 정지"</strong>라는 문제를 자주 보여줘요. 더 많이 생각하게 한다고 해결되는 게 아니에요. 방향이 잘못된 거죠.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_adaptive_inference_03.png" alt="방향이 틀리면 아무리 오래 가도 도착 못 해">
+      </div>
+
+      <h2 id="s3">"필요한 건 내비게이션"</h2>
+      <p>그래서 AI에게 필요한 건 속도계가 아니라 <strong>내비게이션</strong>이에요. "어떤 방향으로 생각할까?" — 이 질문에 답하는 기술을 <strong>궤적 조율(Trajectory Steering)</strong>이라고 불러요.</p>
+      <p>Wiki에 이미 이 방향을 가리키는 단서들이 산재해 있었어요. <strong>Activation Steering</strong>은 표현 공간에서 방향을 제어하고, <strong>신념 상태 기반 제약</strong>은 에이전트가 중간 목표를 인식하게 해줘요. 문제는 이게 서로 연결되지 않았다는 거죠.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_adaptive_inference_04.png" alt="AI에게 필요한 건 내비게이션">
+      </div>
+
+      <h2 id="s4">"속도와 방향, 둘 다 필요해"</h2>
+      <p>자율주행차를 생각해보면 이해가 쉬워요. 하위 레이어는 속도 조절, 상위 레이어는 경로 탐색. 둘 다 있어야 제대로 도착하죠.</p>
+      <p>AI도 마찬가지예요. <strong>"얼마나 깊이 생각할까"(예산 축)</strong>와 <strong>"어떤 방향으로 생각할까"(궤적 축)</strong>은 하나를 선택할 문제가 아니라 <strong>계층적으로 통합</strong>해야 하는 거예요. 궤적 축이 목표를 정하면, 예산 축이 그 방향에서 얼마나 깊이 갈지 결정하는 식으로요.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_adaptive_inference_05.png" alt="속도 + 방향 두 축이 다 필요해">
+      </div>
+
+      <h2 id="s5">"지도를 쥐어야 할 때"</h2>
+      <p>연비만 아끼며 운전하는 것과, 지도를 보며 방향도 잡으면서 연비도 관리하는 것의 차이. 전자는 "효율적으로 길을 잃는 방법"이고, 후자가 우리가 진짜 원하는 거예요.</p>
+      <p>기존 예산 관리는 버릴 필요 없어요. 그건 하위 계층에서 여전히 쓸모있거든요. 그 위에 <strong>궤적 조율이라는 상위 계층</strong>을 올리면, <strong>AI가 생각의 양과 방향을 동시에 제어하는</strong> 진짜 다음 세대가 될 거예요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_adaptive_inference_06.png" alt="생각의 양이 아니라 방향이다">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 글: 생각의 양이 아니라 방향이다 — 적응적 추론이 궤적 조율로 확장되어야 하는 이유 (Wiki Deep Analysis, 2025.07)<br>
+        관련 개념: Adaptive Inference · CADENCE · SpecKV · Activation Steering · Belief State as Constraint · CoT Steering<br>
+        Wiki Knowledge Graph 기반 심층 분석
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-042-branch-isolation.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">여러 길을 걸어도 만나지 못하는 자들</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
