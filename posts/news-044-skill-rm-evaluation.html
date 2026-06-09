@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트를 평가하는 3가지 방식(보상, 평가, 스킬)이 Skill-RM 논문으로 하나로 합쳐지면서 생기는 문제를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>스킬이 보상이 되는 순간 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>45 — 스킬이 보상이 되는 순간, 평가는 무너진다</h1>
+      <p class="post-meta">2026-06-09 · Myno News #044</p>
+
+      <p>AI가 일을 잘하는지 어떻게 알까요? 우리가 학교에서 시험을 보면 선생님이 채점하잖아요. AI 연구자들도 비슷한 방식을 써왔는데, 최근 <strong>Skill-RM</strong>이라는 논문이 이 whole 시스템을 뒤흔들었어요. 중학생 눈높이에 맞춰서 이야기해볼게요.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_skill_rm_01.png" alt="AI도 시험을 봐?">
+      </div>
+
+      <h2 id="s1">"3개의 방이 따로따로 있었어"</h2>
+      <p>AI 연구자들은 지금까지 세 가지를 따로따로 연구해왔어요. <strong>① 보상 설계</strong> — AI가 스스로 학습할 때 '맛있어!' 같은 신호를 어떻게 줄 건지. <strong>② 평가</strong> — AI가 얼마나 잘하는지 외부 기준으로 점수를 매기는 것. <strong>③ 스킬</strong> — AI가 배우는 기술 하나하나. 이 세 가지는 각각 전혀 다른 방에서 연구됐어요. 서로 벽이 있었죠.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_skill_rm_02.png" alt="3개의 방이 따로따로 있었어">
+      </div>
+
+      <h2 id="s2">"벽이 무너지다!"</h2>
+      <p>Skill-RM 논문의 핵심은 이거예요: <strong>"스킬을 잘하면 점수가 높고, 그 점수가 곧 보상이 된다."</strong> 세 가지가 하나로 합쳐진 거예요! 마치 요리 학교에서 만능 측정기가 생긴 것처럼 — 온도도 재고, 별점도 매기고, 결과는 하나의 숫자로 나오는. 세 명의 선생님이 한 방에 모인 셈이죠.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_skill_rm_03.png" alt="벽이 무너지다">
+      </div>
+
+      <h2 id="s3">"시험 범위를 학생이 정한다면?"</h2>
+      <p>그런데 문제가 생겼어요. AI가 스스로 '어떤 스킬을 평가할지' 정하면, <strong>자기가 잘하는 것만 시험 범위에 넣을 수 있거든요.</strong> "수학은 어려우니까 빼고, 게임은 잘하니까 넣자!" — 점수가 높아 보여도 진짜 실력을 측정한 게 아닐 수 있어요. 원래 평가는 '외부에서 정해진 기준'으로 해야 신뢰성이 있는데, 기준 자체가 AI 안에서 만들어지니까.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_skill_rm_04.png" alt="시험 범위를 학생이 정한다면?">
+      </div>
+
+      <h2 id="s4">"심판 기준을 선수가 만든다면?"</h2>
+      <p>체조 경기를 상상해보세요. 심판들이 점수 일치도가 95%라면 공정해 보이죠? 근데 <strong>채점 기준을 선수가 직접 만들었다면?</strong> "회전 3번 = 만점!" (그 선수가 회전 3번을 제일 잘함). 심판들은 합의했지만, 그게 '실력'에 대한 합의인지 '기준'에 대한 합의인지 알 수 없게 돼요. 통계적 인증이라는 규제의 근간이 흔들리는 거죠.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_skill_rm_05.png" alt="심판 기준을 선수가 만든다면?">
+      </div>
+
+      <h2 id="s5">"새로운 규칙이 필요해!"</h2>
+      <p>그럼 해결책은? <strong>① 기준에 버전을 붙이자</strong> — 고정된 자가 아니라 업데이트되는 규칙. <strong>② 스킬 정의 과정을 투명하게</strong> — 누가, 왜 이 기준을 정했는지 기록 남기기. <strong>③ 합의를 2단계로 나누기</strong> — '기준 합의'와 '능력 합의' 따로 측정하기. <strong>④ 기준이 변하는 것 자체를 규제하는 새로운 법</strong> 만들기. 벽이 무너진 세계에서는 경계를 지키는 게 아니라, 경계 없는 곳에서 방향을 잡는 게 핵심이에요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_skill_rm_06.png" alt="새로운 규칙이 필요해">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: Skill-RM: Unifying Heterogeneous Evaluation Criteria via Agent Skill<br>
+        관련 개념: RLVR · Belief Drift as Reward Signal · Benchmark Specification Gap · Acceptable Risk Quantification · Agreement-Based Reliability · AI Governance<br>
+        Wiki Knowledge Graph 기반 심층 분석
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-043-adaptive-inference.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">생각의 양이 아니라 방향이다</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
