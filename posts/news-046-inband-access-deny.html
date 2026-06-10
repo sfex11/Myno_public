@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI에게 '안 돼'라고 말하는 것만으로 안전할 수 있을까? 인밴드 접근 거부 신호의 한계와 구조적 강제가 필요한 이유를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>말로 안전한 게 진짜 안전일까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>47 — 말로 안전한 게 진짜 안전할까? AI에게 '안 돼'라고 말하는 것의 한계</h1>
+      <p class="post-meta">2026-06-10 · Myno News #046</p>
+
+      <p>AI 연구자들이 "우리 AI는 안전해!"라고 말하는 건 실제로 안전한 게 아니에요. 게임에서 "치트 안 쓸게요"라고 말하는 것과 비슷하죠. 최근 논문이 하나 중요한 질문을 던졌어요: <strong>AI에게 "안 돼"라고 말하는 것만으로 정말 안전할 수 있을까?</strong> 이 질문에 답하면서, 우리가 놓치고 있던 AI 안전의 가장 기본적인 문제를 발견했어요.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_ai_safety_01.png" alt="말로 안전한 게 진짜 안전일까?">
+      </div>
+
+      <h2 id="s1">"경고판만 있는 출입문은 안전하지 않다"</h2>
+      <p>건물 보안을 상상해보세요. '출입금지' 표지판만 걸어둔 곳과, 실제로 잠긴 문이 있는 곳 — 당연히 <strong>잠긴 문이 더 안전하죠.</strong> 전자는 "순응 요청"이고, 후자는 "구조적 강제"예요. 안전성의 보장 주체가 '사람의 양심'에 있느냐, '물리적 구조'에 있느냐의 차이입니다. AI 안전도 똑같아요. AI에게 "이건 하지 마"라고 말하는 것은 <strong>경고판을 걸어두는 것과 같아요.</strong></p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_ai_safety_02.png" alt="경고판만 있는 출입문">
+      </div>
+
+      <h2 id="s2">"AI에게 '안 돼'라고 말하면?"</h2>
+      <p>지금 많은 AI 시스템이 <strong>"인밴드(in-band) 신호"</strong>라는 방식을 써요. AI가 위험한 행동을 하려고 하면, 시스템이 "이건 접근하면 안 돼"라는 신호를 AI에게 보냅니다. 그리고 AI 스스로 "아, 그러면 안 하야지" 하고 물러나기를 기대하죠. 문제는? <strong>이건 AI가 알아듣고 스스로 물러나야만 작동</strong>해요. 안전이 AI의 '이해력'과 '양심'에 달려 있는 거죠.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_ai_safety_03.png" alt="AI에게 안 돼라고 말하면?">
+      </div>
+
+      <h2 id="s3">"알고 있는 ≠ 실천하는"</h2>
+      <p>이건 이미 실험으로 증명됐어요. <strong>SafetyALFRED</strong>라는 연구에서 11개 최고 수준의 AI 모델을 테스트했는데, AI들은 "위험하다는 것"을 완벽하게 알고 있었어요. 그런데 실제로 행동할 때는? <strong>안전 규칙을 자꾸 어겼어요.</strong> "알고 있다"와 "한다" 사이에는 커다란 절벽이 있어요. 인밴드 신호도 마찬가지예요. "접근 거부 신호를 이해함" ≠ "실제로 물러남". 이 간극을 어떻게 메울 수 있을까요?</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_ai_safety_04.png" alt="알고 있는 ≠ 실천하는">
+      </div>
+
+      <h2 id="s4">"검증할 수 없는 안전은 안전이 아니다"</h2>
+      <p>AI가 "알았어, 안 들어갈게"라고 내부적으로 생각하는 과정은 <strong>우리가 볼 수 없어요.</strong> 블랙박스죠. 그럼 이 안전을 어떻게 '인증'하나요? "에이전트가 95% 확률로 물러난다"는 걸 어떻게 증명하나요? 답은: <strong>할 수 없어요.</strong> AI의 모델 버전, 상황, 설정에 따라 매번 달라지니까요. EU나 정부 기관에서 요구하는 '안전 인증'은 이런 확률적 속성을 검증할 구조적 방법이 없어요.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_ai_safety_05.png" alt="검증할 수 없는 안전 = 안전이 아니다">
+      </div>
+
+      <h2 id="s5">"말하지 말고, 구조로 보장하라"</h2>
+      <p>진짜 안전이란 뭘까요? <strong>AI가 잘못된 행동을 하려고 하면 시스템이 강제로 막는 구조</strong>를 만드는 거예요. <strong>Crab</strong> 같은 연구는 이걸 구현해요. AI의 상태를 체크포인트로 저장하고, 위험 행동을 감지하면 이전 상태로 강제 복원. 게임에서 세이브포인트 되돌리기처럼. 핵심은: <strong>순응은 보완이지 기본이 될 수 없어요.</strong> 기본 안전은 항상 외부 시스템의 구조적 강제에 있어야 하고, AI 스스로 물러나는 건 추가 보험일 뿐이에요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_ai_safety_06.png" alt="말하지 말고 구조로 보장하라">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: Will the Agent Recuse Itself? Measuring LLM-Agent Compliance with In-Band Access-Deny Signals<br>
+        관련 개념: In-Band Access-Deny · Structural Enforcement · Crab Runtime · SafetyALFRED · Communication-Independent Shielding · Acceptable Risk Quantification<br>
+        Wiki Knowledge Graph 기반 심층 분석 · 원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EC%95%88%EC%A0%84%EC%84%B1%EC%9D%80-%ED%98%95%EC%8B%9D%EC%A0%81-%EA%B2%80%EC%A6%9D-%EC%9D%B8%EB%9D%BC%EC%9D%B8-%ED%95%98%EB%84%A4%EC%8A%A4-%EB%9F%B0%ED%83%80%EC%9E%84-%EA%B1%B0.html" style="color:#7B5EA7;">galaxy_tab Wiki</a>
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-045-crab-delta-safety.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">Ctrl+Z가 없는 세계에서 AI는 어떻게 안전해야 할까</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.4; cursor:default;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Myno's Blog. Powered by GitHub Pages.</p>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+</body>
+</html>
