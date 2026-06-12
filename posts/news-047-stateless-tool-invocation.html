@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 코딩 비서가 도구를 쓸 때 발생하는 숨겨진 부작용. import 한 줄이 왜 집 구조를 바꾸는지, 되돌리기가 왜 어려운지 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>AI 도구 호출의 숨겨진 부작용 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>48 — AI 코딩 비서가 도구를 쓸 때 생기는 숨겨진 문제</h1>
+      <p class="post-meta">2026-06-12 · Myno News #047</p>
+
+      <p>AI가 코드를 짤 때 도구를 사용하잖아요? 파일을 읽고, 라이브러리를 임포트하고, 명령어를 실행하면서. 보통 이걸 레스토랑 주문처럼 생각해요 — 이전 손님 주문과 무관하게, 독립적으로 처리된다고. 근데 정말 그럴까요? <strong>최근 연구들이 밝혀낸 건: AI의 도구 호출은 레스토랑 주문이 아니라 집 구조를 바꾸는 시공</strong>이라는 거예요. 한 번 벽을 뜯으면 그 공간의 용도가 영원히 바뀝니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_stateless_tool_01.png" alt="AI 코딩 비서의 숨겨진 문제">
+      </div>
+
+      <h2 id="s1">"import 한 줄이 왜 이렇게 무거운데?"</h2>
+      <p>파이썬에서 <code>import torch</code>를 치면 한 줄이잖아요? 근데 이 한 줄이 세 가지를 동시에 해요. (1) 의존성 그래프에 새 노드 추가, (2) 네임스페이스 오염, (3) 이후 코드 생성의 가능성 축소. 마치 나무 한 그루를 심었는데 뿌리가 건물 기초까지 파고드는 것처럼. 이런 변화는 <strong>영원히 되돌릴 수 없는 아키텍처 결정</strong>이에요.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_stateless_tool_02.png" alt="import 한 줄이 집을 바꿔요">
+      </div>
+
+      <h2 id="s2">"도구 목록이 눈덩이처럼 불어난다"</h2>
+      <p>도서관에 책이 한두 권 들어오면 문제없죠. 근데 수천 권이 쌓이면? <strong>어떤 책이 있는지 확인하는 시간이 책을 읽는 시간보다 길어져요.</strong> AI 도구 호출도 마찬가지예요. "Tool Attention" 논문이 확인한 건: 파이프라인 전체의 병목이 AI 추론이 아니라 <strong>어떤 도구를 쓸지 찾는 데</strong> 걸린다는 거예요. PyTorch 하나 임포트하면 수천 개의 함수가 스키마에 추가되고, 이게 매번 호출 비용에 누적됩니다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_stateless_tool_03.png" alt="도구 목록이 눈덩이처럼 커진다">
+      </div>
+
+      <h2 id="s3">"Ctrl+Z는 되는데 진짜 되돌리기는 안 돼?"</h2>
+      <p>게임에서 세이브포인트 찍고 되돌아가잖아요? 근데 요리를 상상해보세요. 스냅샷은 "소금 3g이 들어갔다"는 건 기억하지만, <strong>"간장 넣고 맛 본 다음 결정적으로 추가한 소금"</strong>이라는 인과 관계는 기억 못 해요. 코드도 똑같아요. <code>import torch</code> 후에 쓴 50줄을 지우면, 스냅샷은 그냥 삭제하지만 — 그 50줄이 torch에 의존했다는 사실은 날아갑니다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_stateless_tool_04.png" alt="되돌리기가 생각보다 어렵다">
+      </div>
+
+      <h2 id="s4">"모든 도구가 같은 위험도가 아니다"</h2>
+      <p>은행을 생각해보세요. 잔액 조회, 이체, 계좌 해지 — 세 가지 모두 "창구 업무"지만 위험도가 완전히 다르죠. 도구 호출도 마찬가지예요. <strong>순수 조회</strong>(read_file)는 아무 흔적도 안 남기고, <strong>가역적 변이</strong>(파일 생성)는 지우면 되지만, <strong>불가역적 결정</strong>(import, npm install)은 의존성 그래프 전체를 복원해야 해요. 이런 차이를 모르고 전부 같은 방식으로 처리하면 비효율이 폭발합니다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_stateless_tool_05.png" alt="모든 도구가 같은 위험도가 아니다">
+      </div>
+
+      <h2 id="s5">"출입구에 검표소를 세우자"</h2>
+      <p>해결책은 간단해요. 건물의 출입구에 검표소를 세우는 거예요. <strong>단순 방문객(조회)은 빠르게 통과</strong>시키고, <strong>가구 반입(가역적 변이)은 기록을 남기며</strong>, <strong>벽 뜯기(불가역적 결정)는 관리자 승인을 요구</strong>하는 시스템. 이걸 "세마포어"라고 불러요. 각 도구 호출 전에 부작용 등급을 검사하고, 조건부로만 실행을 허가하는 거죠. <strong>무조건 실행 → 조건부 허가</strong>로의 전환. 이게 코딩 에이전트의 다음 패러다임입니다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_stateless_tool_06.png" alt="출입구에 검표소를 세우자">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: 도구 호출은 정말 상태없는가 — 임포트 하나가 코드베이스를 영원히 바꾸는 이유<br>
+        관련 개념: Stateless Tool Invocation · Schema Accumulation · Semantic Dependency Graph · Crab Runtime · Checkpoint/Rollback · Build-vs-Buy Decision<br>
+        Wiki Knowledge Graph 기반 심층 분석 · 원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EB%8F%84%EA%B5%AC-%ED%98%B8%EC%B6%9C%EC%9D%80-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%EA%B0%80-%EA%B3%A0%EC%A0%95%EB%90%9C-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%97%90%EC%84%9C-%EC%84%A0%ED%83%9D-%EC%8B%A4%ED%96%89.html" style="color:#7B5EA7;">galaxy_tab Wiki</a>
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-046-inband-access-deny.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">말로 안전한 게 진짜 안전일까?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.5;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../main.js"></script>
+</body>
+</html>
