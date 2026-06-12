@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 자기 자신을 어떻게 고칠까? 간장 양만 조절하던 시대가 끝나고, AI가 레시피 자체를 쓰는 시대가 왔다. 메타-적응 계층이 필요한 이유를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>AI가 레시피를 쓸 수 있게 된다면? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>49 — AI가 레시피를 쓸 수 있게 된다면? 적응의 주체 이전과 메타-적응</h1>
+      <p class="post-meta">2026-06-12 · Myno News #048</p>
+
+      <p>요리사가 레시피를 쓸 때를 생각해보세요. 간장 양, 소금 양, 불 세기 — 이런 건 자유롭게 조절하잖아요. 근데 <strong>"볶기 → 끓이기"라는 순서 자체</strong>는 못 바꿉니다. 그건 주방장이 정해놓은 규칙이니까요. 지금까지 AI의 적응적 추론도 똑같았어요. <strong>간장과 소금(파라미터)만 조절 가능했지, 레시피(알고리즘)는 못 바꿨어요.</strong> 그런데 Vortex라는 연구가 이 벽을 통째로 허무셨습니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_meta_adaptive_01.png" alt="간장과 소금만 조절하던 요리사">
+      </div>
+
+      <h2 id="s1">"볶기, 끓이기, 찌기 — 동사를 레고처럼 조립하라"</h2>
+      <p>Vortex는 희소 주의(sparse attention) 알고리즘을 <strong>"프로그래밍 가능한 서빙 프리미티브"</strong>로 만들었어요. 요리 비유로 하면, "볶기"와 "끓이기"라는 <strong>동사 자체</strong>를 레고 블록처럼 자유롭게 조립할 수 있게 된 거예요. "끓이면서 볶기"나 "3초 볶고 7초 찌기" 같은 완전히 새로운 조리법을 <strong>런타임에</strong> 만들어낼 수 있어요. 이건 간장 양 조절하고 질적으로 다른 차원의 적응입니다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_meta_adaptive_02.png" alt="Vortex가 레시피를 열어줬다">
+      </div>
+
+      <h2 id="s2">"레고 블록이 많으면 누가 조립할지 골라야 하잖아"</h2>
+      <p>조리법을 바꿀 수 있게 되니 자연스럽게 큰 질문이 생겨요: <strong>"그럼 어떤 레시피를 고르지?"</strong> 간장 양을 결정하는 1차 적응 계층 위에, "어떤 레시피를 쓸 것인가"를 결정하는 <strong>메타-적응 계층</strong>이 필요해요. 마치 "한식 vs 양식"을 고르던 수준에서 "가능한 모든 조리법 조합" 중에서 최적을 찾는 수준으로 도약한 거예요.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_meta_adaptive_03.png" alt="누가 레시피를 고르지?">
+      </div>
+
+      <h2 id="s3">"고민의 위치가 옮겨간다"</h2>
+      <p>예전에는 "간장 1ml vs 2ml"을 고르는 게 병목이었어요. 이 선택이 요리의 성패를 가름했죠. 근데 이제는 <strong>"볶을까, 찔까, 교차할까"</strong> — 조리법 자체의 선택이 먼저고, 간장 양은 그다음 문제예요. 병목이 이동한 거예요. 그리고 이건 단순한 추상화 상승이 아니라, <strong>이전 병목을 해결하던 도구들이 더 이상 안 통한다</strong>는 뜻이에요.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_meta_adaptive_04.png" alt="병목이 이동한다">
+      </div>
+
+      <h2 id="s4">"요리사가 주방장이 된다"</h2>
+      <p>가장 큰 변화는 <strong>적응의 주체</strong>가 바뀐다는 거예요. 지금까지는 인간 설계자가 알고리즘 구조를 정해놓고 AI가 세부 파라미터만 조절했어요. 암묵적으로 "인간이 주체"라는 전제가 깔려 있었죠. 하지만 Vortex 이후에는 AI가 직접 알고리즘을 작성하고 선택합니다. <strong>주방장의 모자가 인간에서 AI로 넘어가는 거예요.</strong> 이 전이 과정을 아키텍처에 명시적으로 반영해야 합니다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_meta_adaptive_05.png" alt="적응의 주체가 바뀐다">
+      </div>
+
+      <h2 id="s5">"세 층 피라미드로 설계하라"</h2>
+      <p>필요한 건 세 개의 층이에요. <strong>1층:</strong> 세부 숫자 조절(γ, 압축률) — 기존 적응. <strong>2층:</strong> 어떤 알고리즘을 조립할지 메타-선택 — 새로운 계층. <strong>3층:</strong> 작성된 알고리즘이 하드웨어에서 의도대로 실행되는지 검증 — 번역 간극 해결. 세 층은 서로 다른 시간 스케일과 검증 방식을 가지므로 <strong>단일 메커니즘으로 통합하면 안 됩니다.</strong> 이게 적응의 주체가 이전되는 시대에 필수적인 아키텍처 설계 원칙입니다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_meta_adaptive_06.png" alt="세 층으로 쌓아 올리자">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: 적응적 추론은 인간이 설계한 고정된 알고리즘 내에서 런 — Vortex의 메타-적응 패러다임 전환<br>
+        관련 개념: Adaptive Inference · Vortex · Computation Unit Meta-Selection · Agent-Native Serving · Algorithm-System Translation Gap · Adaptive Bottleneck Migration<br>
+        Wiki Knowledge Graph 기반 심층 분석 · 원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%A0%81%EC%9D%91%EC%A0%81-%EC%B6%94%EB%A1%A0%EC%9D%80-%EC%9D%B8%EA%B0%84%EC%9D%B4-%EC%84%A4%EA%B3%84%ED%95%9C-%EA%B3%A0%EC%A0%95%EB%90%9C-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%82%B4%EC%97%90%EC%84%9C-%EB%9F%B0.html" style="color:#7B5EA7;">galaxy_tab Wiki</a>
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-047-stateless-tool-invocation.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI 도구 호출의 숨겨진 부작용</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.5;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../main.js"></script>
+</body>
+</html>
