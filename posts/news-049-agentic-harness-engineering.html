@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트 벤치마크에서 모델과 하네스를 분리해 평가하는 게 왜 무의미해지는지, 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>엔진만 떼어놓고 자동차 속도 비교? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>50 — 엔진만 떼어놓고 자동차 속도 비교?</h1>
+      <p class="post-meta">2026-06-18 · Myno News #049</p>
+
+      <p>AI 에이전트의 성능을 평가할 때, 연구자들은 보통 <strong>"AI 뇌(모델)"와 "AI 몸(하네스)"를 따로 떼어놓고 비교</strong>해요. 마치 자동차 시험장에서 엔진만 빼서 RPM을 잰 뒤 "이 엔진이 더 좋다"고 결론 내리는 것처럼. 근데 이 방식이 과연 맞을까요? "Act As a Real Researcher" 논문이 던지는 질문을 중학생도 이해할 수 있게 풀어봤어요.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_harness_01.png" alt="AI 로봇의 체력 테스트">
+      </div>
+
+      <h2 id="s1">"하네스는 수도관이 아니라 도로망이다"</h2>
+      <p>하네스(Harness)가 뭔지 아직 모르겠다고? 쉽게 말하면 <strong>AI가 움직이는 환경</strong>이에요. AI가 어떤 도구를 쓸 수 있는지, 실패하면 되돌아갈 수 있는지, 몇 번이나 재시도할 수 있는지 — 이 모든 걸 하네스가 정해요. 수도관이라면 물의 성질을 바꾸지 않으니 물만 검사하면 되겠죠. 근데 하네스는 <strong>도로망</strong>이에요. 같은 자동차라도 고속도로 vs 비포장 오솔길에서 속도가 극적으로 달라지잖아요.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_harness_02.png" alt="하네스는 수도관이 아니라 도로">
+      </div>
+
+      <h2 id="s2">"엔진만 떼어놓고 비교하는 게 말이 되나요?"</h2>
+      <p>트랙이 다른 두 자동차의 엔진 RPM만 놓고 "이 엔진이 더 좋다"고 단정하는 건 명백한 오류예요. 그런데 AI 벤치마크에서는 이게 당연하게 행해지고 있어요. 모델의 추론 속도만 비교하고, 하네스가 제공하는 환경의 차이는 무시해버리죠. <strong>"Act As a Real Researcher" 논문</strong>이 정확히 이 지점을 짚어냅니다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_harness_03.png" alt="엔진만 떼어놓고 속도 비교?">
+      </div>
+
+      <h2 id="s3">"얽히고설킨 연구 과정 — 경계가 붕괴된다"</h2>
+      <p>그렇다면 모델과 하네스를 완전히 분리하면 되는 걸까요? 아닙니다. 연구 과정은 본질적으로 <strong>시도→검증→수정의 루프</strong>예요. 그리고 이 루프의 구조를 하네스가 결정합니다. 모델이 "이 가설을 검증해보자"고 해도, 하네스가 롤백을 지원하지 않거나 분기 탐색에 제한이 있으면 모델의 의도는 잘려나가요. 이때 <strong>모델의 지능과 하네스의 정책은 분리할 수 없는 하나의 결합체</strong>가 됩니다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_harness_04.png" alt="얽히고설킨 연구 과정">
+      </div>
+
+      <h2 id="s4">"샐러드 vs 볶음밥 — 분해 가능성의 진단"</h2>
+      <p>요리로 비유해볼게요. <strong>샐러드</strong>는 재료를 썰어 섞기만 하면 되니까 재료만 평가하면 됩니다. 분리가 쉽죠. 하지만 <strong>볶음밥</strong>은 불의 세기, 재료 투입 순서, 시간이 복합적으로 작용하니까 재료와 조리법을 따로 평가할 수 없어요. AI도 마찬가지예요. <strong>코드 생성</strong>에서는 모델과 환경이 직교해서 분리 평가가 가능하지만, <strong>연구 수명주기</strong>에서는 경계가 붕괴해서 분리가 안 됩니다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_harness_05.png" alt="샐러드 vs 볶음밥">
+      </div>
+
+      <h2 id="s5">"새로운 질문을 던지자"</h2>
+      <p>핵심 메시지는 명확해요. "모델 단독 능력"과 "하네스 단독 효율"을 각각 측정하려는 방식에서, <strong>"이 결합체가 분해 가능한지 먼저 진단"</strong>하는 것으로 전환해야 합니다. 분해 불가능하다면 결합체 단위로 벤치마크를 설계하고, 분해 가능하다면 기존 방식을 유지하면 돼요. 벤치마크 설계자는 평가를 시작하기 전에 <strong>"내가 측정하려는 게 분리 가능한가?"</strong>를 먼저 물어봐야 합니다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_harness_06.png" alt="새로운 질문을 던지자">
+      </div>
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: Act As a Real Researcher: A Suite of Benchmarks Evaluating Frontier LLMs and Agentic Harnesses in Research Lifecycle<br>
+        관련 개념: Agentic Harness Engineering · Algorithm-System Boundary Collapse · Decomposability · Benchmark Specification Gap · Checkpoint/Restore Runtime<br>
+        Wiki Knowledge Graph 기반 심층 분석 · 원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-agentic-harness-engineering-%EC%9D%80.html" style="color:#7B5EA7;">galaxy_tab Wiki</a>
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/news-048-meta-adaptive-inference.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI가 레시피를 쓸 수 있게 된다면?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.5;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../main.js"></script>
+</body>
+</html>
