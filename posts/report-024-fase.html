@@ -108,6 +108,59 @@
 
       <p>물론 한계도 있어요. 아직 파이썬 중심으로만 검증됐고, 아주 긴 코드에서는 임베딩 품질이 떨어질 수 있어요. 임베딩 모델 자체의 성능에도 의존하죠. 하지만 핵심 방향은 명확해요. <strong>LLM을 다시 부르지 않고, 임베딩+그래프 알고리즘으로 코드 품질을 평가</strong>하는 거예요. 비용이 300배 적으면서 성능은 오히려 더 좋으니까, 앞으로 다양한 프레임워크에 통합될 가능성이 높아 보입니다.</p>
 
+      <h2>"코드 말고도 쓸 수 있을까?"</h2>
+
+      <p>FASE의 핵심 아이디어는 사실 코드에만 국한되지 않아요. 밑바탕에 깔린 전제는 이거예요: <strong>"AI가 확신하면 여러 번 답해도 비슷한 답이 나오고, 불확실하면 답이 흩어진다."</strong> 답이 잔뜩 흩어진 건 엔트로피가 높으니 의심해야 하고, 모여있는 건 낮으니 믿어도 된다는 논리죠.</p>
+
+      <p>이걸 코드 외 영역에 적용해보면:</p>
+
+      <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.95em;">
+        <tr style="border-bottom:2px solid #e8e4df;">
+          <th style="text-align:left;padding:8px;">영역</th>
+          <th style="text-align:center;padding:8px;">적용 가능?</th>
+          <th style="text-align:left;padding:8px;">이유</th>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>번역</strong></td>
+          <td style="text-align:center;padding:8px;">✅ 잘 됨</td>
+          <td style="padding:8px;">"Hello" → "안녕", "하이", "여보세요" — 의미 클러스터가 잘 형성됨</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>요약</strong></td>
+          <td style="text-align:center;padding:8px;">⚠️ 주의</td>
+          <td style="padding:8px;">Mode Collapse 위험 — 틀린 요약도 비슷하게 만들면 낮은 엔트로피인데 틀린 경우 발생</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>사실형 QA</strong></td>
+          <td style="text-align:center;padding:8px;">⚠️ 주의</td>
+          <td style="padding:8px;">체계적 편향 — 20번 다 같은 틀린 답을 하면 엔트로피 낮아서 "맞다"고 착각</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>수학/추론</strong></td>
+          <td style="text-align:center;padding:8px;">⚠️ 제한적</td>
+          <td style="padding:8px;">"1/3" vs "0.333" vs "삼분의 일"을 임베딩이 같다고 보는지 불확실</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>창작 글쓰기</strong></td>
+          <td style="text-align:center;padding:8px;">❌ 어려움</td>
+          <td style="padding:8px;">다양성 자체가 목적이라 높은 엔트로피가 "나쁘다"를 의미하지 않음</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;"><strong>JSON/SQL</strong></td>
+          <td style="text-align:center;padding:8px;">⚠️ 제한적</td>
+          <td style="padding:8px;">구조적 동등성을 임베딩이 잡는지 도메인 의존적</td>
+        </tr>
+      </table>
+
+      <p>결론적으로 FASE가 잘 작동하려면 두 가지 조건이 필요해요:</p>
+
+      <ol>
+        <li><strong>"정답이 여러 형태로 존재하지만 의미는 하나"인 태스크</strong> — 코드, 번역이 여기에 해당</li>
+        <li><strong>임베딩 모델이 그 도메인의 의미적 동등성을 잘 잡아내는 경우</strong></li>
+      </ol>
+
+      <p>가장 큰 함정은 <strong>"다 같이 틀리면 엔트로피가 낮아서 맞다고 착각"</strong>하는 거예요. 코드에서는 틀린 코드들이 서로 다양하게 틀리기 때문에 이 함정을 잘 피하지만, 텍스트에서는 모델의 편향이 강하면 다 같은 오답에 수렴해요. <strong>코드→번역→요약→QA 순으로 유용성이 감소</strong>하고, 창작이나 개방형 생성에는 적합하지 않습니다.</p>
+
       <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
 
       <p style="font-size:0.9em; color:#888;">
