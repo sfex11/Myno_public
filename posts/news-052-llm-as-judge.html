@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 에이전트 평가가 '고정 점수'에서 '수렴 궤적'으로 바뀌고 있다. LLM-as-judge의 한계와 새로운 평가 패러다임을 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>AI 점수, 믿을 수 있을까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <script src="../script.js"></script>
+
+  <main class="content-wrap">
+    <article class="blog-post">
+
+      <h1>53 — AI 점수, 믿을 수 있을까?</h1>
+      <p class="post-meta">2026-06-20 · Myno News #052</p>
+
+      <p>운전면허 적성검사를 생각해 보세요. 시력, 청력, 색각을 10분 만에 확인하는 검사예요. 여기서 만점 받았다고 실제 도로에서 안전하게 운전할 수 있을까요? 당연히 아니죠. 운전은 상황 인식 → 판단 → 행동 → 결과 확인의 <strong>연속적인 루프</strong>니까요. AI 에이전트 평가도 지금 정확히 같은 함정에 빠져 있다고 합니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_llm_judge_01.png" alt="AI 성적표, 믿을 수 있을까?">
+      </div>
+
+      <h2 id="s1">"시력 1.0이었는데 교차로에서 당황했어요"</h2>
+      <p>현재 AI 평가의 주류 방식 — 정적 벤치마크, LLM-as-judge, 통계적 인증 —은 전부 에이전트의 <strong>단일 출력 스냅샷</strong>을 찍어 점수를 매기는 방식이에요. 적성검사와 다를 게 없죠. 하지만 최신 AI는 한 번 답하고 끝나는 게 아니라, 탐색하고 판단하고 다시 탐색하며 <strong>여러 턴에 걸쳐 답을 개선</strong>합니다. 한 장의 사진으로 이런 과정을 평가할 수는 없어요.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_llm_judge_02.png" alt="10분 검사로 운전 실력?">
+      </div>
+
+      <h2 id="s2">"AI도 사진이 아니라 영상으로 봐야 해요"</h2>
+      <p>그래서 등장한 게 <strong>수렴 역학(Convergence Dynamics)</strong>이라는 개념이에요. 최종 답이 아니라, AI의 생각이 턴마다 어떻게 변하는지 — 그 궤적이 수렴하는지(개선하는지), 발산하는지(혼란스러운지) —을 추적해서 평가하는 방식이죠. 마치 운전 학원에서 "합격/불합격"이 아니라 <strong>"매 주차별 코너링이 어떻게 개선됐는가"</strong>를 기록하는 것과 같아요.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_llm_judge_03.png" alt="AI는 여러 번 생각해요">
+      </div>
+
+      <h2 id="s3">"점수 하나 vs 수렴 프로파일"</h2>
+      <p>기존 방식은 정답률이나 F1 점수 하나를 매기는 방식이었어요. 하지만 수렴 역학 패러다임에선 <strong>수렴 속도, 수렴 깊이, 궤적 안정성</strong> 등 여러 차원을 동시에 봅니다. 예를 들어, AI A는 3턴 만에 빠르고 안정적으로 정답에 도달하고, AI B는 8턴에 천천히 도달하고, AI C는 계속 흔들리며 안정화되지 못하는데 — 셋의 최종 답이 비슷해 보여도 <strong>완전히 다른 존재</strong>인 거죠.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_llm_judge_04.png" alt="점수가 아니라 궤적을 봐야 해">
+      </div>
+
+      <h2 id="s4">"스스로 고치기 vs 누가 알려주기"</h2>
+      <p>재미있는 건 수렴하는 방식도 두 가지라는 거예요. AI가 스스로 출력을 비판하고 개선하는 <strong>자기 성찰 루프</strong>와, 환경 피드백이나 검증자를 통해 개선하는 <strong>외부 지도 루프</strong>. 둘의 메커니즘이 다르니 평가 지표도 달라야 해요. 자기 성찰에선 "진짜 개선인지 자기 합리화인지"를 구별해야 하고, 외부 지도에선 "표면적 수렴인지 구조적 수렴인지"를 봐야 하죠.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_llm_judge_05.png" alt="스스로 vs 남이 알려줄 때">
+      </div>
+
+      <h2 id="s5">"진화생물학이 이미 알고 있던 것"</h2>
+      <p>진화생물학은 "종의 적합도"를 고정된 특성이 아니라 환경과의 상호작용에서 emerges하는 과정으로 이해하게 됐죠. AI 에이전트 평가도 같은 전환점에 있어요. <strong>"이 AI는 얼마나 똑똑한가"</strong>에서 <strong>"이 AI는 피드백을 받으면 얼마나 잘 변하는가"</strong>로. 능력을 고정된 속성이 아니라 <strong>적응적 과정</strong>으로 보는 패러다임 전환이, 이제 선택이 아닌 필수가 되고 있어요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_llm_judge_06.png" alt="같은 점수, 다른 실력">
+      </div>
+
+      <hr class="end-divider">
+
+      <div class="article-nav">
+        <a href="news-051-delegation-intelligence.html" class="nav-prev">← 이전 글</a>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2025 Myno. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
