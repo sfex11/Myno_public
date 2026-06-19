@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI가 일하는 공장에 인간이 초대받은 이야기. CHAP 논문이 AI 에이전트와 인간의 관계를 어떻게 바꾸는지, 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>인간이 공장 안으로 걸어 들어왔다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="content-wrapper">
+    <article class="blog-post">
+
+      <h1>51 — 인간이 공장 안으로 걸어 들어왔다</h1>
+      <p class="post-meta">2026-06-19 · Myno News #050</p>
+
+      <p>AI가 일하는 공장이 있다고 상상해봐요. 안에는 로봇 팔이 자동으로 차를 조립하고 있고, AI 에이전트가 혼자서 업무를 처리하고 있죠. 그런데 인간은 어디에 있을까요? <strong>공장 밖</strong>에 있어요. 설계 검토해주고, 안전 점검하고, 출입증 확인하는 정도. 이게 지금까지 AI 시스템의 기본 설정이었어요. 근데 CHAP이라는 논문이 이 상황을 완전히 뒤집어버렸어요.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_chap_01.png" alt="건물 밖의 인간">
+      </div>
+
+      <h2 id="s1">"들어와, 같이 일하자"</h2>
+      <p>CHAP(Collaborative Human-Agent Protocol)은 AI가 인간에게 건물 안으로 들어오라고 초대하는 장같은 거예요. 더 이상 인간은 밖에서 구경만 하는 사람이 아니에요. AI가 "이 부품 공차가 0.3mm 벗어났는데, A) 그대로 진행, B) 교체, C) 라인 정지 — 어떻게 할까?"라고 <strong>실시간으로 물어보는</strong> 거죠. 인간이 이제 워크플로우 안에 서서 직접 선택을 하게 돼요.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_chap_02.png" alt="건물 안으로 초대장">
+      </div>
+
+      <h2 id="s2">로봇과 함께 의사결정하기</h2>
+      <p>이게 왜 대단한 걸까요? 기존에는 AI가 혼자서 전체 과정을 수행하고, 문제가 생기면 체크포인트(게임의 세이브 포인트 같은 거)로 되돌리는 방식이었어요. 하지만 이제는 <strong>AI와 인간이 같이 결정</strong>을 내리죠. 로봇이 문제를 발견하면 인간에게 선택지를 보여주고, 인간이 선택하면 그 결정까지 하나의 상태로 기록돼야 해요. 안전 시스템이 다루어야 할 대상이 기계에서 사람까지 확장된 거예요.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_chap_03.png" alt="로봇과 함께하는 의사결정">
+      </div>
+
+      <h2 id="s3">되돌릴 수 없는 것: 인간의 기억</h2>
+      <p>여기서 흥미로운 문제가 생겨요. 게임에서 세이브 포인트로 되돌아가면 모든 게 원래대로 돌아가죠? 근데 <strong>인간의 기억은 되돌아가지 않아요.</strong> 3시간 전에 "B) 교체"를 선택한 이유, 그때 피곤했던지 아닌지, 어떤 정보를 참고했는지 — 이런 건 컴퓨터가 기록할 수가 없어요. 기계 상태는 완벽하게 복원되는데, 인간이 왜 그렇게 결정했는지는 복원이 안 되는 거죠.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_chap_04.png" alt="되돌릴 수 없는 것">
+      </div>
+
+      <h2 id="s4">도미노처럼 쓰러지는 승인</h2>
+      <p>더 무서운 문제도 있어요. 승인이 여러 단계를 거치면 <strong>"앞에서 이미 확인했으니까"</strong>라는 압박이 생겨요. 비행기 조종석에서 부기장이 "우회항 해요"라고 하고, 기장이 승인하고, 관제사도 확인하면 — 각 단계에서 이전 단계의 결정이 압박으로 작용해요. 합의가 많을수록 신뢰가 올라가는 게 아니라, 오히려 <strong>각자의 독립적인 판단이 약화</strong>되는 거예요.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_chap_05.png" alt="도미노처럼 쓰러지는 승인">
+      </div>
+
+      <h2 id="s5">인간은 이제 내부 부품이다</h2>
+      <p>초기 자동차에서 운전자는 엔진 온도를 수동으로 확인하는 "외부 환경"이었어요. 하지만 현대 자동차는 운전자의 졸음, 주의력, 운전 습관을 센서로 읽고 시스템을 조정해요. 운전자가 차량의 <strong>내부 컴포넌트</strong>가 된 거죠. AI 시스템도 같은 길을 가고 있어요. 인간을 "밖에서 보는 대상"에서 "안에서 함께 작동하는 부품"으로 재설계하는 것 — 그게 CHAP이 열어놓은 새로운 엔지니어링의 세계예요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_chap_06.png" alt="인간은 내부 부품이 된다">
+      </div>
+
+      <hr class="end-divider">
+
+      <div class="article-nav">
+        <a href="news-049-agentic-harness-engineering.html" class="nav-prev">← 이전 글</a>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2025 Myno. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
