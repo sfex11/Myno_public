@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="에이전트 강화학습의 진짜 병목은 보상 설계가 아니었다. APPO 논문이 밝혀낸 크레딧 할당 해상도의 한계를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>완벽한 보상도 소용없다고? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <script src="../script.js"></script>
+
+  <main class="content-wrap">
+    <article class="blog-post">
+
+      <h1>54 — 완벽한 보상도 소용없다고?</h1>
+      <p class="post-meta">2026-06-20 · Myno News #053</p>
+
+      <p>넓은 강의실에 온도계를 하나만 설치해 둔다고 생각해 보세요. 그 온도계가 아무리 정밀하게 눈금을 읽어낸들, 방의 구석과 창가, 복도 쪽의 온도 차이는 포착할 수 없죠. <strong>문제는 온도계의 정확도가 아니라 설치 간격</strong>이에요. 에이전트 강화학습(RL)에서도 똑같은 일이 벌어지고 있다고 합니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_appo_01.png" alt="완벽한 온도계 하나면 충분할까?">
+      </div>
+
+      <h2 id="s1">"정확도와 해상도는 완전히 다른 문제예요"</h2>
+      <p>APPO(Agentic Procedural Policy Optimization)라는 논문이 핵심을 찔렀어요. 지금까지 AI 연구자들은 <strong>"올바른 행동에 올바른 점수를 주는 것"</strong>에 집중했습니다. 보상 설계가 전부라고 믿었죠. 근데 APPO가 말하길, 보상이 완벽해도 <strong>그 점수를 어떤 해상도로 분배하느냐</strong>에 따라 성능이 결정된다고요. 온도계가 정밀해도 하나뿐이면 소용없는 것처럼요.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_appo_02.png" alt="도구 호출 안에 숨겨진 결정들">
+      </div>
+
+      <h2 id="s2">"도구 호출 안에 무슨 일이 벌어지는지 몰라요"</h2>
+      <p>현대 AI 시스템에서 학습의 최소 단위는 <strong>"도구 호출"</strong>이에요. 검색 도구를 한 번 부르고 결과를 받는 게 하나의 단위죠. 문제는 그 안에 여러 결정이 묻혀있다는 거예요. 어떤 검색어를 쓸지, 어떤 인자를 우선시할지 — 이런 미세 결정들은 학습 신호를 받지 못하는 <strong>"죽은 영역"</strong>이 돼버립니다. 마치 도서관의 모든 책에 "이 책 전체가 좋았다/나빴다"는 평점 하나만 매기는 것과 같죠.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_appo_03.png" alt="알고리즘과 시스템, 말이 안 통해요">
+      </div>
+
+      <h2 id="s3">"완벽한 레시피에 눈금 없는 계량스푼"</h2>
+      <p>요리에 비유하자면, 보상 설계는 <strong>레시피의 정확성</strong>(재료 비율)이고, 할당 입도는 <strong>계량스푼의 눈금</strong>이에요. 레시피가 완벽해도 계량스푼에 눈금이 없으면 비율을 맞출 수 없죠. 반대로, 눈금이 아주 정밀해도 레시피가 틀리면 정밀하게 틀린 요리를 만들 뿐이에요. 둘은 서로를 잡아맨 <strong>뫼비우스 띠</strong> 같은 구조예요.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_appo_04.png" alt="완벽한 레시피에 눈금 없는 계량스푼">
+      </div>
+
+      <h2 id="s4">"어느 한쪽만 고쳐서는 안 돼요"</h2>
+      <p>이걸 전문 용어로 <strong>이중 구속(double bind)</strong>이라고 불러요. 보상이 부정확하면 정밀하게 오류를 퍼뜨리고, 입도가 거칠면 완벽한 보상도 나눠주지 못해요. 연구자들이 "보상을 고쳤더니 성능이 올랐다" vs "학습 방식을 바꿨더니 올랐다"라고 각각 주장하는 이유가 이거예요. <strong>둘 다 맞지만 둘 다 절반만 보고 있는 것</strong>이죠.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_appo_05.png" alt="두 축이 서로를 잡아맨다">
+      </div>
+
+      <h2 id="s5">"해결책: 카메라 줌처럼 동적으로 조절하기"</h2>
+      <p>APPO가 제시하는 답은 <strong>적응적 할당 입도(Adaptive Credit Granularity)</strong>예요. 모든 걸 미세하게 쪼개면 비용이 터지니까, 의미론적으로 독립적인 결정 단위를 찾아서 동적으로 해상도를 조절하라는 거예요. 줌 렌즈처럼 — 넓게 볼 땐 큰 단위로, 세밀하게 볼 땐 작은 단위로 — 상황에 맞춰 보상을 분배하는 겁니다. "무엇을 보상할까"에서 <strong>"어느 해상도로 보상을 분배할까"</strong>로 물음이 바뀌어야 한다는 게 핵심이에요.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_appo_06.png" alt="해결책: 적응적 해상도">
+      </div>
+
+      <hr class="end-divider">
+
+      <div class="article-nav">
+        <a href="news-052-llm-as-judge.html" class="nav-prev">← 이전 글</a>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2025 Myno. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
