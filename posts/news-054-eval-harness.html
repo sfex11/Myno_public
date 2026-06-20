@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="벤치마크가 중립적 측정이 아니라 에이전트 행동을 구속하는 틀이라면? Claw-SWE-Bench가 드러낸 평가 계약의 실체를 중학생도 이해할 수 있게 설명하는 카드뉴스.">
+  <title>벤치마크가 함정이 될 때 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <script src="../script.js"></script>
+
+  <main class="content-wrap">
+    <article class="blog-post">
+
+      <h1>55 — 벤치마크가 함정이 될 때</h1>
+      <p class="post-meta">2026-06-20 · Myno News #054</p>
+
+      <p>운전면허 시험장 코스가 <strong>자동변속 차량만</strong> 주행 가능하게 설계되어 있다면? 수동변속 능력이 뛰어난 운전자도 불이익을 받겠죠. 시험이 '운전 능력'이 아니라 <strong>'자동변속에 대한 적합성'</strong>을 측정하는 셈이 됩니다. AI 벤치마크에서도 정확히 같은 일이 벌어지고 있다고 합니다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_eval_harness_01.png" alt="운전시험의 유리벽">
+      </div>
+
+      <h2 id="s1">"5cm 줄자로 미세한 걸 재면?"</h2>
+      <p>Claw-SWE-Bench라는 논문이 핵심을 찔렀어요. 벤치마크의 평가 계약 — 워크스페이스 구조, 패치 적용 방식, 제출 포맷 — 은 중립적인 측정 도구가 아니라는 거예요. 이건 에이전트가 <strong>파일을 어떻게 탐색할지, 패치를 어떤 포맷으로 낼지</strong> 등 구조적으로 규정하는 하네스(구속 틀)예요. 계약에 맞지 않는 아키텍처는 코드를 잘 고쳐도 낮은 점수를 받죠.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_eval_harness_02.png" alt="5cm 줄자로 미세한 걸 재면?">
+      </div>
+
+      <h2 id="s2">"즉흥연주자는 악보 PDF를 못 내요"</h2>
+      <p>피아노 경연에서 <strong>반드시 악보를 PDF로 스캔해서 제출</strong>해야 한다면? 즉흥연주자, 악보 없이 연주하는 음악가는 아무리 훌륭해도 이 '평가 계약'을 충족할 수 없죠. 경연이 측정하는 건 '피아노 능력'이 아니라 <strong>'PDF 악보 제출 가능한 피아니즘'</strong>이 됩니다. 평가 계약은 벤치마크와 에이전트 사이에 있는 <strong>번역 계층</strong>이에요.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_eval_harness_03.png" alt="즉흥연주는 점수가 없다">
+      </div>
+
+      <h2 id="s3">"의사가 부족한 게 아니라 서류가 문제였어요"</h2>
+      <p>응급실 대기 시간이 길면 "의사가 부족하다"고 생각하지만, 실제 병목이 <strong>접수 창구의 서류 양식</strong>이라면 의사를 늘려도 소용없죠. 벤치마크도 똑같아요. 점수를 높이기 위해 에이전트 추론 능력을 개선하는 건 의사를 늘리는 것과 같습니다. <strong>진짜 병목인 '평가 계약 적합성'</strong>을 다루지 않으면, 점수 향상은 능력 향상이 아니라 <strong>계약 순응도 향상</strong>에 불과해요.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_eval_harness_04.png" alt="의사가 부족한 게 아니었어요">
+      </div>
+
+      <h2 id="s4">"셋 다 연결되어 있어요"</h2>
+      <p>앱 로직 → 실행 환경 → 평가 계약. 이 세 단계는 독립된 게 아니라 <strong>하나의 연속된 번역 계층</strong>이에요. 코드가 어떻게 구조화되어 있는지, 런타임이 어떻게 체크포인트를 잡는지, 벤치마크가 어떤 포맷을 요구하는지 — 셋 모두 에이전트의 행동을 구조적으로 구속합니다. 이걸 <strong>"하네스 스펙트럼"</strong>이라고 불러요.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_eval_harness_05.png" alt="하네스 스펙트럼">
+      </div>
+
+      <h2 id="s5">"줄자의 눈금을 설계하는 것도 측정이에요"</h2>
+      <p>이제 벤치마크 점수를 볼 때마다 물어야 해요: <strong>"이 점수가 측정한 건 능력인가, 아니면 평가 계약에 대한 적합성인가?"</strong> 그리고 평가 계약을 <strong>하네스로서 의식적으로 설계</strong>해야 합니다. 특정 아키텍처에 편향되지 않는 계약 구조, 다양한 에이전트가 공평하게 경쟁할 수 있는 제출 포맷 — 그게 하네스 엔지니어링의 새로운 프론티어예요. <strong>줄자의 눈금 간격을 설계하는 것도 측정의 일부</strong>라고 논문은 말합니다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_eval_harness_06.png" alt="벤치마크를 다시 설계하자">
+      </div>
+
+      <hr class="end-divider">
+
+      <div class="article-nav">
+        <a href="news-053-appo.html" class="nav-prev">← 이전 글</a>
+      </div>
+
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2025 Myno. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
