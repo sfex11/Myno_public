@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LLM 에이전트의 확률적 본질이 형식적 검증의 '보장' 개념을 어떻게 뿌리째 흔드는지, 세 가지 전략이 어떻게 패러다임 전환을 이끄는지 분석합니다.">
+  <title>보장(0)에서 상한(ε)으로 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>보장(0)에서 상한(ε)으로</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">AI 에이전트 검증의 근본적 전환 — Datalog 모니터링에서 확률적 검증까지</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-27</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>소프트웨어 검증이라는 분야에서 '보장(guarantee)'이라는 단어는 수십 년간 거의 종교적 의미를 가져왔다. "위반이 절대 발생하지 않음" — 그 0이라는 숫자가 검증의 전부였다. 빨간불이면 멈추고, 초록불이면 가는 것. 입력이 주어지면 출력이 하나로 확정되는 세계.</p>
+
+      <p>그런데 LLM 에이전트는 그 세계에 살지 않는다. 같은 상황에서 100번 실행하면 100가지 행동이 나올 수 있는 주체를 대상으로, "절대 위반 없음"을 증명할 수 있는가? 이 글은 그 근본적인 긴장을 파악하고, 세 가지 전략이 어떻게 각기 다른 방향으로 해결을 시도하는지를 추적한다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_prob_verification_01.png" alt="교통신호등과 주사위의 대비 — 결정론적 vs 확률적">
+      </div>
+
+      <h2>"신호등은 멈추고, 주사위는 굴린다"</h2>
+
+      <p>지금까지 Datalog 기반 런타임 모니터링은 '신호등 모델'을 전제로 작동해 왔다. 정책을 형식 언어로 공식화하고, 런타임에서 위반 여부를 이진적으로 판정하는 방식이다. 하지만 LLM 에이전트는 운전 면허 시험장의 주사위에 가깝다.</p>
+
+      <p>이진 합격/불합격 판정 기준이 본질적으로 확률적으로 행동하는 주체에게 적용될 수 있는가? 이 질문은 단순한 기술적 난제가 아니다. 수십 년간 검증 분야에서 확고했던 '보장'의 의미를 뿌리째 흔드는 문제다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_prob_verification_02.png" alt="P(위반) ≤ ε — 보장의 의미가 바뀐다">
+      </div>
+
+      <h2>"0이 ε으로 대체되는 순간"</h2>
+
+      <p>Probabilistic Verification 논문은 이 문제를 정면으로 마주한다. "속도 위반을 했는가/안 했는가"에서 "속도 위반을 할 확률이 ε 이하인가"로 패러다임을 전환한다. P(위반) = 0이었던 보장이 P(위반) ≤ ε으로 재정의된다.</p>
+
+      <p>엘리베이터 비유가 직관적이다. 과거 기계식 엘리베이터에서 안전 장치는 물리적 고정핀이었다 — 핀이 걸리면 100% 멈춘다. 하지만 소프트웨어 제어 엘리베이터에서 안전은 "고장 확률이 10⁻⁹ 이하"로 표현된다. 0이 아니라 극히 작은 수다. 그럼에도 우리는 이것을 '안전하다'고 받아들인다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_prob_verification_03.png" alt="건축가와 시공자의 분리 — 확률적 추론과 결정론적 실행">
+      </div>
+
+      <h2>"건축가는 도면만, 시공자가 짓는다"</h2>
+
+      <p>Sovereign Execution Brokers는 정반대 방향에서 접근한다. 핵심 명제는 명쾌하다: "production mutation authority should not reside inside non-deterministic reasoning processes" — 비결정론적 추론 과정 내부에 변경 권한을 두어서는 안 된다.</p>
+
+      <p>건축가(확률적 추론)는 도면을 그리고 조언하지만, 실제 건물을 짓고 해체하는 권한은 시공자(결정론적 브로커)만 가진다. 이렇게 하면 보장의 의미를 바꿀 필요가 없다 — 시공자 층은 여전히 결정론적이므로 기존의 형식적 검증이 그대로 적용된다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_prob_verification_04.png" alt="약품 부작용 같은 안전 증명 — 통계적 인증">
+      </div>
+
+      <h2>"부작용 0인 약은 없다"</h2>
+
+      <p>Bounding the Black Box는 이 문제를 규제 문맥에서 해결한다. EU AI Act, NIST RMF, CoE Convention이 요구하는 '사전 안전 증명'을 통계적 인증(statistical certification)으로 정량화한다.</p>
+
+      <p>약품의 부작용 확률과 같은 논리다. 어떤 약도 부작용이 정확히 0인 것은 불가능하다. 대신 "부작용 발생률이 0.001% 이하임을 임상 시험으로 입증했다"는 것이 승인의 근거가 된다. AI 에이전트의 안전성도 "위반 확률이 통계적으로 유의한 상한 이하임"을 증거로 제시하는 것이다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_prob_verification_05.png" alt="번역 불가능성의 균열 — 알고리즘-시스템 간극">
+      </div>
+
+      <h2>"영어 시를 한국어로 번역하면서 운율까지 보존해야 하는 상황"</h2>
+
+      <p>여기서 한 가지 더 깊은 균열이 드러난다. 결정론적 정책 명세를 확률적 에이전트 행동에 매핑할 때, "파일 삭제 금지"라는 결정론적 규칙을 확률적 에이전트에 적용하면 — 에이전트가 "파일 삭제와 유사하지만 동일하지 않은 행동"을 수행했다면, 이것은 위반인가 아닌가?</p>
+
+      <p>이 번역 불가능성은 두 번 나타난다. 구현 런타임에서와 검증 런타임에서. 전자가 효율의 문제라면, 후자는 의미의 문제다. 보장이라는 개념 자체가 흔들리기 때문이다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_prob_verification_06.png" alt="분리-측정-인증의 하이브리드 — 3층 구조">
+      </div>
+
+      <h2>"세 전환, 하나의 해답"</h2>
+
+      <p>최종적으로 세 전략은 상호 배타적이 아니라 보완적으로 조합되어야 한다. 확률적 추론층과 결정론적 실행 브로커를 분리하고, 브로커의 결정에 대해 통계적 인증을 적용하며, 추론층 자체는 확률적 임계값으로 실시간 모니터링하는 3층 구조.</p>
+
+      <p>필요한 전환은 세 가지다. 첫째, '보장'을 이진 명제에서 확률적 명제로 재개념화할 것. 둘째, 검증 가능한 계층과 불가능한 계층을 명시적으로 분리할 것. 셋째, 그 분리 자체를 규제에 매핑 가능한 형식으로 표현할 것.</p>
+
+      <p style="font-size:1.1rem; text-align:center; font-weight:600; margin: 2rem 0; padding: 1rem; background: #f5f0e8; border-radius: 12px;">"보장의 의미는 0에서 ε으로 바뀌었다.<br>하지만 그 ε이 여전히 의미 있는 것이라면,<br>우리는 새로운 패러다임 위에 서 있는 것이다."<br><span style="font-weight:400; font-size:0.95rem; color:#888;">P(위반) ≤ ε — 절대 방어에서 통계적 상한으로</span></p>
+
+      <hr>
+
+      <h2>원문과 참고 자료</h2>
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EB%9F%B0%ED%83%80%EC%9E%84-%EA%B2%80%EC%A6%9D%EC%9D%80-datalog-%EA%B8%B0%EB%B0%98-%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81%EC%B2%98%EB%9F%BC.html" style="color:#7B5EA7;">현재 Wiki에서 에이전트 런타임 검증은 Datalog 기반 모니터링처럼</a></li>
+        <li>참조 논문: Efficient and Sound Probabilistic Verification for AI Agents</li>
+        <li>참조 논문: Sovereign Execution Brokers</li>
+        <li>참조 논문: Bounding the Black Box</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="news-057-multi-agent-ceiling.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">다중 에이전트 협력의 한계와 잠재력</span>
+      </a>
+      <a href="#" class="article-nav-item">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
