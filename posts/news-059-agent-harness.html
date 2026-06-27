@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="에이전트 하네스를 '실행 인프라'에서 '선언적 렌즈'로 재정의해야 하는 이유 — AGENTS.md, 저장소 지침이 하네스의 숨겨진 반쪽이라는 패러다임 전환.">
+  <title>하네스의 절반만 보고 있었다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>하네스의 절반만 보고 있었다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">에이전트 하네스를 '실행 환경'에서 '선언적 렌즈'로 재정의해야 하는 이유</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-06-27</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>"에이전트 하네스"라고 하면 떠오르는 건 뭘까? 대부분 Crab 논문이 제시한 C/R(Checkpoint/Restore) 런타임, 결함 내성, 롤백, 파이프라인 서빙 같은 실행 인프라다. 마치 자동차의 엔진과 변속기 — 에이전트가 "어떻게" 돌아가는지를 결정하는 그릇.</p>
+
+      <p>하지만 엔진이 아무리 훌륭해도, 운전자가 지도를 읽을 줄 모르면 차는 목적지에 도달하지 못한다. 하네스 논의에서 바로 이 '지도 읽기'에 해당하는 부분이 누락되어 있었다. Probe-and-Refine 논문이 그 빈자리를 정면으로 찌른다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_agent_harness_059_01.png" alt="하네스의 절반 — C/R 런타임, 파이프라인, 코드 기질">
+      </div>
+
+      <h2>"하네스 = C/R 런타임 + 파이프라인 + 코드 기질"</h2>
+
+      <p>현행 정의는 일관되게 하네스를 실행 인프라로만 규정한다. Tool Attention 논문은 파이프라인 서빙의 레이턴시 병목이 스키마 축적에 의해 결정된다는 사실을 보여주며, 하네스를 런타임 서빙 최적화 문제로 프레이밍했다. 현행 Wiki의 agentic-harness-engineering 엔트리도 "애플리케이션 로직에서 실행 환경까지 확장"하는 방향으로 기술되어 있다.</p>
+
+      <p>정리하면 하네스 = 실행 인프라. 하지만 이 방정식에는 결정적인 맹점이 하나 있다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_agent_harness_059_02.png" alt="코드에 없는 지식이 행동을 규정한다">
+      </div>
+
+      <h2>"코딩 에이전트는 코드에 존재하지 않는 지식을 필요로 한다"</h2>
+
+      <p>Probe-and-Refine 논문의 핵심 발견: 코딩 에이전트는 "어떤 파일이 어떤 하위 시스템을 담고 있는지, 테스트를 어떻게 실행하는지, 어떤 워크플로우가 잘못된 수정으로 이어졌는지"를 알아야 한다. 그런데 이 지식은 소스 코드 안에 없다.</p>
+
+      <p>AGENTS.md, CONTRIBUTING.md, 프로젝트 고유의 암묵적 컨벤션, 과거 PR 리뷰에서 축적된 경험적 지식 — 이런 선언적 메타데이터로만 존재한다. 지침이 없는 에이전트는 코드베이스 구조를 파악하지 못해 관련 없는 파일을 수정하고, 이미 실패로 검증된 패턴을 반복한다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_agent_harness_059_03.png" alt="주방 설비와 레시피의 비유">
+      </div>
+
+      <h2>"훌륭한 설비만으로 요리가 완성되지 않는다"</h2>
+
+      <p>비유가 직관적이다. 산업용 오븐, 정밀 온도 계산기, 자동 절단기 — 훌륭한 주방 설비를 갖추는 것만으로 요리가 되지 않는다. 레시피가 없으면 요리사는 재료를 보고도 무엇을 만들어야 할지 모른다.</p>
+
+      <p>지금까지의 하네스 논의는 주방 설비(실행 인프라)에만 집중했다. 하지만 요리사의 행동을 규정하는 것은 레시피(저장소 운영 지식)다. 설비가 아무리 정교해도 레시피가 없으면 요리사는 재료를 해석하지 못하고 무작위로 조작한다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_agent_harness_059_04.png" alt="하네스는 그릇이 아니라 렌즈다">
+      </div>
+
+      <h2>"돋보기 없으면 글씨는 존재하지만 읽을 수 없다"</h2>
+
+      <p>제안하는 재정의: 하네스 = (실행 하네스: C/R, 파이프라인) + (해석 하네스: AGENTS.md, 컨벤션, 저장소 지식). 핵심 전환은 하네스를 "에이전트가 돌아가는 그릇"에서 "에이전트가 코드를 해석하는 렌즈"로 바꾸는 것이다.</p>
+
+      <p>렌즈 비유가 정확한 이유가 있다. 돋보기가 없으면 글씨는 그대로 존재하지만 읽을 수 없다. 코드는 그대로 존재하지만 AGENTS.md라는 렌즈가 없으면 에이전트는 코드를 해석하지 못한다. 렌즈의 곡률(저장소 지침의 정확도)에 따라 에이전트가 보는 코드의 의미가 완전히 달라진다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_agent_harness_059_05.png" alt="간극의 지도 — 실행 계층과 해석 계층">
+      </div>
+
+      <h2>"간극의 지도에 해석 계층이 누락되어 있었다"</h2>
+
+      <p>이 재정의는 Wiki의 기존 간극 엔티티들과 놀라운 구조적 유사성을 보인다. Crab의 알고리즘-시스템 번역 간극이 실행 계층에 있다면, 코드-메타데이터 번역 간극은 해석 계층에 있다. agentic-language와 저장소 지침은 본질이 동일한 것(도메인 특화 제약 언어)이면서도 분리되어 기술되어 있다.</p>
+
+      <p>기존 간극 지도에는 해석 계층의 간극이 완전히 누락되어 있었다. 하네스를 재정의한다는 것은 단순히 용어를 바꾸는 것이 아니라, 간극의 지도 자체를 갱신하는 작업이다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_agent_harness_059_06.png" alt="렌즈의 곡률을 엔지니어링하라">
+      </div>
+
+      <h2>"렌즈의 곡률을 엔지니어링하지 않으면, 아무리 정교한 그릇도 빈 채로 남는다"</h2>
+
+      <p>엔지니어링 실천에서 네 가지가 바뀌어야 한다. 하네스 엔지니어링은 지침의 설계·튜닝·검증까지 포함해야 한다. code-as-agent-harness를 부가적 개념에서 중심 엔티티로 격상시켜야 한다. agentic-language와 저장소 지침을 통합 기술해야 한다. 평가 지표도 해석 정확도·지침 준수율까지 이중화해야 한다.</p>
+
+      <p>Probe-and-Refine 논문이 던지는 메시지는 분명하다. 저장소 운영 지식이 에이전트 행동을 규정하는 메커니즘은 실행 인프라와 동등한 하네스의 핵심 축이다. 절반만 보고 있었다는 사실을 인정하는 것이 패러다임 전환의 첫 단계다.</p>
+
+      <p style="font-size:1.1rem; text-align:center; font-weight:600; margin: 2rem 0; padding: 1rem; background: #f5f0e8; border-radius: 12px;">"하네스는 에이전트가 돌아가는 그릇이 아니라,<br>에이전트가 코드를 읽어내는 렌즈다.<br>렌즈의 곡률을 엔지니어링하지 않으면,<br>아무리 정교한 그릇도 빈 채로 남는다."<br><span style="font-weight:400; font-size:0.95rem; color:#888;">실행 하네스 + 해석 하네스 = 온전한 하네스</span></p>
+
+      <hr>
+
+      <h2>원문과 참고 자료</h2>
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%ED%95%98%EB%84%A4%EC%8A%A4%EB%8A%94-c-r-%EB%9F%B0%ED%83%80%EC%9E%84-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8-%EC%84%9C%EB%B9%99-%EC%BD%94%EB%93%9C.html" style="color:#7B5EA7;">현재 Wiki에서 에이전트 하네스는 C/R 런타임 파이프라인 서빙 코드</a></li>
+        <li>참조 논문: Probe-and-Refine Tuning of Repository Guidance for Coding Agents</li>
+        <li>참조 논문: Tool Attention (파이프라인 서빙 레이턴시 병목)</li>
+        <li>참조 논문: Crab (C/R 런타임, 결함 내성)</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="news-058-prob-verification.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">보장(0)에서 상한(ε)으로</span>
+      </a>
+      <a href="#" class="article-nav-item">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
