@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RLVR, 자기진화, 환경생성이 공유하는 '사전 데이터 전제'를 Autodata가 기초층으로 내재화하며 에이전트 개발의 전체 지형도를 바꾸는 기초층 변동 분석.">
+  <title>판을 만드는 자 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>판을 만드는 자</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">Autodata가 무너뜨리는 세 축의 공통 전제 — RLVR·자기진화·환경생성, 이 셋은 정말 병렬적인가?</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2025-07-05</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>LLM 에이전트 연구는 크게 세 방향으로 진행되고 있다. RLVR로 보상을 자가 생성하고, 환경 생성으로 학습 공간을 새로 짓고, 자기 진화로 런타임에 적응한다. 세 축이 병렬적으로 에이전트 능력의 각기 다른 차원을 다루는 것처럼 보인다.</p>
+      <p>하지만 Autodata라는 논문이 이 세 축이 공유하는 하나의 암묵적 전제를 들춰냈다. 그 전제가 무너지면, 이 세 축은 "병렬적"이 될 수 없다. 왜냐하면 그들은 사실 같은 바닥 위에 서 있었기 때문이다.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_autodata_01.png" alt="세 요리사와 빈 냉장고">
+      </div>
+
+      <h2>"거기에 재료가 이미 있다"</h2>
+      <p>비유를 하나 상상해 보자. 세 명의 요리사가 있다. 첫 번째는 레시피를 더 정교하게 다듬는다(RLVR). 두 번째는 주방 배치를 바꾸고 조리 도구를 최적화한다(환경 생성). 세 번째는 요리하면서 실시간으로 손놀림을 교정한다(자기 진화).</p>
+      <p>세 사람 모두 훌륭하다. 하지만 한 가지를 공통으로 전제하고 있다 — <strong>냉장고에 이미 재료가 들어 있다는 것</strong>이다. 누가 그 재료를 넣었는지는 묻지 않는다. 요리사의 영역 밖이라고 암묵적으로 합의했다.</p>
+      <p>훈련·평가·환경의 '내용물'은 사전 존재하며, 우리가 최적화하는 것은 그 내용물에 대한 '반응 방식'이다. 이 전제가 세 축 전체에 걸쳐 얼마나 단단히 자리 잡고 있는지, 하나씩 들여다보면 명확해진다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_autodata_02.png" alt="세 축은 같은 바닥에 서 있다">
+      </div>
+
+      <h2>"보상 신호의 근원은 여전히 '밖'에 있다"</h2>
+      <p>RLVR는 에이전트가 스스로 피드백을 생성한다는 점에서 자가 학습처럼 보인다. 하지만 기존 RLVR는 "ground-truth answers to assign rewards"를 전제한다. 이를 벗어나려는 시도조차 "verifiable rewards"라는 <strong>대체 고정점</strong>을 필요로 한다. 보상 신호의 궁극적 근원이 사전에 존재해야 한다는 구조적 제약은 그대로다.</p>
+      <p>환경 생성도 마찬가지다. Nemobot Games는 게임 도메인 특화 학습 환경을 생성하지만, 이는 "환경 구조를 새로 만드는" 것이지 "환경 속 데이터 분포를 처음부터 발명하는" 것과는 다르다. 빈 방을 지을 수는 있어도, 방 안에 무엇을 채울지는 정해져 있는 셈이다.</p>
+      <p>자기 진화 역시 외부 의존이다. Agora-opt의 런타임 메모리·토론 구조나 Adaptive Inference의 추론 길이 적응은 모두 "주어진" 지식 베이스 위에서의 최적화다. DNA를 재조합할 수는 있어도, <strong>염기서열 자체를 창조하지는 못하는 구조</strong>다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_autodata_03.png" alt="Autodata가 부수는 두 개의 벽">
+      </div>
+
+      <h2>"요리사가 냉장고를 채우는 사람까지 겸하게 되는 것"</h2>
+      <p>Autodata는 이 암묵적 전제를 <strong>두 수준에서 동시에</strong> 공격한다.</p>
+      <p>첫째 벽: 데이터 생성 주체의 전환. 데이터가 더 이상 인간이 큐레이션하거나 환경이 산출하는 부산물이 아니다. 에이전트 자신이 데이터의 설계자가 된다. 요리사 비유로 돌아가면, 이제 요리사가 냉장고를 채우는 사람까지 겸하게 되는 것이다.</p>
+      <p>둘째 벽: 메타최적화 루프. 데이터를 만드는 에이전트를 다시 훈련시킨다. 단순히 데이터를 만드는 것으로 끝나지 않고, <strong>데이터 생성 과정 자체가 최적화 대상</strong>이 된다. 폐쇄 루프 훈련이 정책 학습 수준에 머물던 것을 데이터 원천까지 확장한다.</p>
+      <p>비유하자면, 한 작가가 소설을 쓰고(데이터 생성), 그 소설을 읽으면서 자신의 글쓰기 능력을 향상시키고(에이전트 학습), 다시 더 나은 소설을 쓰는(메타최적화) 과정이다. 문제는 — <em>처음 소설을 쓸 수 있었던 능력은 어디서 왔는가?</em></p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_autodata_04.png" alt="부트스트랩 역설의 구조적 필연">
+      </div>
+
+      <h2>"인과 화살표가 순환하며 시스템 내부에 갇힌다"</h2>
+      <p>이 지점에서 부트스트랩 역설이 구조적으로 필연적이 된다. 에이전트 능력이 데이터 품질을 결정하고, 그 데이터가 다시 에이전트 능력을 결정한다. P = f(D), D = g(P). 인과 화살표가 순환하며, "최초의 좋은 데이터는 어디서 왔는가?"라는 근원적 질문이 시스템 내부에 갇히게 된다.</p>
+      <p>세 축에서는 이 질문을 인간, 벤치마크, 물리 환경으로 <strong>외주</strong>할 수 있었다. 하지만 Autodata에서는 그게 안 된다. 더 이상 "역설을 해결해야 한다"가 아니라, "역설 안에서 안정적으로 작동하도록 설계해야 한다"로 과제가 바뀐다.</p>
+      <p>이것이 부트스트랩 역설과 폐쇄 루프 훈련의 강결합이다. 기존에는 폐쇄 루프가 주로 정책 학습을 지칭했지만, Autodata는 이 루프를 데이터 원천까지 확장하며 부트스트랩을 구조적 필연으로 만든다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_autodata_05.png" alt="네 번째 축이 아닌 기초층 내재화">
+      </div>
+
+      <h2>"차원의 추가가 아니라 기초층의 내재화다"</h2>
+      <p>네 번째 축이라고 부르려면, 세 축과 <strong>동일한 추상 수준</strong>에서 병렬적으로 배치될 수 있어야 한다. 하지만 구조적으로 불가능하다.</p>
+      <ul style="padding-left:1.5em; margin:1em 0;">
+        <li>세 축의 작동 대상: 사전 존재하는 데이터/환경에 대한 반응</li>
+        <li>Autodata의 작동 대상: <strong>데이터 자체의 생성</strong></li>
+        <li>세 축의 의존성: 데이터 → 에이전트 (단방향)</li>
+        <li>Autodata의 의존성: <strong>데이터 ↔ 에이전트 (순환)</strong></li>
+      </ul>
+      <p>세 축이 "주어진 판 위에서 어떻게 더 잘 두느냐"의 문제라면, Autodata는 "판 자체를 만들고, 판을 만드는 능력까지 최적화하는" 문제다. 이는 차원(dimension)의 추가가 아니라 <strong>기초층(foundation layer)의 내재화</strong>다.</p>
+      <p>환경 생성의 정의 범위도 확장되어야 한다. 게임 맵을 만드는 것과, 게임의 세계관 자체를 창조하는 것의 차이다. Autodata는 "훈련 데이터 분포 자체를 환경으로 간주하고 그 환경을 생성"하는 방향으로 일반화한다.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_autodata_06.png" alt="판을 만드는 시대로의 전환">
+      </div>
+
+      <h2>"외부 의존형에서 자가 참조형으로"</h2>
+      <p>지금까지의 에이전트 개발은 근본적으로 <strong>외부 의존형</strong>이었다. 데이터는 인간이 만들고, 환경은 세상이 제공하고, 평가는 벤치마크가 담당했다. 에이전트는 이 "주어진 세계"에 대해 더 나은 반응을 학습하는 존재였다.</p>
+      <p>Autodata가 제시하는 것은 <strong>자가 참조형(self-referential)</strong> 패러다임이다. 에이전트가 자신의 학습 재료를 설계하고, 그 설계 능력을 다시 최적화한다. 시스템이 자신의 발을 딛고 서는 구조이며, 이것이 가능하려면 부트스트랩 역설을 해결 과제가 아닌 <em>설계 원리</em>로 삼아야 한다.</p>
+      <p>구체적으로 세 가지 방향이 제시된다:</p>
+      <ul style="padding-left:1.5em; margin:1em 0;">
+        <li><strong>메타 안정성 보장 장치</strong> — 자가 참조 루프가 발산하지 않도록 메타 학습률, 다양성 하한선, 외부 앵커 포인트를 공식화</li>
+        <li><strong>순환적 타당성(circular validity)</strong> — 루프 내부의 일관성, 다양성, surprise 등 새로운 평가 지표</li>
+        <li><strong>정보적 환경 생성의 독자적 연구 영역화</strong> — 물리적 환경 생성과 정보적 환경 생성을 명확히 구분</li>
+      </ul>
+
+      <p style="font-size:1.1rem; text-align:center; font-weight:600; margin: 2rem 0; padding: 1rem; background: #f5f0e8; border-radius: 12px;">"Autodata는 네 번째 축이 아니다.<br>RLVR·자기진화·환경생성이 공유하는<br>'사전 데이터 전제'라는 기초층을 내재화함으로써,<br>에이전트 개발의 전체 지형도를 바꾸는<br>기초층 변동이다.<br><span style="font-weight:400; font-size:0.95rem; color:#888;">판 위에서 더 잘 두는 법을 고민하던 시대에서,<br>판을 만드는 법을 고민해야 하는 시대로의 전환.</span>"</p>
+
+      <hr>
+
+      <h2>원문과 참고 자료</h2>
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EB%8A%A5%EB%A0%A5-%ED%96%A5%EC%83%81%EC%9D%80-rlvr-%EC%9E%90%EA%B8%B0-%EC%A7%84%ED%99%94-%ED%99%98%EA%B2%BD-%EC%83%9D%EC%84%B1%EC%9D%98.html" style="color:#7B5EA7;">현재 Wiki에서 에이전트 능력 향상은 RLVR 자기진화 환경생성의</a></li>
+        <li>대상 논문: Autodata: An Agentic Data Scientist to Create High Quality Synthetic Data (2025)</li>
+        <li>참조 논문: Reinforcement Learning without Ground-Truth Solutions can Improve LLMs (2025)</li>
+        <li>참조 논문: Nemobot Games (2025)</li>
+        <li>관련 분석: <a href="https://sfex11.github.io/Myno_public/posts/news-062-reward-collapse.html" style="color:#7B5EA7;">보상만으로는 도구를 쓸 수 없다 (news-062)</a></li>
+        <li>관련 분석: <a href="https://sfex11.github.io/Myno_public/posts/news-061-co-failure-ceiling.html" style="color:#7B5EA7;">더 나은 토론이 아니라 더 다른 모델 (news-061)</a></li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="news-062-reward-collapse.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">보상만으로는 도구를 쓸 수 없다</span>
+      </a>
+      <a href="#" class="article-nav-item">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
