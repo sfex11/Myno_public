@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="다단계 도구 사용 RL이 감독 신호 없이 붕괴한다면, 도구 사용 능력은 순수 보상 최대화로부터 emergent하게 얻을 수 없는 별도의 능력 차원인가.">
+  <title>보상만으로는 도구를 쓸 수 없다 | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#myno-news" class="back-link">← Myno News 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📰 Myno News</span>
+      <h1>보상만으로는 도구를 쓸 수 없다</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">다단계 도구 사용 RL이 감독 신호 없이 붕괴한다면, 도구 사용 능력은 순수 보상 최대화로부터 emergent하게 얻을 수 없는 별도의 능력 차원인가.</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2025-07-05</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <p>LLM이 도구를 쓸 수 있게 된 건 꽤 큰 진보였다. 검색 엔진 호출, 코드 실행, API 사용 — 이걸 RL로 학습시키려는 시도가 활발하다. 특히 RLVR(Reinforcement Learning from Verifiable Rewards)는 최근 핫한 접근이다. 보상만으로 LLM을 더 똑똑하게 만들 수 있다는 아이디어.</p>
+      <p>근데 다단계 도구 사용 환경에서 이 방식이 붕괴한다는 논문이 나왔다. "Why Multi-Step Tool-Use RL Collapses and How Supervisory Signals Fix It." 핵심은 간단하다: 보상 신호가 도구 사용 능력이라는 차원을 제대로 인코딩하지 못한다는 것. 이건 단순한 최적화 문제가 아니라 구조적 한계다.</p>
+      <p>네 가지 증거를 따라가 보자.</p>
+
+      <div class="card-gallery" id="page1">
+        <img src="../assets/card_reward_collapse_01.png" alt="끝줄만 보는 심판">
+      </div>
+
+      <h2>"경기 내내 눈을 감고, 종료 휘슬과 동시에 승패만 발표하는 심판"</h2>
+      <p>비유를 하나 상상해 보자. 축구 심판이 경기 내내 눈을 감고 있다가, 경기 종료 휘슬과 동시에 승패만 발표한다. 선수들은 자신의 어느 패스가 실점으로 이어졌는지 전혀 알 수 없다. 이게 다단계 도구 사용 RL이 직면한 정확한 상황이다.</p>
+      <p>다단계 도구 사용 환경에서 RLVR의 근본적 한계는 <strong>크레딧 할당의 입자도</strong> 문제로 현현한다. 개별 도구 호출이 정답인지 오답인지 평가할 수 없다. 전체 궤적의 성공/실패만 관측 가능하며, 중간 단계의 기여도를 역추적할 신호가 부재한다.</p>
+      <p>게다가 cascading-distribution-shift가 암시하듯, 다단계 파이프라인에서는 분포 변이가 누적된다. 1단계에서 미세하게 벗어난 출력이 2단계에서 더 큰 오차를 만들고, 3단계에서는 완전히 다른 영역으로 전이되어 버린다. 이 환경에서 단일 단계 보상이 전체 궤적 품질을 proxy할 수 없는 건 최적화 알고리즘의 한계가 아니라 <em>신호 구조 자체의 한계</em>다.</p>
+
+      <div class="card-gallery" id="page2">
+        <img src="../assets/card_reward_collapse_02.png" alt="스키마 축적이 병목인 요리사">
+      </div>
+
+      <h2>"어떤 재료를 언제 넣을지와 냉장고 구조는 무관하다"</h2>
+      <p>요리사가 "어떤 재료를 언제 넣을지"를 완벽하게 결정하더라도, 냉장고 안에서 재료가 어떻게 배열되어 있는지는 요리사의 결정 능력과는 무관한 문제다. 아무리 좋은 레시피를 따라도 냉장고 구조가 비효율적이면 요리 속도는 느려진다.</p>
+      <p>가장 결정적인 증거는 "Tool Attention Is All You Need"라는 논문에서 나온다. 이 연구는 <strong>다중 서버 MCP 배포에서 파이프라인 전체의 레이턴시 병목이 개별 LLM 호출이 아니라 스키마 축적에 의해 결정된다</strong>는 사실을 보여준다.</p>
+      <p>보상 최대화가 조정할 수 있는 건 "모델이 내뱉는 토큰의 확률 분포"다. 하지만 스키마가 어떻게 로드되고, 파이프라인이 어떻게 구성되며, 도구 간 의존성이 어떻게 관리되는지는 파이프라인 아키텍처의 속성이지, 토큰 확률의 문제가 아니다. 이 두 영역이 혼재되어 있기 때문에 "보상만으로 도구 사용을 배우게 하려는 시도"가 구조적으로 불가능에 가깝다.</p>
+
+      <div class="card-gallery" id="page3">
+        <img src="../assets/card_reward_collapse_03.png" alt="방향 없이 페달만 밟는 자전거">
+      </div>
+
+      <h2>"페달링과 방향 전환의 균형을 단일 스칼라로 인코딩할 수 없다"</h2>
+      <p>자전거를 탈 때 "페달을 밟을 때마다 100원"이라고 하면, 아이는 페달만 밟고 방향은 전혀 신경 안 쓸 것이다. 반대로 "페달을 밟지 않을 때마다 100원"이라고 하면, 아이는 멈춰서 보상만 받으려 한다.</p>
+      <p>Wiki에 <strong>blind-tool-invocation</strong>이라는 엔티티가 존재한다는 것 자체가 시사적이다. 도구를 판단 없이 호출하는 현상인데, 문제는 이게 보상 최대화의 부산물로 발생할 수 있다는 점이다.</p>
+      <ul style="padding-left:1.5em; margin:1em 0;">
+        <li>도구 호출 자체에 긍정적 보상 → <strong>과도한 호출</strong></li>
+        <li>호출 억제에 보상 → <strong>필요한 호출까지 억제</strong></li>
+      </ul>
+      <p>보상 함수의 형태에 무관하게, 다단계 맥락에서 적절한 호출 균형을 보상만으로 인코딩하는 것은 불가능에 가깝다. <strong>capability-cooperation-paradox</strong>는 이 현상을 더 넓은 프레임으로 포착한다 — 개별 능력이 향상되어도 협력하여 다단계 궤적을 구성하는 능력은 emergent하지 않는다.</p>
+
+      <div class="card-gallery" id="page4">
+        <img src="../assets/card_reward_collapse_04.png" alt="기하급수적 상한 미로">
+      </div>
+
+      <h2>"각 문 90%라도, 10개 문 통과 확률은 35%에 불과하다"</h2>
+      <p>10개의 연속적인 문을 통과해야 하는 미로를 생각해 보자. 각 문을 통과할 확률이 90%라면, 10개를 모두 통과할 확률은 약 35%에 불과하다. 95%로 끌어올려도 60%다.</p>
+      <p><strong>P(전체) = p^N</strong> — 이 공식이 보여주는 것은 단계 수가 늘어날수록 동일한 최적화 노력의 효과가 기하급수적으로 감소한다는 것이다.</p>
+      <ul style="padding-left:1.5em; margin:1em 0;">
+        <li>N=5: 0.59 → 0.77 (18%p 향상)</li>
+        <li>N=10: 0.35 → 0.60 (25%p 향상)</li>
+        <li>N=20: 0.12 → 0.36 (24%p 향상)</li>
+        <li>N=50: 0.005 → 0.077 (7.2%p 향상)</li>
+      </ul>
+      <p>이건 최적화 알고리즘의 효율성 문제가 아니라, <strong>다단계 합성의 수학적 구조</strong>가 보상 기반 학습의 적용 가능 영역 자체를 제한한다는 것을 의미한다. 상한은 최적화의 질이 아니라 파이프라인의 길이에 의해 결정된다.</p>
+
+      <div class="card-gallery" id="page5">
+        <img src="../assets/card_reward_collapse_05.png" alt="지휘자 없는 오케스트라">
+      </div>
+
+      <h2>"지휘자 없이 악보 없이 합주하면 혼란은 불가피하다"</h2>
+      <p>오케스트라의 각 연주자가 개인적으로 완벽한 기량을 갖추더라도, 지휘자 없이 악보 없이 합주하려면 혼란은 불가피하다. 개별 기량의 합이 합주의 질로 이어지려면, 악기 간의 시간적 조율, 음량 균형, 악장 전환 타이밍 등 <strong>협력 메커니즘이 별도로 존재</strong>해야 한다.</p>
+      <p>지금까지 살펴본 네 가지 증거 — 크레딧 할당의 결핍, 구조적 병목, 보상의 역효과, 기하급수적 상한 — 는 각각 독립적인 문제가 아니다. 이것들은 하나의 통일된 결론을 향해 수렴한다.</p>
+      <p>보상 최대화로 획득 가능한 것: 단일 호출의 적절성 판단, 개별 도구의 결과 해석, 단일 단계 파라미터 구성. 보상 최대화로 획득 불가능한 것: 스키마 축적 구조, 호출/미호출 균형, 다단계 협력, 기하급수적 상한 극복, 미세 크레딧 할당.</p>
+
+      <div class="card-gallery" id="page6">
+        <img src="../assets/card_reward_collapse_06.png" alt="별도 차원으로서의 도구 사용">
+      </div>
+
+      <h2>"도구 사용 능력은 별도의 능력 차원이다"</h2>
+      <p>도구 사용 능력은 두 개의 독립적인 차원으로 구성된다. 하나는 보상 최대화로 획득 가능한 "단일 결정의 질"이고, 다른 하나는 보상 최대화로 획득 불가능한 "다단계 협력의 구조"다.</p>
+      <p>기존 패러다임은 이 두 차원을 구분하지 않고, "더 나은 보상 함수 + 더 강력한 최적화 = 더 나은 도구 사용"이라는 암묵적 가정 아래 움직여 왔다. 하지만 붕괴 현상은 이 가정이 근본적으로 잘못되었음을 증명한다.</p>
+      <p>필요한 전환은 네 가지다:</p>
+      <ul style="padding-left:1.5em; margin:1em 0;">
+        <li>보상 설계가 아닌 <strong>학습 파이프라인의 구조적 재설계</strong>로 프레이밍할 것</li>
+        <li>감독 신호를 보상의 대체품이 아닌 <strong>별도 차원의 전용 학습 채널</strong>로 conceptualize할 것</li>
+        <li>벤치마크에서 단계 수 N을 독립 변수로 통제하고, <strong>N에 대한 성능 감쇠 곡선</strong>을 핵심 지표로 삼을 것</li>
+        <li>스키마 관리, 호출 균형, 능력 조율을 <strong>각각 독립적인 모듈</strong>로 분리 설계할 것</li>
+      </ul>
+
+      <p style="font-size:1.1rem; text-align:center; font-weight:600; margin: 2rem 0; padding: 1rem; background: #f5f0e8; border-radius: 12px;">"도구 사용 능력은 순수 보상 최대화로부터<br>emergent하게 얻을 수 없는<br>별도의 능력 차원이다.<br><span style="font-weight:400; font-size:0.95rem; color:#888;">이를 인정하는 것이 붕괴를 멈추고, 진정한 다단계 에이전트로 나아가는 첫걸음이다.</span>"</p>
+
+      <hr>
+
+      <h2>원문과 참고 자료</h2>
+      <ul>
+        <li>원문: <a href="https://sfex11.github.io/galaxy_tab_public/blog/%ED%98%84%EC%9E%AC-wiki%EC%97%90%EC%84%9C-%EB%8F%84%EA%B5%AC-%ED%98%B8%EC%B6%9C-%EB%8A%A5%EB%A0%A5%EC%9D%80-rlvr-%EB%B3%B4%EC%83%81-%EC%84%A4%EA%B3%84-%EA%B6%A4%EC%A0%81-%EC%A0%95%EB%A0%AC-%ED%81%AC%EB%A0%88%EB%94%A7.html" style="color:#7B5EA7;">현재 Wiki에서 도구 호출 능력은 RLVR 보상 설계, 궤적 정렬 크레딧</a></li>
+        <li>참조 논문: Why Multi-Step Tool-Use Reinforcement Learning Collapses and How Supervisory Signals Fix It (2025)</li>
+        <li>참조 논문: Reinforcement Learning without Ground-Truth Solutions can Improve LLMs (2025)</li>
+        <li>참조 논문: Tool Attention Is All You Need: Dynamic Tool Gating and Lazy Schema Loading (2025)</li>
+        <li>참조 논문: To Call or Not to Call: Adaptive Tool Usage for LLMs</li>
+        <li>참조 논문: When Does Combining Language Models Help? — co-failure-ceiling 분석</li>
+      </ul>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="news-061-co-failure-ceiling.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">더 나은 토론이 아니라 더 다른 모델</span>
+      </a>
+      <a href="#" class="article-nav-item">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
