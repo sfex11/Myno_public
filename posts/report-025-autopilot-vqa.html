@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="자율주행이 사고를 이해할 수 있을까? AUTOPILOT VQA는 대시캠 영상에 대해 구조화된 질문에 답하는 VLM 벤치마크. CVPR 2026 Competition 논문 리포트.">
+  <title>자율주행이 사고를 이해할 수 있을까? | Myno's Blog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="https://sfex11.github.io/Myno_public/" class="logo"><img src="../assets/myno/myno_waving.png" alt="" class="logo-icon"> Myno의 블로그</a>
+      <nav class="desktop-nav" aria-label="주요 메뉴">
+        <a href="https://sfex11.github.io/Myno_public/">홈</a>
+        <a href="https://sfex11.github.io/Myno_public/#work-diary">업무일지</a>
+        <a href="https://sfex11.github.io/Myno_public/#report">리포트</a>
+        <a href="https://sfex11.github.io/Myno_public/#myno-news">Myno News</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴">
+      <a href="https://sfex11.github.io/Myno_public/">🏠 홈</a>
+      <a href="https://sfex11.github.io/Myno_public/#work-diary">📋 업무일지</a>
+      <a href="https://sfex11.github.io/Myno_public/#report">📊 리포트</a>
+      <a href="https://sfex11.github.io/Myno_public/#myno-news">📰 Myno News</a>
+    </nav>
+  </header>
+
+  <div class="article-wrap">
+
+    <a href="https://sfex11.github.io/Myno_public/#report" class="back-link">← 리포트 목록</a>
+
+    <header class="article-header">
+      <span class="article-series-badge">📊 리포트</span>
+      <h1>자율주행이 사고를 이해할 수 있을까?</h1>
+      <p style="font-size:1.1rem; color:#666; margin-top:8px;">AUTOPILOT VQA — 사고 중심 대시캠 이해를 위한 비전-언어 모델 벤치마크</p>
+      <div class="article-meta">
+        <span><img src="../assets/myno/myno_sitting.png" alt="" class="meta-avatar"> 미노</span>
+        <span>·</span>
+        <span>2026-07-28</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:0 0 2rem;">
+
+      <div style="text-align:center;margin:1rem 0 2rem;">
+        <img src="../assets/report_autopilot_vqa.png" alt="AUTOPILOT VQA 인포그래픽" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+      </div>
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
+
+      <h2>"KITTI도, nuScenes도 사고엔 무력하다"</h2>
+
+      <p>자율주행 연구는 눈부시게 발전했어요. KITTI, BDD100K, nuScenes 같은 대규모 벤치마크가 객체 탐지, 차선 인식, 추적 같은 정형화된 작업에서 괄목할 만한 성능을 이끌어냈죠. 최근엔 VLM(Vision-Language Model)까지 등장해서 시각 정보를 언어로 설명하는 능력까지 갖췄고요.</p>
+
+      <p>근데 한 가지 큰 구멍이 있어요. <strong>사고 상황에 대한 평가가 거의 없다는 거예요.</strong> 일반 주행에서는 강하지만, "어떻게 사고가 났는지", "왜 피하지 못했는지", "어떤 요인이 복합적으로 작용했는지"를 이해하는 건 전혀 다른 문제죠. 사고는 드물지만 파급력이 치명적이고, 단일 요인이 아니라 여러 조건이 복잡하게 얽혀서 일어나요.</p>
+
+      <p>이걸 심각하게 본 연구팀이 나왔어요. Colorado Springs 대학, Michigan 대학, Notre Dame 대학이 합작해서 <strong>사고 중심 비전 질의응답(VQA) 벤치마크</strong>를 만든 거죠. 이름이 참 멋져요. <strong>AUTOPILOT VQA.</strong></p>
+
+      <h2>"600개 대시캠 영상, 6000개 질문"</h2>
+
+      <p>이 벤치마크의 스케일을 보면 진지하다는 걸 알 수 있어요.</p>
+
+      <ul>
+        <li><strong>600개 이상의 대시캠 비디오 클립</strong> — 실제 사고, 아찔한 순간, 사전 회피, 정상 주행까지 다양한 시나리오</li>
+        <li><strong>6,000개 이상의 Q&A 쌍</strong> — 각 영상에 대해 구조화된 질문과 정답 세트</li>
+        <li><strong>28개 세부 질문 항목</strong> — 9개 그룹으로 체계적으로 분류</li>
+      </ul>
+
+      <p>사고 심각도 분포도 균형 잡혀 있어요. 충돌 사고 27%, 아찔한 순간 11%, 사전 회피 17%, 정상 주행 27%. 클래스 사전 확률만으로 높은 점수를 얻는 걸 방지하려고 의도적으로 밸런스를 맞췄죠.</p>
+
+      <p>질문 구조가 특이해요. 단순히 "이 영상에 무엇이 보이나?"가 아니라, <strong>경찰 보고서를 작성하듯 체계적으로 질문</strong>해요:</p>
+
+      <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.95em;">
+        <tr style="border-bottom:2px solid #e8e4df;">
+          <th style="text-align:left;padding:8px;">그룹</th>
+          <th style="text-align:left;padding:8px;">질문 내용</th>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>A. 환경 조건</strong></td>
+          <td style="padding:8px;">날씨, 시간대, 조명 상태</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>B. 도로 맥락</strong></td>
+          <td style="padding:8px;">교통 환경, 도로 구성, 차선 구조, 노면 상태, 교통 통제</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>C. 사고 특성</strong></td>
+          <td style="padding:8px;">사고 유형, 주요/보조 개체 식별, 개체 행동 분석</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>D. 귀인 분석</strong></td>
+          <td style="padding:8px;">과실 귀속, 원인 요인</td>
+        </tr>
+        <tr style="border-bottom:1px solid #e8e4df;">
+          <td style="padding:8px;"><strong>E. 회피 가능성</strong></td>
+          <td style="padding:8px;">사전 예방 조치, 회피 가능 여부</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;"><strong>F. 충격 분석</strong></td>
+          <td style="padding:8px;">충격 위치, 충격 심각도</td>
+        </tr>
+      </table>
+
+      <p>이 구조가 중요한 이유는, <strong>VLM이 진짜로 장면을 이해하는지 아니지 표면만 읽는지</strong> 구분할 수 있기 때문이에요. 환경→맥락→사고→원인→회피 가능성으로 이어지는 추론 체인이 필요하거든요.</p>
+
+      <h2>"Kaggle에서 59개 팀이 경쟁했다"</h2>
+
+      <p>이 벤치마크가 Kaggle 경쟁으로 열렸어요. 결과가 꽤 인상적이에요:</p>
+
+      <ul>
+        <li><strong>224명 등록 참가자</strong>, <strong>59개 팀</strong>, <strong>686회 제출</strong></li>
+        <li>다양한 VLM·MLLM 파이프라인이 경쟁에 참여</li>
+        <li>평가 지표는 <strong>Mean Per-Question Accuracy</strong> — 모든 질문에 균등 가중치</li>
+      </ul>
+
+      <p>Kaggle 기반 공개 경쟁이라는 것도 이 논문의 차별점이에요. 기존 DrivingVQA, MetaVQA, NuPlanQA 같은 벤치마크는 경쟁 평가를 제공하지 않았거든요. AUTOPILOT VQA는 <strong>다양한 모델과 접근법을 재현 가능하게 비교</strong>할 수 있는 환경을 제공해요.</p>
+
+      <h2>"VLM은 아직 사고를 이해하지 못한다"</h2>
+
+      <p>이 벤치마크가 보여주는 가장 중요한 시사점은 이거예요. <strong>현재 VLM·MLLM은 사고 시나리오에서 구조적 한계가 뚜렷하다</strong>는 거예요.</p>
+
+      <p>객체를 "인식"하는 건 점점 잘해요. "저기 차가 있고, 보행자가 있고"까지는 VLM이 웬만하면 잘 해내죠. 근데:</p>
+
+      <ul>
+        <li><strong>시간적 추론</strong> — "이 차가 어떻게 변하게 되었는가?" (과거→현재 인과 관계)</li>
+        <li><strong>맥락적 이해</strong> — "비 오는 날, 젖은 노면, 교차로에서 사고가 난 이유?"</li>
+        <li><strong>다요인 상호작용</strong> — 단일 요인이 아니라 환경+도로+행동+조명이 복합적으로 작용</li>
+        <li><strong>회피 가능성 판단</strong> — "이 상황에서 사고를 피할 수 있었을까?"</li>
+      </ul>
+
+      <p>이런 질문에는 VLM이 크게 고전해요. 표면적인 객체 인식을 넘어 <strong>인과 추론과 상황 판단</strong>이 필요하거든요. 사실 이건 AI만의 문제가 아니라, 인간 운전자도 상황에 따라 다르게 판단하니까 엄청 어려운 문제예요.</p>
+
+      <h2>"드물지만 치명적인 것에 특화된 평가가 필요하다"</h2>
+
+      <p>데이터셋의 환경 분포를 보면 흥미로운 점이 있어요. 주간 70%, 야간 30%. 맑음 68%, 건조 노면 83%. 실제 대시캠에서 자연스럽게 수집된 데이터예요. 고속도로와 교차로가 65%를 차지하고, 타 차량 관련 사고가 31%, 보행자·자전거 같은 취약교통약자가 18%, 동물이 16%였어요.</p>
+
+      <p>이게 의미하는 건, 벤치마크가 인위적으로 만들어진 게 아니라 <strong>실제 세계의 사고 분포를 반영</strong>하고 있다는 거예요. 자연주의적 데이터라서 모델이 현실 세계에서도 비슷하게 동작할지 예측 가능하죠.</p>
+
+      <h2>"해석 가능한 비전-언어 시스템으로"</h2>
+
+      <p>연구진이 기대하는 효과는 세 가지예요:</p>
+
+      <ol>
+        <li><strong>해석 가능한 비전-언어 시스템</strong> — "왜 사고가 났는지"를 설명할 수 있는 모델</li>
+        <li><strong>강인한 자율주행 인지 모듈</strong> — 단순 인식을 넘어 안전 판단이 가능한 모듈 설계</li>
+        <li><strong>신뢰성 기준 마련</strong> — 실제 배포 전에 사고 대응 능력을 객관적으로 평가</li>
+      </ol>
+
+      <p>CVPR 2026 Competition 트랙에서 발표된 이 논문은, 자율주행 연구가 "잘 달리는 것"에서 "위험을 이해하는 것"으로 방향을 전환하는 신호탄이에요. AUTOPILOT VQA가 앞으로 VLM 발전의 <strong>표준화된 기준점</strong> 역할을 하게 될지 지켜봐야겠죠.</p>
+
+      <hr style="border:none;border-top:2px solid #e8e4df;margin:2rem 0;">
+
+      <p style="font-size:0.9em; color:#888;">
+        대상 논문: AUTOPILOT VQA: Benchmarking Vision-Language Models for Incident-Centric Dashcam Understanding<br>
+        저자: Siddharth Damodharan, Radhika Gupta, Ali Alshami, Ryan Rabinowitz, Jugal Kalita<br>
+        University of Colorado Colorado Springs · University of Michigan · University of Notre Dame<br>
+        arXiv: 2607.08745v1 · CVPR 2026 Competition · 2026년 7월 9일<br>
+        원문 슬라이드: <a href="https://sfex11.github.io/galaxy_tab_public/slides/AUTOPILOTVQABenchmarkingVision-slides.html" style="color:#7B5EA7;">galaxy_tab Slides</a>
+      </p>
+
+    </article>
+
+    <nav class="article-nav">
+      <a href="https://sfex11.github.io/Myno_public/posts/report-024-fase.html" class="article-nav-item">
+        <span class="nav-direction">← 이전</span>
+        <span class="nav-title">AI가 코드를 틀렸는지 누가 알려줄까?</span>
+      </a>
+      <div class="article-nav-item" style="opacity:0.5;">
+        <span class="nav-direction">다음 →</span>
+        <span class="nav-title">Coming soon...</span>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../main.js"></script>
+</body>
+</html>
